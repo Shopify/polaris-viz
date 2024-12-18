@@ -10,25 +10,29 @@ import {endLineTruncate} from './utilities/endLineTruncate';
 interface SingleTextLineProps {
   color: string;
   fontSize: number;
+  fontWeight?: number;
   targetWidth: number;
   text: string;
-  x: number;
-  y: number;
+  x?: number;
+  y?: number;
   ariaHidden?: boolean;
   dominantBaseline?: 'middle' | 'hanging';
   textAnchor?: 'start' | 'middle' | 'end';
 }
+
+const DEFAULT_LABEL_FONT_WEIGHT = 400;
 
 export function SingleTextLine({
   ariaHidden = false,
   color,
   dominantBaseline = 'hanging',
   fontSize,
+  fontWeight = DEFAULT_LABEL_FONT_WEIGHT,
   targetWidth,
   text,
   textAnchor = 'middle',
-  y,
-  x,
+  y = 0,
+  x = 0,
 }: SingleTextLineProps) {
   const {characterWidths} = useChartContext();
 
@@ -49,6 +53,7 @@ export function SingleTextLine({
         width={targetWidth}
         fill={color}
         fontSize={fontSize}
+        fontWeight={fontWeight}
         fontFamily={FONT_FAMILY}
         y={y}
         x={x}

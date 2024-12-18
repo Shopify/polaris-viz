@@ -138,6 +138,19 @@ export const MAX_SERIES_ARGS = {
   },
 };
 
+export const SERIES_NAME_FORMATTER_ARGS = {
+  description: 'A function that formats the series name in the chart.',
+};
+
+export const LABEL_FORMATTER_ARGS = {
+  description: 'A function that formats numeric values displayed in the chart.',
+};
+
+export const PERCENTAGE_FORMATTER_ARGS = {
+  description:
+    'A function that formats percentage values displayed in the chart.',
+};
+
 export const DEFAULT_CHART_CONTEXT: ChartContextValues = {
   shouldAnimate: false,
   characterWidths,

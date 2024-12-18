@@ -4,3 +4,5 @@ export {HorizontalBars, Label} from './HorizontalBars';
 export {HorizontalStackedBars} from './HorizontalStackedBars';
 export {HorizontalGroup} from './HorizontalGroup';
 export {Bar} from './Bar';
+export {FunnelChartConnector} from './FunnelChartConnector';
+export {FunnelChartSegment} from './FunnelChartSegment';

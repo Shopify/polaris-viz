@@ -54,3 +54,7 @@ export type {LineChartPredictiveProps} from './LineChartPredictive';
 export type {ComparisonMetricProps} from './ComparisonMetric';
 export {Grid} from './Grid';
 export type {GridProps} from './Grid';
+export {FunnelChartNext} from './FunnelChartNext';
+export type {FunnelChartNextProps} from './FunnelChartNext';
+export {SparkFunnelChart} from './SparkFunnelChart';
+export type {SparkFunnelChartProps} from './SparkFunnelChart';
