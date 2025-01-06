@@ -85,7 +85,7 @@ export function LegendValues({
   const longestLegendNameWidth = useMemo(() => {
     return legendData.reduce((previous, current) => {
       const estimatedLegendNameWidth = estimateStringWidth(
-        `${seriesNameFormatter(`${current.name || ''}`)}`,
+        current.name,
         characterWidths,
       );
 
@@ -95,7 +95,7 @@ export function LegendValues({
 
       return previous;
     }, 0);
-  }, [legendData, seriesNameFormatter, characterWidths]);
+  }, [legendData, characterWidths]);
 
   const longestLegendValueWidth = useMemo(() => {
     return legendData.reduce((previous, current) => {
