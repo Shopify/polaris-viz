@@ -1,0 +1,1 @@
+export {FunnelChartLabels} from './FunnelChartLabels';

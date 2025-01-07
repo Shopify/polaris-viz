@@ -14,15 +14,12 @@ import {
   FunnelChartConnectorGradient,
 } from '../shared/FunnelChartConnector';
 import {FunnelChartSegment} from '../shared';
-import {SingleTextLine} from '../Labels';
 import {ChartElements} from '../ChartElements';
 
 import {FunnelChartLabels} from './components';
 import {
   LABELS_HEIGHT,
-  PERCENTAGE_SUMMARY_HEIGHT,
   LINE_GRADIENT,
-  PERCENTAGE_COLOR,
   LINE_OFFSET,
   LINE_WIDTH,
   GAP,
@@ -50,6 +47,7 @@ export function Chart({
   const dataSeries = data[0].data;
   const xValues = dataSeries.map(({key}) => key) as string[];
   const yValues = dataSeries.map(({value}) => value) as [number, number];
+  const sanitizedYValues = yValues.map((value) => Math.max(0, value));
 
   const {width: drawableWidth, height: drawableHeight} = containerBounds ?? {
     width: 0,
@@ -58,14 +56,15 @@ export function Chart({
     y: 0,
   };
 
-  const highestYValue = Math.max(...yValues);
+  const highestYValue = Math.max(...sanitizedYValues);
+
   const yScale = scaleLinear()
-    .range([0, drawableHeight - LABELS_HEIGHT - PERCENTAGE_SUMMARY_HEIGHT])
+    .range([0, drawableHeight - LABELS_HEIGHT])
     .domain([0, highestYValue]);
 
   const {getBarHeight, shouldApplyScaling} = useFunnelBarScaling({
     yScale,
-    values: yValues,
+    values: sanitizedYValues,
   });
 
   const labels = useMemo(
@@ -89,11 +88,12 @@ export function Chart({
   const barWidth = sectionWidth * SEGMENT_WIDTH_RATIO;
   const lineGradientId = useMemo(() => uniqueId('line-gradient'), []);
 
-  const lastPoint = dataSeries.at(-1);
   const firstPoint = dataSeries[0];
 
   const calculatePercentage = (value: number, total: number) => {
-    return total === 0 ? 0 : (value / total) * 100;
+    const sanitizedValue = Math.max(0, value);
+    const sanitizedTotal = Math.max(0, total);
+    return sanitizedTotal === 0 ? 0 : (sanitizedValue / sanitizedTotal) * 100;
   };
 
   const percentages = dataSeries.map((dataPoint) => {
@@ -106,10 +106,6 @@ export function Chart({
   const formattedValues = dataSeries.map((dataPoint) => {
     return labelFormatter(dataPoint.value);
   });
-
-  const mainPercentage = percentageFormatter(
-    calculatePercentage(lastPoint?.value ?? 0, firstPoint?.value ?? 0),
-  );
 
   return (
     <ChartElements.Svg height={drawableHeight} width={drawableWidth}>
@@ -124,17 +120,7 @@ export function Chart({
           y1="0%"
           y2="100%"
         />
-
-        <SingleTextLine
-          color={PERCENTAGE_COLOR}
-          fontWeight={600}
-          targetWidth={drawableWidth}
-          fontSize={20}
-          text={mainPercentage}
-          textAnchor="start"
-        />
-
-        <g transform={`translate(0,${PERCENTAGE_SUMMARY_HEIGHT})`}>
+        <g>
           <FunnelChartLabels
             formattedValues={formattedValues}
             labels={labels}
@@ -185,10 +171,10 @@ export function Chart({
                 </FunnelChartSegment>
                 {index > 0 && (
                   <rect
-                    y={PERCENTAGE_SUMMARY_HEIGHT}
+                    y={0}
                     x={x - (LINE_OFFSET - LINE_WIDTH)}
                     width={LINE_WIDTH}
-                    height={drawableHeight - PERCENTAGE_SUMMARY_HEIGHT}
+                    height={drawableHeight}
                     fill={`url(#${lineGradientId})`}
                   />
                 )}

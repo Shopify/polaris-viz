@@ -1,4 +1,4 @@
-import {useCallback, useMemo} from 'react';
+import {useCallback} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 
 // Threshold to determine if we should scale the segments, i.e if the smallest segment is less than 10% of the tallest segment
@@ -16,29 +16,18 @@ export function useFunnelBarScaling({
   yScale,
   values,
 }: UseFunnelBarScalingProps) {
-  const tallestBarHeight = useMemo(
-    () => yScale(Math.max(...values)),
-    [yScale, values],
-  );
-  const smallestBarHeight = useMemo(
-    () => yScale(Math.min(...values)),
-    [yScale, values],
-  );
+  const hasZeroValue = values.some((value) => value === 0);
 
-  const smallestToTallestBarRatio = useMemo(
-    () => smallestBarHeight / tallestBarHeight,
-    [smallestBarHeight, tallestBarHeight],
-  );
-
-  const shouldApplyScaling = useMemo(
-    () => smallestToTallestBarRatio <= SCALING_RATIO_THRESHOLD,
-    [smallestToTallestBarRatio],
-  );
+  const tallestBarHeight = yScale(Math.max(...values));
+  const smallestBarHeight = yScale(Math.min(...values));
+  const smallestToTallestBarRatio = smallestBarHeight / tallestBarHeight;
+  const shouldApplyScaling =
+    !hasZeroValue && smallestToTallestBarRatio <= SCALING_RATIO_THRESHOLD;
 
   const getBarHeight = useCallback(
     (rawValue: number) => {
-      const barHeight = yScale(rawValue);
-
+      const sanitizedValue = Math.max(0, rawValue);
+      const barHeight = sanitizedValue === 0 ? 0 : yScale(sanitizedValue);
       if (!shouldApplyScaling || barHeight === tallestBarHeight) {
         return barHeight;
       }

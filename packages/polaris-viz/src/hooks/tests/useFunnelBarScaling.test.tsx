@@ -47,6 +47,22 @@ describe('useFunnelBarScaling', () => {
     expect(data.shouldApplyScaling).toBe(true);
   });
 
+  it('returns shouldApplyScaling=false when there is a 0 value', () => {
+    function TestComponent() {
+      const data = useFunnelBarScaling({
+        yScale: mockYScale,
+        values: [0, 100],
+      });
+
+      return <span data-data={`${JSON.stringify(data)}`} />;
+    }
+
+    const result = mount(<TestComponent />);
+    const data = parseData(result);
+
+    expect(data.shouldApplyScaling).toBe(false);
+  });
+
   describe('getBarHeight', () => {
     it('returns original bar height when ratio is above scaling threshold', () => {
       function TestComponent() {
@@ -112,6 +128,23 @@ describe('useFunnelBarScaling', () => {
       const data = parseData(result);
 
       expect(data.height).toBe(mockYScale(100));
+    });
+
+    it('returns a height of 0 when the value is 0', () => {
+      function TestComponent() {
+        const data = useFunnelBarScaling({
+          yScale: mockYScale,
+          values: [0, 100],
+        });
+
+        const height = data.getBarHeight(0);
+        return <span data-data={`${JSON.stringify({height})}`} />;
+      }
+
+      const result = mount(<TestComponent />);
+      const data = parseData(result);
+
+      expect(data.height).toBe(0);
     });
   });
 });

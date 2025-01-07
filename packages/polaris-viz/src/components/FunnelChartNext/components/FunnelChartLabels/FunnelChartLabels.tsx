@@ -3,12 +3,11 @@ import {Fragment, useMemo, useState} from 'react';
 import type {ScaleBand} from 'd3-scale';
 import {estimateStringWidth, useChartContext} from '@shopify/polaris-viz-core';
 
-import {LINE_HEIGHT} from '../../../constants';
-import {estimateStringWidthWithOffset} from '../../../utilities';
-import {SingleTextLine} from '../../Labels';
-
-import {ScaleIcon} from './ScaleIcon';
-import {ScaleIconTooltip} from './ScaleIconTooltip';
+import {LINE_HEIGHT} from '../../../../constants';
+import {estimateStringWidthWithOffset} from '../../../../utilities';
+import {SingleTextLine} from '../../../Labels';
+import {ScaleIcon} from '../ScaleIcon';
+import {ScaleIconTooltip} from '../ScaleIconTooltip';
 
 const LINE_GAP = 5;
 const LINE_PADDING = 10;
