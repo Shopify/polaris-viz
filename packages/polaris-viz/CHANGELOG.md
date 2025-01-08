@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Fixed
+
+- Fixed issue in `<StackedArea />` where changing data series length would cause the chart to throw an error
+
 ### Changed
 
 - Removed main percentage label from `<FunnelChartNext />`
