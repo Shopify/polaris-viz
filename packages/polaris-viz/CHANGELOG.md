@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Changed
+
+- Removed main percentage label from `<FunnelChartNext />`
+
 ### Fixed
 
 - Double formatting in Donut Chart label calculations
