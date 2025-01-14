@@ -20,6 +20,10 @@ const percentageFormatter = (value) => `${labelFormatter(value)}%`;
 
 Default.args = {
   data: DEFAULT_DATA,
+  tooltipLabels: {
+    reached: 'Reached this step',
+    dropped: 'Dropped off',
+  },
   labelFormatter,
   percentageFormatter,
   renderScaleIconTooltipContent: () => (
