@@ -116,5 +116,36 @@ describe('<FunnelChartNext />', () => {
         labelFormatter,
       });
     });
+
+    describe('showTooltip', () => {
+      it('passes showTooltip prop to Chart', () => {
+        const funnel = mount(
+          <FunnelChartNext
+            data={mockData}
+            tooltipLabels={mockTooltipLabels}
+            showTooltip={false}
+            state={ChartState.Success}
+          />,
+        );
+
+        expect(funnel).toContainReactComponent(Chart, {
+          showTooltip: false,
+        });
+      });
+
+      it('defaults showTooltip to true when not provided', () => {
+        const funnel = mount(
+          <FunnelChartNext
+            data={mockData}
+            tooltipLabels={mockTooltipLabels}
+            state={ChartState.Success}
+          />,
+        );
+
+        expect(funnel).toContainReactComponent(Chart, {
+          showTooltip: true,
+        });
+      });
+    });
   });
 });

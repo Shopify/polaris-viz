@@ -151,6 +151,18 @@ export const PERCENTAGE_FORMATTER_ARGS = {
     'A function that formats percentage values displayed in the chart.',
 };
 
+export const FUNNEL_TOOLTIP_LABELS_ARGS = {
+  description:
+    'An object that defines the "reached" and "dropped" labels in the tooltip.',
+};
+
+export const SHOW_TOOLTIP_ARGS = {
+  description: 'Whether to show the tooltip or not.',
+  control: {
+    type: 'boolean',
+  },
+};
+
 export const DEFAULT_CHART_CONTEXT: ChartContextValues = {
   shouldAnimate: false,
   characterWidths,

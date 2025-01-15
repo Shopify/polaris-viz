@@ -102,4 +102,32 @@ describe('<Chart />', () => {
 
     expect(chart).not.toContainReactComponent(FunnelTooltip);
   });
+
+  describe('showTooltip', () => {
+    it('shows tooltip when showTooltip is true', () => {
+      const chart = mount(
+        <ChartContext.Provider value={mockContext}>
+          <Chart {...defaultProps} showTooltip />
+        </ChartContext.Provider>,
+      );
+
+      const firstSegment = chart.find(FunnelChartSegment);
+      firstSegment?.trigger('onMouseEnter', 0);
+
+      expect(chart).toContainReactComponent(FunnelTooltip);
+    });
+
+    it('does not show tooltip when showTooltip is false', () => {
+      const chart = mount(
+        <ChartContext.Provider value={mockContext}>
+          <Chart {...defaultProps} showTooltip={false} />
+        </ChartContext.Provider>,
+      );
+
+      const firstSegment = chart.find(FunnelChartSegment);
+      firstSegment?.trigger('onMouseEnter', 0);
+
+      expect(chart).not.toContainReactComponent(FunnelTooltip);
+    });
+  });
 });
