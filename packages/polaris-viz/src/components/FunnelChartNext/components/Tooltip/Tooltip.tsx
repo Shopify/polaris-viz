@@ -5,7 +5,6 @@ import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 import {TOOLTIP_WIDTH} from '../../constants';
 import {FUNNEL_CHART_CONNECTOR_GRADIENT} from '../../../shared/FunnelChartConnector';
 import {FUNNEL_CHART_SEGMENT_FILL} from '../../../shared/FunnelChartSegment';
-import type {FunnelChartNextProps} from '../../FunnelChartNext';
 import {SeriesIcon} from '../../../shared/SeriesIcon';
 import {calculateDropOff} from '../../utilities/calculate-dropoff';
 import {TooltipContentContainer, TooltipTitle} from '../../../TooltipContent';
@@ -15,7 +14,10 @@ import styles from './Tooltip.scss';
 export interface TooltipContentProps {
   activeIndex: number;
   dataSeries: DataPoint[];
-  tooltipLabels: FunnelChartNextProps['tooltipLabels'];
+  tooltipLabels: {
+    reached: string;
+    dropped: string;
+  };
   labelFormatter: LabelFormatter;
   percentageFormatter: (value: number) => string;
 }
@@ -67,11 +69,24 @@ export function Tooltip({
     >
       {() => (
         <Fragment>
-          <TooltipTitle theme={DEFAULT_THEME_NAME}>{point.key}</TooltipTitle>
+          <TooltipTitle
+            theme={DEFAULT_THEME_NAME}
+            aria-label={`Step: ${point.key}`}
+          >
+            {point.key}
+          </TooltipTitle>
           <div className={styles.Rows}>
             {data.map(({key, value, color, percent}, index) => {
+              const ariaLabel = `${key}: ${value}, ${percentageFormatter(
+                percent,
+              )}`;
+
               return (
-                <div className={styles.Row} key={`row-${index}-${key}`}>
+                <div
+                  className={styles.Row}
+                  key={`row-${index}-${key}`}
+                  aria-label={ariaLabel}
+                >
                   <div className={styles.Keys}>
                     <SeriesIcon color={color!} shape="Bar" />
                     <span>{key}</span>

@@ -24,6 +24,7 @@ Default.args = {
     reached: 'Reached this step',
     dropped: 'Dropped off',
   },
+  showTooltip: true,
   labelFormatter,
   percentageFormatter,
   renderScaleIconTooltipContent: () => (

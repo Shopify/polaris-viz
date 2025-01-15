@@ -6,7 +6,9 @@ import {
   LABEL_FORMATTER_ARGS,
   PERCENTAGE_FORMATTER_ARGS,
   SERIES_NAME_FORMATTER_ARGS,
+  SHOW_TOOLTIP_ARGS,
   THEME_CONTROL_ARGS,
+  FUNNEL_TOOLTIP_LABELS_ARGS,
 } from '../../../storybook/constants';
 import {PageWithSizingInfo} from '../../Docs/stories';
 import {FunnelChartNext} from '../FunnelChartNext';
@@ -27,6 +29,8 @@ export const META: Meta = {
     seriesNameFormatter: SERIES_NAME_FORMATTER_ARGS,
     labelFormatter: LABEL_FORMATTER_ARGS,
     percentageFormatter: PERCENTAGE_FORMATTER_ARGS,
+    tooltipLabels: FUNNEL_TOOLTIP_LABELS_ARGS,
+    showTooltip: SHOW_TOOLTIP_ARGS,
     theme: THEME_CONTROL_ARGS,
     state: CHART_STATE_CONTROL_ARGS,
   },
