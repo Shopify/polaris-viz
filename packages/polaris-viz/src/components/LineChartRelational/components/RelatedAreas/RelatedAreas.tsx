@@ -15,11 +15,9 @@ export interface RelatedAreaProps extends LineChartSlotProps {
 export function RelatedAreas({yScale, xScale, data}: RelatedAreaProps) {
   const [activeIndex, setActiveIndex] = useState(-1);
 
-  const lineSeries = data.filter(
-    (series) => series?.metadata?.relatedIndex == null,
+  const percentileIndex = data.findIndex(
+    (series) => series.metadata?.relatedIndex != null,
   );
-
-  const percentileIndex = lineSeries.length + 1;
 
   const {hiddenIndexes} = useExternalHideEvents();
   const {id} = useChartContext();

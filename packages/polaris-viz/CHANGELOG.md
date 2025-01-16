@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Fixed
+
+- Fixed issue in `<LineChartRelational />` where the `percentileIndex` was not being set correctly.
+
 ### Added
 
 - Added Tooltips to `<FunnelChartNext />`
