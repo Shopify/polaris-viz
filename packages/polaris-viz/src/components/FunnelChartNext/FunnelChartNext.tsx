@@ -11,14 +11,23 @@ import {ChartSkeleton} from '../';
 
 import {Chart} from './Chart';
 
+const DEFAULT_LABEL_FORMATTER: LabelFormatter = (value) => `${value}`;
+const DEFAULT_TOOLTIP_LABELS = {
+  reached: 'Reached this step',
+  dropped: 'Dropped off',
+} as const;
+
 export type FunnelChartNextProps = {
+  tooltipLabels?: {
+    reached: string;
+    dropped: string;
+  };
+  showTooltip?: boolean;
   seriesNameFormatter?: LabelFormatter;
   labelFormatter?: LabelFormatter;
   renderScaleIconTooltipContent?: () => ReactNode;
   percentageFormatter?: (value: number) => string;
 } & ChartProps;
-
-const DEFAULT_LABEL_FORMATTER: LabelFormatter = (value) => `${value}`;
 
 export function FunnelChartNext(props: FunnelChartNextProps) {
   const {theme: defaultTheme} = useChartContext();
@@ -30,7 +39,8 @@ export function FunnelChartNext(props: FunnelChartNextProps) {
     isAnimated,
     state,
     errorText,
-
+    tooltipLabels = DEFAULT_TOOLTIP_LABELS,
+    showTooltip = true,
     seriesNameFormatter = DEFAULT_LABEL_FORMATTER,
     labelFormatter = DEFAULT_LABEL_FORMATTER,
     percentageFormatter,
@@ -59,6 +69,8 @@ export function FunnelChartNext(props: FunnelChartNextProps) {
       ) : (
         <Chart
           data={data}
+          tooltipLabels={tooltipLabels}
+          showTooltip={showTooltip}
           seriesNameFormatter={seriesNameFormatter}
           labelFormatter={labelFormatter}
           percentageFormatter={percentageFormatter}

@@ -1,7 +1,11 @@
 import type {ReactNode} from 'react';
-import {Fragment, useMemo} from 'react';
+import {Fragment, useMemo, useState} from 'react';
 import {scaleBand, scaleLinear} from 'd3-scale';
-import type {DataSeries, LabelFormatter} from '@shopify/polaris-viz-core';
+import type {
+  DataPoint,
+  DataSeries,
+  LabelFormatter,
+} from '@shopify/polaris-viz-core';
 import {
   uniqueId,
   LinearGradientWithStops,
@@ -16,7 +20,12 @@ import {
 import {FunnelChartSegment} from '../shared';
 import {ChartElements} from '../ChartElements';
 
-import {FunnelChartLabels} from './components';
+import {
+  FunnelChartLabels,
+  FunnelTooltip,
+  Tooltip,
+  TooltipWithPortal,
+} from './components';
 import {
   LABELS_HEIGHT,
   LINE_GRADIENT,
@@ -24,10 +33,18 @@ import {
   LINE_WIDTH,
   GAP,
   SEGMENT_WIDTH_RATIO,
+  TOOLTIP_HORIZONTAL_OFFSET,
+  TOOLTIP_HEIGHT,
+  TOOLTIP_WIDTH,
 } from './constants';
 
 export interface ChartProps {
   data: DataSeries[];
+  tooltipLabels: {
+    reached: string;
+    dropped: string;
+  };
+  showTooltip?: boolean;
   seriesNameFormatter: LabelFormatter;
   labelFormatter: LabelFormatter;
   percentageFormatter?: (value: number) => string;
@@ -36,6 +53,8 @@ export interface ChartProps {
 
 export function Chart({
   data,
+  tooltipLabels,
+  showTooltip = true,
   seriesNameFormatter,
   labelFormatter,
   percentageFormatter = (value: number) => {
@@ -43,13 +62,19 @@ export function Chart({
   },
   renderScaleIconTooltipContent,
 }: ChartProps) {
+  const [tooltipIndex, setTooltipIndex] = useState<number | null>(null);
   const {containerBounds} = useChartContext();
   const dataSeries = data[0].data;
   const xValues = dataSeries.map(({key}) => key) as string[];
   const yValues = dataSeries.map(({value}) => value) as [number, number];
   const sanitizedYValues = yValues.map((value) => Math.max(0, value));
 
-  const {width: drawableWidth, height: drawableHeight} = containerBounds ?? {
+  const {
+    width: drawableWidth,
+    height: drawableHeight,
+    x: chartX,
+    y: chartY,
+  } = containerBounds ?? {
     width: 0,
     height: 0,
     x: 0,
@@ -107,9 +132,18 @@ export function Chart({
     return labelFormatter(dataPoint.value);
   });
 
+  const handleChartBlur = (event: React.FocusEvent) => {
+    const currentTarget = event.currentTarget;
+    const relatedTarget = event.relatedTarget as Node;
+
+    if (!currentTarget.contains(relatedTarget)) {
+      setTooltipIndex(null);
+    }
+  };
+
   return (
     <ChartElements.Svg height={drawableHeight} width={drawableWidth}>
-      <g>
+      <g onBlur={handleChartBlur}>
         <FunnelChartConnectorGradient />
 
         <LinearGradientWithStops
@@ -152,6 +186,10 @@ export function Chart({
                   barWidth={barWidth}
                   index={index}
                   isLast={isLast}
+                  onMouseEnter={(index) =>
+                    showTooltip && setTooltipIndex(index)
+                  }
+                  onMouseLeave={() => showTooltip && setTooltipIndex(null)}
                   shouldApplyScaling={shouldApplyScaling}
                   x={x}
                 >
@@ -182,7 +220,50 @@ export function Chart({
             </Fragment>
           );
         })}
+        <TooltipWithPortal>{getTooltipMarkup()}</TooltipWithPortal>
       </g>
     </ChartElements.Svg>
   );
+
+  function getTooltipMarkup() {
+    if (!showTooltip || tooltipIndex == null || !dataSeries[tooltipIndex]) {
+      return null;
+    }
+
+    const activeDataSeries = dataSeries[tooltipIndex];
+    const xPosition = getXPosition(activeDataSeries);
+    const yPosition = getYPosition(activeDataSeries);
+
+    return (
+      <FunnelTooltip x={xPosition} y={yPosition}>
+        <Tooltip
+          activeIndex={tooltipIndex}
+          dataSeries={dataSeries}
+          tooltipLabels={tooltipLabels}
+          labelFormatter={labelFormatter}
+          percentageFormatter={percentageFormatter}
+        />
+      </FunnelTooltip>
+    );
+  }
+
+  function getXPosition(activeDataSeries: DataPoint) {
+    if (tooltipIndex === 0) {
+      return chartX + barWidth + TOOLTIP_HORIZONTAL_OFFSET;
+    }
+
+    const xOffset = (barWidth - TOOLTIP_WIDTH) / 2;
+    return chartX + (xScale(activeDataSeries.key.toString()) ?? 0) + xOffset;
+  }
+
+  function getYPosition(activeDataSeries: DataPoint) {
+    const barHeight = getBarHeight(activeDataSeries.value ?? 0);
+    const yPosition = chartY + drawableHeight - barHeight;
+
+    if (tooltipIndex === 0) {
+      return yPosition;
+    }
+
+    return yPosition - TOOLTIP_HEIGHT;
+  }
 }

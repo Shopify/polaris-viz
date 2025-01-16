@@ -6,6 +6,7 @@ import React from 'react';
 import {Chart} from '../Chart';
 import {FunnelChartConnector, FunnelChartSegment} from '../../shared';
 import {SingleTextLine} from '../../Labels';
+import {FunnelTooltip} from '../components';
 
 const mockData: DataSeries[] = [
   {
@@ -29,6 +30,10 @@ const mockContext = {
 
 const defaultProps = {
   data: mockData,
+  tooltipLabels: {
+    reached: 'Reached this step',
+    dropped: 'Dropped off',
+  },
   seriesNameFormatter: (value: string) => `$${value}`,
   labelFormatter: (value: string) => `$${value}`,
 };
@@ -68,6 +73,61 @@ describe('<Chart />', () => {
 
     expect(chart).toContainReactComponent(SingleTextLine, {
       text: 'Custom Step 1',
+    });
+  });
+
+  it('shows tooltip when hovering over a segment', () => {
+    const chart = mount(
+      <ChartContext.Provider value={mockContext}>
+        <Chart {...defaultProps} />
+      </ChartContext.Provider>,
+    );
+
+    const firstSegment = chart.find(FunnelChartSegment);
+    firstSegment?.trigger('onMouseEnter', 0);
+
+    expect(chart).toContainReactComponent(FunnelTooltip);
+  });
+
+  it('hides tooltip when mouse leaves a segment', () => {
+    const chart = mount(
+      <ChartContext.Provider value={mockContext}>
+        <Chart {...defaultProps} />
+      </ChartContext.Provider>,
+    );
+
+    const firstSegment = chart.find(FunnelChartSegment);
+    firstSegment?.trigger('onMouseEnter', 0);
+    firstSegment?.trigger('onMouseLeave');
+
+    expect(chart).not.toContainReactComponent(FunnelTooltip);
+  });
+
+  describe('showTooltip', () => {
+    it('shows tooltip when showTooltip is true', () => {
+      const chart = mount(
+        <ChartContext.Provider value={mockContext}>
+          <Chart {...defaultProps} showTooltip />
+        </ChartContext.Provider>,
+      );
+
+      const firstSegment = chart.find(FunnelChartSegment);
+      firstSegment?.trigger('onMouseEnter', 0);
+
+      expect(chart).toContainReactComponent(FunnelTooltip);
+    });
+
+    it('does not show tooltip when showTooltip is false', () => {
+      const chart = mount(
+        <ChartContext.Provider value={mockContext}>
+          <Chart {...defaultProps} showTooltip={false} />
+        </ChartContext.Provider>,
+      );
+
+      const firstSegment = chart.find(FunnelChartSegment);
+      firstSegment?.trigger('onMouseEnter', 0);
+
+      expect(chart).not.toContainReactComponent(FunnelTooltip);
     });
   });
 });
