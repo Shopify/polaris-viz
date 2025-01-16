@@ -60,4 +60,16 @@ describe('<RelatedAreas />', () => {
 
     expect(chart).toContainReactComponentTimes(Area, 2);
   });
+
+  it('sets the Area index to the index of the first related percentile series', () => {
+    const chart = mount(
+      <svg>
+        <RelatedAreas {...MOCK_PROPS} />
+      </svg>,
+    );
+
+    expect(chart).toContainReactComponent(Area, {
+      index: 1,
+    });
+  });
 });
