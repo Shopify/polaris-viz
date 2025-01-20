@@ -1,6 +1,7 @@
 import {HORIZONTAL_BAR_LABEL_OFFSET} from '@shopify/polaris-viz-core';
 
 import {
+  TREND_INDICATOR_NO_VALUE_WIDTH,
   estimateTrendIndicatorWidth,
   TREND_INDICATOR_FONT_WEIGHT,
 } from '../TrendIndicator';
@@ -24,15 +25,18 @@ export function getLongestTrendIndicator(
       for (const [index, trend] of trendEntries) {
         const dataPoint = seriesData[index];
 
-        if (trend == null || trend.value == null || dataPoint?.value == null) {
+        if (trend == null || dataPoint?.value == null) {
           return longestTrendIndicator;
         }
 
-        const trendStringWidth = estimateTrendIndicatorWidth(
-          trend.value,
-          fontSize,
-          TREND_INDICATOR_FONT_WEIGHT,
-        ).totalWidth;
+        const trendStringWidth =
+          trend.value == null
+            ? TREND_INDICATOR_NO_VALUE_WIDTH
+            : estimateTrendIndicatorWidth(
+                trend.value,
+                fontSize,
+                TREND_INDICATOR_FONT_WEIGHT,
+              ).totalWidth;
 
         // Positive value
         if (dataPoint.value > 0) {
