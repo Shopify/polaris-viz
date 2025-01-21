@@ -126,7 +126,7 @@ export function HorizontalBars({
             min: 1,
           });
 
-          if (isNegative) {
+          if (areAllNegative || isNegative) {
             return {
               labelX: -(clampedWidth + leftLabelOffset),
               barWidth: clampedWidth,
