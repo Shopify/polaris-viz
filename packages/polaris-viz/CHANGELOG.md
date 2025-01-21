@@ -10,6 +10,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Fixed
 
 - Fixed issue in `<SimpleBarChart />` where the trend indicator was not being positioned correctly when the value was `null`.
+- Fixed issue in `<SimpleBarChart />` where labels are not positioned correctly when all values were negative and `0`.
 
 ## [15.8.0] - 2025-01-16
 
