@@ -4,7 +4,8 @@ export const SEGMENT_WIDTH_RATIO = 0.75;
 export const TOOLTIP_HORIZONTAL_OFFSET = 10;
 export const LINE_OFFSET = 3;
 export const LINE_WIDTH = 1;
-export const TOOLTIP_HEIGHT = 90;
+export const TOOLTIP_HEIGHT = 130;
+export const TOOLTIP_RIGHT_POSITION_THRESHOLD = 65;
 export const SHORT_TOOLTIP_HEIGHT = 65;
 export const GAP = 1;
 

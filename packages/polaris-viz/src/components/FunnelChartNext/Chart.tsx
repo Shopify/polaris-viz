@@ -36,7 +36,9 @@ import {
   TOOLTIP_HORIZONTAL_OFFSET,
   TOOLTIP_HEIGHT,
   TOOLTIP_WIDTH,
+  TOOLTIP_RIGHT_POSITION_THRESHOLD,
 } from './constants';
+import {useBuildFunnelTrends} from './utilities/useBuildFunnelTrends';
 
 export interface ChartProps {
   data: DataSeries[];
@@ -65,6 +67,8 @@ export function Chart({
   const [tooltipIndex, setTooltipIndex] = useState<number | null>(null);
   const {containerBounds} = useChartContext();
   const dataSeries = data[0].data;
+  const calculatedTrends = useBuildFunnelTrends(data);
+  const trends = calculatedTrends?.trends;
   const xValues = dataSeries.map(({key}) => key) as string[];
   const yValues = dataSeries.map(({value}) => value) as [number, number];
   const sanitizedYValues = yValues.map((value) => Math.max(0, value));
@@ -164,6 +168,7 @@ export function Chart({
             xScale={labelXScale}
             shouldApplyScaling={shouldApplyScaling}
             renderScaleIconTooltipContent={renderScaleIconTooltipContent}
+            trends={trends}
           />
         </g>
 
@@ -239,6 +244,7 @@ export function Chart({
         <Tooltip
           activeIndex={tooltipIndex}
           dataSeries={dataSeries}
+          trends={trends}
           tooltipLabels={tooltipLabels}
           labelFormatter={labelFormatter}
           percentageFormatter={percentageFormatter}
@@ -248,22 +254,38 @@ export function Chart({
   }
 
   function getXPosition(activeDataSeries: DataPoint) {
-    if (tooltipIndex === 0) {
-      return chartX + barWidth + TOOLTIP_HORIZONTAL_OFFSET;
+    const currentX = xScale(activeDataSeries.key.toString()) ?? 0;
+
+    if (shouldPositionTooltipRight(activeDataSeries)) {
+      return chartX + currentX + barWidth + TOOLTIP_HORIZONTAL_OFFSET;
     }
 
     const xOffset = (barWidth - TOOLTIP_WIDTH) / 2;
-    return chartX + (xScale(activeDataSeries.key.toString()) ?? 0) + xOffset;
+    return chartX + currentX + xOffset;
   }
 
   function getYPosition(activeDataSeries: DataPoint) {
     const barHeight = getBarHeight(activeDataSeries.value ?? 0);
     const yPosition = chartY + drawableHeight - barHeight;
 
-    if (tooltipIndex === 0) {
+    if (shouldPositionTooltipRight(activeDataSeries)) {
       return yPosition;
     }
 
     return yPosition - TOOLTIP_HEIGHT;
+  }
+
+  function getBarHeightPercentage(value: number) {
+    const barHeight = getBarHeight(value ?? 0);
+    const maxBarHeight = getBarHeight(highestYValue);
+    return (barHeight / maxBarHeight) * 100;
+  }
+
+  function shouldPositionTooltipRight(activeDataSeries: DataPoint) {
+    return (
+      tooltipIndex === 0 ||
+      getBarHeightPercentage(activeDataSeries.value ?? 0) >
+        TOOLTIP_RIGHT_POSITION_THRESHOLD
+    );
   }
 }

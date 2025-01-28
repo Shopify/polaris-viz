@@ -3,6 +3,9 @@ import {Fragment, useMemo, useState} from 'react';
 import type {ScaleBand} from 'd3-scale';
 import {estimateStringWidth, useChartContext} from '@shopify/polaris-viz-core';
 
+import {getTrendIndicatorData} from '../../../../utilities/getTrendIndicatorData';
+import {TrendIndicator} from '../../../TrendIndicator';
+import type {FunnelChartMetaData} from '../../types';
 import {LINE_HEIGHT} from '../../../../constants';
 import {estimateStringWidthWithOffset} from '../../../../utilities';
 import {SingleTextLine} from '../../../Labels';
@@ -16,6 +19,9 @@ const LABEL_FONT_SIZE = 12;
 const PERCENT_FONT_SIZE = 14;
 const PERCENT_FONT_WEIGHT = 650;
 const VALUE_FONT_SIZE = 11;
+const TREND_INDICATOR_SPACING = 8;
+const BUFFER_PADDING = 8;
+const LABEL_VERTICAL_OFFSET = 2;
 
 const TEXT_COLOR = 'rgba(31, 33, 36, 1)';
 const VALUE_COLOR = 'rgba(97, 97, 97, 1)';
@@ -28,6 +34,7 @@ export interface FunnelChartLabelsProps {
   labelWidth: number;
   barWidth: number;
   percentages: string[];
+  trends?: FunnelChartMetaData['trends'];
   xScale: ScaleBand<string>;
   shouldApplyScaling: boolean;
   renderScaleIconTooltipContent?: () => ReactNode;
@@ -39,6 +46,7 @@ export function FunnelChartLabels({
   labelWidth,
   barWidth,
   percentages,
+  trends,
   xScale,
   shouldApplyScaling,
   renderScaleIconTooltipContent,
@@ -61,9 +69,10 @@ export function FunnelChartLabels({
         const showScaleIcon = index === 0 && shouldApplyScaling;
         const isLast = index === labels.length - 1;
 
+        // We need to offset the target width by the GROUP_OFFSET to account for start and end padding
         const targetWidth = isLast
-          ? barWidth - GROUP_OFFSET * 3
-          : labelWidth - GROUP_OFFSET * 3;
+          ? barWidth - GROUP_OFFSET * 2
+          : labelWidth - GROUP_OFFSET * 2;
 
         const percentWidth = estimateStringWidthWithOffset(
           percentages[index],
@@ -76,9 +85,24 @@ export function FunnelChartLabels({
           VALUE_FONT_SIZE,
         );
 
-        const totalPercentAndValueWidth = percentWidth + formattedValueWidth;
+        const {trendIndicatorProps, trendIndicatorWidth} =
+          getTrendIndicatorData(trends?.[index]?.reached);
+
+        // Position trend indicator at the right edge
+        const trendIndicatorX = targetWidth - trendIndicatorWidth;
+
+        // First check if we can show the trend indicator
+        const shouldShowTrendIndicator =
+          trendIndicatorProps != null &&
+          percentWidth + TREND_INDICATOR_SPACING < trendIndicatorX;
+
+        // Then check if we can show formatted value without overlapping trend indicator
+        const availableWidthForValue = shouldShowTrendIndicator
+          ? trendIndicatorX - TREND_INDICATOR_SPACING - BUFFER_PADDING
+          : targetWidth;
         const shouldShowFormattedValue =
-          totalPercentAndValueWidth < targetWidth;
+          percentWidth + formattedValueWidth < availableWidthForValue &&
+          (!trendIndicatorProps || shouldShowTrendIndicator);
 
         return (
           <g
@@ -127,10 +151,17 @@ export function FunnelChartLabels({
                   text={formattedValues[index]}
                   targetWidth={targetWidth}
                   x={percentWidth + LINE_PADDING}
-                  y={1}
+                  y={LABEL_VERTICAL_OFFSET}
                   textAnchor="start"
                   fontSize={VALUE_FONT_SIZE}
                 />
+              )}
+              {shouldShowTrendIndicator && (
+                <g
+                  transform={`translate(${trendIndicatorX}, ${-LABEL_VERTICAL_OFFSET})`}
+                >
+                  <TrendIndicator {...trendIndicatorProps} />
+                </g>
               )}
             </g>
           </g>

@@ -1,33 +1,52 @@
 .Rows {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 8px;
+
+  > *:not(:last-child)::after {
+    content: '';
+    display: block;
+    height: 1px;
+    background: rgb(227, 227, 227);
+    margin: 8px 0 0;
+    grid-column: 1 / -1;
+  }
 }
 
 .Row {
   font-size: 12px;
-  display: grid;
-  grid-column: 1 / -1;
-  grid-template-columns: subgrid;
   color: rgba(97, 97, 97, 1);
+  display: grid;
+  grid-template-columns: 8px auto;
+  column-gap: 4px;
   align-items: center;
 }
 
 .Keys {
-  display: flex;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
   align-items: center;
-  gap: 4px;
 }
 
 .Values {
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 4px;
+  align-items: flex-start;
+  gap: 8px;
+  grid-column: 2;
   font-weight: 600;
+  padding-top: 2px;
+
+  > span {
+    flex: 0 0 auto;
+  }
+
+  .TrendIndicator {
+    margin-left: auto;
+  }
 
   strong {
-    font-weight: 600;
+    font-weight: 500;
     color: rgba(31, 33, 36, 1);
   }
 }
