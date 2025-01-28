@@ -1,19 +1,23 @@
 import {Fragment} from 'react';
 import type {Color, DataPoint, LabelFormatter} from '@shopify/polaris-viz-core';
-import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
+import {DEFAULT_THEME_NAME, useTheme} from '@shopify/polaris-viz-core';
 
+import {getTrendIndicatorData} from '../../../../utilities/getTrendIndicatorData';
+import type {FunnelChartMetaData} from '../../types';
 import {TOOLTIP_WIDTH} from '../../constants';
 import {FUNNEL_CHART_CONNECTOR_GRADIENT} from '../../../shared/FunnelChartConnector';
 import {FUNNEL_CHART_SEGMENT_FILL} from '../../../shared/FunnelChartSegment';
 import {SeriesIcon} from '../../../shared/SeriesIcon';
 import {calculateDropOff} from '../../utilities/calculate-dropoff';
 import {TooltipContentContainer, TooltipTitle} from '../../../TooltipContent';
+import {TrendIndicator} from '../../../TrendIndicator';
 
 import styles from './Tooltip.scss';
 
 export interface TooltipContentProps {
   activeIndex: number;
   dataSeries: DataPoint[];
+  trends: FunnelChartMetaData['trends'];
   tooltipLabels: {
     reached: string;
     dropped: string;
@@ -32,10 +36,13 @@ interface Data {
 export function Tooltip({
   activeIndex,
   dataSeries,
+  trends,
   tooltipLabels,
   labelFormatter,
   percentageFormatter,
 }: TooltipContentProps) {
+  const selectedTheme = useTheme(DEFAULT_THEME_NAME);
+
   const point = dataSeries[activeIndex];
   const previousPoint = dataSeries[activeIndex - 1];
   const isFirst = activeIndex === 0;
@@ -65,12 +72,15 @@ export function Tooltip({
   return (
     <TooltipContentContainer
       maxWidth={TOOLTIP_WIDTH}
+      minWidth={TOOLTIP_WIDTH}
       theme={DEFAULT_THEME_NAME}
+      color={selectedTheme.tooltip.backgroundColor}
     >
       {() => (
         <Fragment>
           <TooltipTitle
             theme={DEFAULT_THEME_NAME}
+            color={selectedTheme.tooltip.textColor}
             aria-label={`Step: ${point.key}`}
           >
             {point.key}
@@ -81,6 +91,12 @@ export function Tooltip({
                 percent,
               )}`;
 
+              const {trendIndicatorProps} = getTrendIndicatorData(
+                index === 0
+                  ? trends?.[activeIndex]?.reached
+                  : trends?.[activeIndex]?.dropped,
+              );
+
               return (
                 <div
                   className={styles.Row}
@@ -88,14 +104,21 @@ export function Tooltip({
                   aria-label={ariaLabel}
                 >
                   <div className={styles.Keys}>
-                    <SeriesIcon color={color!} shape="Bar" />
+                    <SeriesIcon color={color!} />
                     <span>{key}</span>
                   </div>
                   <div className={styles.Values}>
-                    <span>{value}</span>
+                    <span>
+                      <strong>{value}</strong>
+                    </span>
                     <span>
                       <strong>{percentageFormatter(percent)}</strong>
                     </span>
+                    {trendIndicatorProps && (
+                      <div className={styles.TrendIndicator}>
+                        <TrendIndicator {...trendIndicatorProps} />
+                      </div>
+                    )}
                   </div>
                 </div>
               );
