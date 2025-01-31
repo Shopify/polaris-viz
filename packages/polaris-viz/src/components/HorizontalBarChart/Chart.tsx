@@ -148,15 +148,14 @@ export function Chart({
       longestLabel,
     });
 
-  const {barHeight, chartHeight, groupBarsAreaHeight, groupHeight} =
-    useHorizontalBarSizes({
-      chartDimensions: {width: drawableWidth, height: drawableHeight},
-      isSimple: xAxisOptions.hide,
-      isStacked,
-      seriesLength: longestSeriesCount,
-      singleBarCount: data.length,
-      xAxisHeight,
-    });
+  const {barHeight, chartHeight, groupHeight} = useHorizontalBarSizes({
+    chartDimensions: {width: drawableWidth, height: drawableHeight},
+    isSimple: xAxisOptions.hide,
+    isStacked,
+    seriesLength: longestSeriesCount,
+    singleBarCount: data.length,
+    xAxisHeight,
+  });
 
   const annotationsDrawableHeight =
     chartYPosition + chartHeight + ANNOTATIONS_LABELS_OFFSET;
@@ -293,17 +292,19 @@ export function Chart({
 
       {highestValueForSeries.length !== 0 && (
         <TooltipWrapper
-          bandwidth={groupBarsAreaHeight}
+          bandwidth={groupHeight}
           chartBounds={chartBounds}
           chartType={InternalChartType.HorizontalBar}
           data={data}
           focusElementDataType={DataType.BarGroup}
           getMarkup={getTooltipMarkup}
-          margin={ChartMargin}
+          margin={{...ChartMargin, Top: chartYPosition}}
           parentElement={svgRef}
           longestSeriesIndex={longestSeriesIndex}
+          highestValueForSeries={highestValueForSeries}
           xScale={xScale}
           type={type}
+          usePortal
         />
       )}
 
