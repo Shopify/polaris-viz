@@ -10,6 +10,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Fixed
 
 - Double formatting in Donut Chart label calculations
+- Changed `<TooltipTitle />` to avoid overflow when displaying long titles without spaces.
 
 ## [15.6.1] - 2024-12-18
 
