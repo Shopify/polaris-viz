@@ -11,6 +11,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 -  Added tooltip support for `<DonutChart />`
 
+### Changed
+
+- Changed default series icon indicator for non-line charts to a circle from a square.
+
 ## [15.8.1] - 2025-01-21
 
 ### Fixed
