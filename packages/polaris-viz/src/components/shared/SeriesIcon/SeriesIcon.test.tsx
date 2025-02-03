@@ -1,14 +1,14 @@
 import {mount} from '@shopify/react-testing';
 
 import {SeriesIcon} from '../SeriesIcon';
-import {SquareColorPreview} from '../../SquareColorPreview';
+import {DefaultPreview} from '../../DefaultPreview';
 import {LinePreview} from '../../LinePreview';
 
 describe('<SeriesIcon />', () => {
-  it('renders a <SquareColorPreview />', () => {
+  it('renders a <DefaultPreview />', () => {
     const component = mount(<SeriesIcon color="red" />);
 
-    expect(component).toContainReactComponent(SquareColorPreview, {
+    expect(component).toContainReactComponent(DefaultPreview, {
       color: 'red',
     });
   });
@@ -23,10 +23,10 @@ describe('<SeriesIcon />', () => {
 });
 
 describe('color', () => {
-  it('passes color as color prop to <SquareColorPreview />', () => {
+  it('passes color as color prop to <DefaultPreview />', () => {
     const component = mount(<SeriesIcon color="red" />);
 
-    expect(component.find(SquareColorPreview)).toHaveReactProps({color: 'red'});
+    expect(component.find(DefaultPreview)).toHaveReactProps({color: 'red'});
   });
 
   it('passes color as color prop to <LinePreview />', () => {

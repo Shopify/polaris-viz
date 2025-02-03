@@ -1,0 +1,9 @@
+@import '../../styles/common';
+
+.ColorPreview {
+  border-radius: 100%;
+  display: block;
+  flex: none;
+  @include print-color;
+  overflow: hidden;
+}

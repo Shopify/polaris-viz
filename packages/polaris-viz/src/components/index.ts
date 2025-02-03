@@ -12,6 +12,8 @@ export type {SimpleNormalizedChartProps} from './SimpleNormalizedChart';
 export {YAxis} from './YAxis';
 export {SquareColorPreview} from './SquareColorPreview';
 export type {SquareColorPreviewProps} from './SquareColorPreview';
+export {DefaultPreview} from './DefaultPreview';
+export type {DefaultPreviewProps} from './DefaultPreview';
 export {StackedAreaChart} from './StackedAreaChart';
 export type {StackedAreaChartProps} from './StackedAreaChart';
 export {BarChart} from './BarChart';
