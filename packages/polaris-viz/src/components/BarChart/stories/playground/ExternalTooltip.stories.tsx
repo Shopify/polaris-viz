@@ -77,6 +77,7 @@ export const ExternalTooltipWithFrame: Story<BarChartProps> =
   TemplateWithFrame.bind({});
 
 ExternalTooltip.args = {
+  direction: 'horizontal',
   data: [
     {
       name: 'Apr 1 – Apr 14, 2020',

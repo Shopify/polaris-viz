@@ -37,6 +37,7 @@ interface BaseProps {
   xScale: ScaleLinear<number, number> | ScaleBand<string>;
   bandwidth?: number;
   onIndexChange?: (index: number | null) => void;
+  highestValueForSeries?: number[];
   id?: string;
   type?: ChartType;
   yScale?: ScaleLinear<number, number>;
@@ -56,6 +57,7 @@ function TooltipWrapperRaw(props: BaseProps) {
     type,
     xScale,
     yScale,
+    highestValueForSeries,
   } = props;
   const {scrollContainer, isTouchDevice, containerBounds} = useChartContext();
   const [position, setPosition] = useState<TooltipPosition>({
@@ -111,6 +113,7 @@ function TooltipWrapperRaw(props: BaseProps) {
         case InternalChartType.HorizontalBar:
           return getHorizontalBarChartTooltipPosition({
             chartBounds,
+            containerBounds,
             data,
             event,
             eventType,
@@ -118,6 +121,11 @@ function TooltipWrapperRaw(props: BaseProps) {
             longestSeriesIndex,
             type,
             xScale: xScale as ScaleLinear<number, number>,
+            highestValueForSeries: highestValueForSeries ?? [],
+            bandwidth,
+            scrollY: scrollContainer
+              ? scrollContainer.scrollTop
+              : window.scrollY,
           });
         case InternalChartType.Bar:
         default:
@@ -136,6 +144,8 @@ function TooltipWrapperRaw(props: BaseProps) {
       }
     },
     [
+      highestValueForSeries,
+      bandwidth,
       chartBounds,
       containerBounds,
       chartType,

@@ -106,7 +106,7 @@ export function HorizontalGroup({
       className={style.Group}
     >
       <rect
-        fill="transparent"
+        fill="green"
         height={groupHeight}
         width={containerWidth}
         y={-(groupHeight - rowHeight) / 2}

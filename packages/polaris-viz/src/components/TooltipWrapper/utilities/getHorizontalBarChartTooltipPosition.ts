@@ -1,4 +1,5 @@
 import type {ScaleLinear} from 'd3-scale';
+import type {BoundingRect} from '@shopify/polaris-viz-core';
 
 import {getStackedValuesFromDataSeries} from '../../../utilities/getStackedValuesFromDataSeries';
 import type {TooltipPosition, TooltipPositionParams} from '../types';
@@ -6,12 +7,18 @@ import {TOOLTIP_POSITION_DEFAULT_RETURN} from '../constants';
 
 import {eventPointNative} from './eventPoint';
 
+const SPACING = 10;
+
 interface Props extends Omit<TooltipPositionParams, 'xScale'> {
+  bandwidth: number;
+  containerBounds: BoundingRect;
+  highestValueForSeries: number[];
+  scrollY: number;
   xScale: ScaleLinear<number, number>;
 }
 
 export function getHorizontalBarChartTooltipPosition({
-  chartBounds,
+  containerBounds,
   data,
   event,
   eventType,
@@ -19,8 +26,12 @@ export function getHorizontalBarChartTooltipPosition({
   longestSeriesIndex,
   type,
   xScale,
+  scrollY,
+  highestValueForSeries,
+  bandwidth,
 }: Props): TooltipPosition {
-  const groupHeight = chartBounds.height / data[longestSeriesIndex].data.length;
+  const groupHeight = bandwidth;
+
   const isStacked = type === 'stacked';
 
   if (eventType === 'mouse' && event) {
@@ -32,7 +43,7 @@ export function getHorizontalBarChartTooltipPosition({
 
     const {svgY} = point;
 
-    const currentPoint = svgY - 0;
+    const currentPoint = svgY - scrollY;
     const currentIndex = Math.floor(currentPoint / groupHeight);
 
     if (
@@ -42,14 +53,17 @@ export function getHorizontalBarChartTooltipPosition({
       return TOOLTIP_POSITION_DEFAULT_RETURN;
     }
 
-    return formatPositionForTooltip(currentIndex);
+    return formatPositionForTooltip(currentIndex, containerBounds);
   } else if (index != null) {
-    return formatPositionForTooltip(index);
+    return formatPositionForTooltip(index, containerBounds);
   }
 
   return TOOLTIP_POSITION_DEFAULT_RETURN;
 
-  function formatPositionForTooltip(index: number): TooltipPosition {
+  function formatPositionForTooltip(
+    index: number,
+    containerBounds: BoundingRect,
+  ): TooltipPosition {
     if (isStacked) {
       const {formattedStackedValues} = getStackedValuesFromDataSeries(data);
 
@@ -64,18 +78,18 @@ export function getHorizontalBarChartTooltipPosition({
       }, xScale(0));
 
       return {
-        x: chartBounds.x + x,
-        y: chartBounds.y + groupHeight * index,
+        x: containerBounds.x + x,
+        y: containerBounds.y + groupHeight * index,
         activeIndex: index,
       };
     }
 
-    const highestValue = data[longestSeriesIndex].data[index].value ?? 0;
-    const x = chartBounds.x + (xScale(highestValue ?? 0) ?? 0);
+    const highestValue = highestValueForSeries[index] ?? 0;
+    const x = containerBounds.x + (xScale(highestValue ?? 0) ?? 0) + SPACING;
 
     return {
       x: highestValue < 0 ? -x : x,
-      y: groupHeight * index,
+      y: containerBounds.y + groupHeight * index,
       activeIndex: index,
     };
   }
