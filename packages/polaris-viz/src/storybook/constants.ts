@@ -173,3 +173,11 @@ export const DEFAULT_CHART_CONTEXT: ChartContextValues = {
   isTouchDevice: false,
   theme: DEFAULT_THEME_NAME,
 };
+
+export const DONUT_CHART_TOOLTIP_OPTIONS_ARGS = {
+  description:
+    'An object that when passed in, enables the tooltip and defines its options in the donut chart.',
+  control: {
+    type: 'object',
+  },
+};

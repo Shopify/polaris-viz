@@ -9,16 +9,17 @@ import {getEventName} from './utilities';
 interface Props<T> {
   type: string;
   onIndexChange: (event: T) => void;
+  enabled?: boolean;
 }
 
 export function useWatchColorVisionEvents<
   T extends CustomEvent = ColorVisionEventReturn,
->({type, onIndexChange}: Props<T>) {
+>({type, onIndexChange, enabled = true}: Props<T>) {
   const onIndexChangeCallback = useCallbackRef(onIndexChange);
   const {id} = useChartContext();
 
   useEffect(() => {
-    if (!id) {
+    if (!id || !enabled) {
       return;
     }
 
@@ -29,5 +30,5 @@ export function useWatchColorVisionEvents<
     return () => {
       window.removeEventListener(eventName, onIndexChangeCallback);
     };
-  }, [id, type, onIndexChangeCallback]);
+  }, [id, type, onIndexChangeCallback, enabled]);
 }

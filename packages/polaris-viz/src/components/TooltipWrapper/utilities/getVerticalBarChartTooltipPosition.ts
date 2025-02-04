@@ -28,7 +28,10 @@ export function getVerticalBarChartTooltipPosition({
 }: Props): TooltipPosition {
   const isStacked = type === 'stacked';
 
-  if (eventType === 'mouse' && event) {
+  if (
+    eventType === 'mouse' &&
+    (event instanceof MouseEvent || event instanceof TouchEvent)
+  ) {
     const point = eventPointNative(event);
 
     if (point == null) {

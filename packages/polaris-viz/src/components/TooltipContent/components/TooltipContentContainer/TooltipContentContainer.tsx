@@ -22,6 +22,7 @@ interface Props {
   maxWidth: number;
   theme: string;
   color?: string;
+  ignoreColorVisionEvents?: boolean;
 }
 
 export function TooltipContentContainer({
@@ -29,6 +30,7 @@ export function TooltipContentContainer({
   maxWidth,
   theme,
   color,
+  ignoreColorVisionEvents = false,
 }: Props) {
   const {isFirefox} = useBrowserCheck();
 
@@ -39,6 +41,7 @@ export function TooltipContentContainer({
   useWatchColorVisionEvents({
     type: COLOR_VISION_SINGLE_ITEM,
     onIndexChange: ({detail}) => setActiveIndex(detail.index),
+    enabled: !ignoreColorVisionEvents,
   });
 
   return (

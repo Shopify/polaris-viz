@@ -100,15 +100,10 @@ export function useLegend({
     direction,
   ]);
 
-  const hasValidDimensions =
-    legendDimensions.height !== defaultHeight ||
-    legendDimensions.width !== maxWidth;
-
   return {
     legend,
     height,
     width,
     setLegendDimensions,
-    isLegendMounted: showLegend === false || hasValidDimensions,
   };
 }

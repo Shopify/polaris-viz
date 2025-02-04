@@ -26,7 +26,10 @@ export function getLineChartTooltipPosition({
   scrollY,
   xScale,
 }: Props) {
-  if (eventType === 'mouse') {
+  if (
+    eventType === 'mouse' &&
+    (event instanceof MouseEvent || event instanceof TouchEvent)
+  ) {
     if (event == null) {
       return TOOLTIP_POSITION_DEFAULT_RETURN;
     }
