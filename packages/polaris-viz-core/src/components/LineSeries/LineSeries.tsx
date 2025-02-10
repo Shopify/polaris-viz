@@ -36,6 +36,7 @@ export interface LineSeriesProps {
   hiddenIndexes?: number[];
   theme: string;
   type?: 'default' | 'spark';
+  shouldShowArea?: boolean;
 }
 
 export function LineSeries({
@@ -48,6 +49,7 @@ export function LineSeries({
   type = 'default',
   xScale,
   yScale,
+  shouldShowArea = true,
 }: LineSeriesProps) {
   const index = data?.metadata?.relatedIndex ?? lineSeriesIndex;
 
@@ -133,7 +135,9 @@ export function LineSeries({
   const PathHoverTargetSize = 15;
 
   const showArea =
-    selectedTheme.line.hasArea && data?.styleOverride?.line?.hasArea !== false;
+    selectedTheme.line.hasArea &&
+    data?.styleOverride?.line?.hasArea !== false &&
+    shouldShowArea;
 
   const zeroLineY = yScale(0);
 
