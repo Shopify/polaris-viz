@@ -242,6 +242,8 @@ export function Chart({
 
   const halfXAxisLabelWidth = xAxisDetails.labelWidth / 2;
 
+  const shouldShowArea = data.length <= 3;
+
   return (
     <Fragment>
       <ChartElements.Svg
@@ -321,6 +323,7 @@ export function Chart({
                 xScale={xScale}
                 yScale={yScale}
                 type="default"
+                shouldShowArea={shouldShowArea}
               />
             );
           })}
