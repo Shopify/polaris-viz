@@ -1,7 +1,7 @@
 import type {Shape, Color, LineStyle} from '@shopify/polaris-viz-core';
 
 import {LinePreview} from '../../LinePreview';
-import {SquareColorPreview} from '../../SquareColorPreview';
+import {DefaultPreview} from '../../DefaultPreview';
 
 interface Props {
   color: Color;
@@ -16,8 +16,7 @@ export function SeriesIcon({color, lineStyle, shape = 'Bar'}: Props) {
 
       return <LinePreview color={color} lineStyle={style} />;
     }
-    case 'Bar':
     default:
-      return <SquareColorPreview color={color} />;
+      return <DefaultPreview color={color} />;
   }
 }
