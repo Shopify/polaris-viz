@@ -172,6 +172,9 @@ export const DEFAULT_CHART_CONTEXT: ChartContextValues = {
   isPerformanceImpacted: false,
   isTouchDevice: false,
   theme: DEFAULT_THEME_NAME,
+  comparisonIndexes: [],
+  comparisonSeriesIndexes: [],
+  scrollContainer: null,
 };
 
 export const DONUT_CHART_TOOLTIP_OPTIONS_ARGS = {

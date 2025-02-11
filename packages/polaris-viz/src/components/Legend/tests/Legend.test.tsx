@@ -5,6 +5,16 @@ import type {LegendProps} from '../Legend';
 import {Legend} from '../Legend';
 import {LegendItem} from '../../Legend/components';
 import type {LegendItemDimension} from '../../Legend/components';
+// eslint-disable-next-line @shopify/strict-component-boundaries
+import {useExternalHideEvents} from '../../../hooks/ExternalEvents/useExternalHideEvents';
+
+jest.mock('../../../hooks/ExternalEvents/useExternalHideEvents', () => ({
+  useExternalHideEvents: jest.fn().mockReturnValue({
+    hiddenIndexes: [],
+  }),
+}));
+
+const useExternalHideEventsMock = useExternalHideEvents as jest.Mock;
 
 const mockProps: LegendProps = {
   data: [
@@ -40,5 +50,49 @@ describe('<Legend />', () => {
 
     component.find(LegendItem)?.trigger('onDimensionChange', 0, newDimensions);
     expect(ref.current[0]).toStrictEqual(newDimensions);
+  });
+
+  it('does not render item when included in hiddenIndexes', () => {
+    useExternalHideEventsMock.mockReturnValue({
+      hiddenIndexes: [1],
+    });
+
+    const component = mount(
+      <Legend
+        {...mockProps}
+        data={[
+          {name: 'Legend One', color: 'red'},
+          {name: 'Legend Two', color: 'blue'},
+        ]}
+      />,
+    );
+
+    expect(component).toContainReactComponent(LegendItem, {
+      name: 'Legend One',
+    });
+
+    expect(component).not.toContainReactComponent(LegendItem, {
+      name: 'Legend Two',
+    });
+  });
+
+  it('does not render item when legend.isHidden is true', () => {
+    const component = mount(
+      <Legend
+        {...mockProps}
+        data={[
+          {name: 'Legend One', color: 'red'},
+          {name: 'Legend Two', color: 'blue', isHidden: true},
+        ]}
+      />,
+    );
+
+    expect(component).toContainReactComponent(LegendItem, {
+      name: 'Legend One',
+    });
+
+    expect(component).not.toContainReactComponent(LegendItem, {
+      name: 'Legend Two',
+    });
   });
 });

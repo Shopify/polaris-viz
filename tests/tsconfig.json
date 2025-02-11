@@ -4,8 +4,23 @@
     "jsx": "react-jsx",
     "composite": true,
     "outDir": "build/ts",
-    "baseUrl": "setup",
-    "rootDir": "setup"
+    "baseUrl": ".",
+    "rootDir": "..",
+    "resolveJsonModule": true
   },
-  "include": ["./setup/**/*.ts"]
+  "include": [
+    "./setup/**/*.ts",
+    "../packages/polaris-viz-core/src/**/!(*.test|*.stories).ts",
+    "../packages/polaris-viz-core/src/**/!(*.test|*.stories).tsx",
+    "../packages/polaris-viz/src/**/!(*.test|*.stories).ts",
+    "../packages/polaris-viz/src/**/!(*.test|*.stories).tsx",
+    "../packages/polaris-viz/src/**/*.json"
+  ],
+  "exclude": [
+    "**/*.chromatic.stories.tsx",
+    "**/*.stories.tsx",
+    "**/*.test.tsx",
+    "**/*.test.ts",
+    "../**/tests/**"
+  ]
 }

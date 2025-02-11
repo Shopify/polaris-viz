@@ -1,5 +1,6 @@
 import {useMemo} from 'react';
-import type {DataSeries} from 'types';
+
+import type {DataSeries} from '../types';
 
 export function useFilteredSparkLineData(data: DataSeries[]) {
   const allNumbers = useMemo(() => {

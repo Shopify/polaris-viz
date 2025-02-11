@@ -1,8 +1,8 @@
 import {useMemo} from 'react';
 import {scaleLinear} from 'd3-scale';
 import {maxIndex} from 'd3-array';
-import type {LabelFormatter} from 'types';
 
+import type {LabelFormatter} from '../types';
 import {DEFAULT_MAX_Y} from '../constants';
 import {
   estimateStringWidth,

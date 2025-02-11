@@ -21,6 +21,7 @@ import {normalizeData} from '../../../utilities';
 import {TooltipWrapper} from '../../TooltipWrapper';
 // jest will not allow access to out of scope constants if they are not named `MOCK_`
 import {DEFAULT_CHART_CONTEXT as MOCK_DEFAULT_CHART_CONTEXT} from '../../../storybook/constants';
+import {useChartContextMock} from '../../../../../../tests/setup/tests';
 
 jest.mock('../../Labels/utilities/getWidestLabel', () => {
   return {
@@ -34,13 +35,6 @@ jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
   ...jest.requireActual('@shopify/polaris-viz-core/src/utilities'),
   estimateStringWidth: jest.fn(() => 100),
   isLargeDataSet: jest.fn(() => true),
-}));
-
-jest.mock('@shopify/polaris-viz-core/src/hooks/useChartContext', () => ({
-  useChartContext: jest.fn(() => ({
-    ...MOCK_DEFAULT_CHART_CONTEXT,
-    containerBounds: {height: 300, width: 100},
-  })),
 }));
 
 const DATA: DataSeries[] = [
@@ -83,6 +77,13 @@ const MOCK_PROPS: ChartProps = {
 };
 
 describe('<Chart />', () => {
+  beforeAll(() => {
+    useChartContextMock.mockReturnValue({
+      ...MOCK_DEFAULT_CHART_CONTEXT,
+      containerBounds: {height: 300, width: 100},
+    });
+  });
+
   describe('svg', () => {
     it('renders svg', () => {
       const chart = mount(<Chart {...MOCK_PROPS} />);

@@ -1,7 +1,7 @@
 import {Fragment, useMemo} from 'react';
-import type {DataSeries} from 'types';
 import type {useTransition} from '@react-spring/core';
 
+import type {DataSeries, TargetLine} from '../../types';
 import {usePolarisVizContext, useSparkBar, useTheme} from '../../hooks';
 import {LinearGradientWithStops} from '../LinearGradientWithStops';
 import {getAnimationTrail, getSeriesColors, uniqueId} from '../../utilities';
@@ -11,7 +11,6 @@ import {
   STROKE_WIDTH,
   STROKE_DOT_ARRAY_WIDTH,
 } from '../../constants';
-import type {TargetLine} from '../../types';
 
 interface SparkBarSeriesProps {
   data: DataSeries[];

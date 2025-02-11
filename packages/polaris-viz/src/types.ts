@@ -138,6 +138,7 @@ export interface LegendData {
   name: string;
   color: Color;
   isComparison?: boolean;
+  isHidden?: boolean;
   shape?: Shape;
   value?: string;
   trend?: MetaDataTrendIndicator;

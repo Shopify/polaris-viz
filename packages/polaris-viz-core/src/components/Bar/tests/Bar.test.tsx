@@ -1,9 +1,8 @@
-import {scaleBand, scaleLinear} from 'd3-scale';
+import {scaleLinear} from 'd3-scale';
 
 import type {Props} from '../Bar';
 import {Bar} from '../Bar';
 import {mountWithProvider} from '../../../test-utilities';
-import {BORDER_RADIUS} from '../../../constants';
 
 jest.mock('d3-scale', () => ({
   scaleBand: jest.fn(() => jest.fn((value) => value)),
@@ -11,7 +10,7 @@ jest.mock('d3-scale', () => ({
 }));
 
 const DEFAULT_PROPS: Props = {
-  borderRadius: BORDER_RADIUS.None,
+  borderRadius: 0,
   fill: 'red',
   yScale: scaleLinear(),
   x: 0,
@@ -89,7 +88,7 @@ describe('<Bar/>', () => {
       <Bar {...DEFAULT_PROPS} value={null} x={0} width={10} height={0} />,
     );
 
-    expect(wrapper.find(Bar).children).toHaveLength(0);
+    expect(wrapper.find(Bar)!.children).toHaveLength(0);
   });
 
   describe('borderRadius', () => {
@@ -104,11 +103,7 @@ describe('<Bar/>', () => {
     it('renders a bar with border radius', () => {
       const bar = mountWithProvider(
         <svg>
-          <Bar
-            {...DEFAULT_PROPS}
-            {...mockProps}
-            borderRadius={BORDER_RADIUS.Top}
-          />
+          <Bar {...DEFAULT_PROPS} {...mockProps} borderRadius={3} />
         </svg>,
       );
 

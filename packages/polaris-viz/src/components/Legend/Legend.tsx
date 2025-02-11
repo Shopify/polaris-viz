@@ -46,7 +46,7 @@ export function Legend({
   );
 
   const items = data.map((legend, index) => {
-    if (hiddenIndexes.includes(index)) {
+    if (hiddenIndexes.includes(index) || legend.isHidden === true) {
       return null;
     }
 

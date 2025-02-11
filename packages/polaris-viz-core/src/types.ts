@@ -339,3 +339,8 @@ export type ErrorBoundaryResponse = (
   error: Error,
   errorInfo: ErrorInfo,
 ) => void;
+
+export interface ComparisonSeriesIndex {
+  originalIndex: number;
+  comparisonIndex: number;
+}

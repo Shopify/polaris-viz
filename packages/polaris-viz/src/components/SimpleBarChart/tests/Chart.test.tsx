@@ -12,6 +12,8 @@ import {
   HorizontalBars,
   Label,
 } from '../../shared';
+import {DEFAULT_CHART_CONTEXT as MOCK_DEFAULT_CHART_CONTEXT} from '../../../storybook/constants';
+import {useChartContextMock} from '../../../../../../tests/setup/tests';
 
 jest.mock('@shopify/polaris-viz-core/src/utilities', () => {
   return {
@@ -19,12 +21,6 @@ jest.mock('@shopify/polaris-viz-core/src/utilities', () => {
     estimateStringWidth: () => 0,
   };
 });
-
-jest.mock('@shopify/polaris-viz-core/src/hooks/useChartContext', () => ({
-  useChartContext: jest.fn(() => ({
-    containerBounds: {height: 300, width: 100},
-  })),
-}));
 
 const SERIES: DataSeries[] = [
   {
@@ -64,6 +60,13 @@ const MOCK_PROPS: ChartProps = {
 };
 
 describe('<Chart />', () => {
+  beforeAll(() => {
+    useChartContextMock.mockReturnValue({
+      ...MOCK_DEFAULT_CHART_CONTEXT,
+      containerBounds: {height: 300, width: 100},
+    });
+  });
+
   describe('svg', () => {
     it('renders svg', () => {
       const chart = mount(<Chart {...MOCK_PROPS} />);

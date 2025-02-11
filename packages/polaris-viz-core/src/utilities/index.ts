@@ -28,3 +28,4 @@ export {OpacityScale} from './OpacityScale/OpacityScale';
 export {isDataGroupArray} from './isDataGroup';
 export {getGradientFromColor} from './getGradientFromColor';
 export {isTouchDevice} from './isTouchDevice';
+export {getComparisonSeriesIndexes} from './getComparisonSeriesIndexes';

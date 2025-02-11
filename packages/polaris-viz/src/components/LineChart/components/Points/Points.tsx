@@ -51,7 +51,7 @@ export function Points({
   xScale,
   yScale,
 }: PointsProps) {
-  const {shouldAnimate} = useChartContext();
+  const {shouldAnimate, comparisonIndexes} = useChartContext();
 
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
 
@@ -71,7 +71,10 @@ export function Points({
 
         const index = singleSeries.metadata?.relatedIndex ?? seriesIndex;
 
-        if (hiddenIndexes.includes(index)) {
+        if (
+          hiddenIndexes.includes(index) ||
+          comparisonIndexes.includes(index)
+        ) {
           return null;
         }
 

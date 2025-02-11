@@ -2,7 +2,6 @@ import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 
 import {DEFAULT_MAX_Y} from '../../constants';
-import type {DataSeries} from '../../types';
 import type {Props} from '../useYScale';
 import {getLabelWidth, useYScale} from '../useYScale';
 import {shouldRoundScaleUp} from '../../utilities/shouldRoundScaleUp';

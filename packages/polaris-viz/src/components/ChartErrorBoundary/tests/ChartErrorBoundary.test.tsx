@@ -3,7 +3,7 @@ import type {DataGroup, DataSeries} from '@shopify/polaris-viz-core';
 
 import {ChartSkeleton} from '../../ChartSkeleton';
 import {ChartErrorBoundary} from '../ChartErrorBoundary';
-import {mountWithProvider} from '../../../test-utilities/mountWithProvider';
+import {mountWithProvider} from '../../../../../polaris-viz-core/src/test-utilities/mountWithProvider';
 
 const MOCK_PROPS = {
   data: [],

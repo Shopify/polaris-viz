@@ -2,7 +2,10 @@ import {mount} from '@shopify/react-testing';
 import {DEFAULT_THEME_NAME} from '@shopify/polaris-viz-core';
 
 import {LegendContainer} from '../../LegendContainer';
-import {mockDefaultTheme} from '../../../test-utilities/mountWithProvider';
+import {
+  mockDefaultTheme,
+  mountWithProvider,
+} from '../../../../../polaris-viz-core/src/test-utilities/mountWithProvider';
 import {YAxis} from '../../../components/YAxis';
 import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
 import {VisuallyHiddenRows} from '../../../components/VisuallyHiddenRows';
@@ -12,7 +15,7 @@ import {
   TooltipWrapper,
   TooltipAnimatedContainer,
 } from '../../../components/TooltipWrapper';
-import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
+import {triggerSVGMouseMove} from '../../../test-utilities';
 import {StackedAreas} from '../components';
 import type {Props} from '../Chart';
 import {Chart} from '../Chart';
@@ -20,6 +23,7 @@ import {Annotations, YAxisAnnotations} from '../../Annotations';
 import {normalizeData} from '../../../utilities';
 import {TextLine} from '../../TextLine';
 import {DEFAULT_CHART_CONTEXT as MOCK_DEFAULT_CHART_CONTEXT} from '../../../storybook/constants';
+import {useChartContextMock} from '../../../../../../tests/setup/tests';
 
 jest.mock('@shopify/polaris-viz-core/src/utilities/estimateStringWidth', () => {
   return {
@@ -47,13 +51,6 @@ jest.mock('../../TooltipWrapper/utilities/eventPoint', () => {
     },
   };
 });
-
-jest.mock('@shopify/polaris-viz-core/src/hooks/useChartContext', () => ({
-  useChartContext: jest.fn(() => ({
-    ...MOCK_DEFAULT_CHART_CONTEXT,
-    containerBounds: {width: 500, height: 250, x: 0, y: 0},
-  })),
-}));
 
 jest.mock('../../../hooks/useResizeObserver', () => {
   return {
@@ -115,6 +112,13 @@ const MOCK_PROPS: Props = {
 };
 
 describe('<Chart />', () => {
+  beforeAll(() => {
+    useChartContextMock.mockReturnValue({
+      ...MOCK_DEFAULT_CHART_CONTEXT,
+      containerBounds: {width: 500, height: 250, x: 0, y: 0},
+    });
+  });
+
   beforeEach(() => {
     jest.useFakeTimers();
   });

@@ -91,8 +91,11 @@ export function LegendContainer({
 
   const {displayedData, hiddenData} = useOverflowLegend(overflowLegendProps);
 
+  // We only filter out the hidden data here because we want to pass all
+  // the data to <Legend /> so that the indexes aren't messed up.
+  const allVisibleData = allData.filter((legend) => legend.isHidden !== true);
   const hasHiddenData =
-    enableHideOverflow && displayedData.length < allData.length;
+    enableHideOverflow && displayedData.length < allVisibleData.length;
 
   const styleMap: {[key: string]: CSSProperties} = {
     horizontal: {

@@ -4,6 +4,8 @@ import {cloneElement} from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {Globals} from '@react-spring/web';
 
+import {useChartContext} from '../../packages/polaris-viz-core/src/hooks/useChartContext';
+
 const mockCloneElement = (element: React.ReactElement, props) =>
   cloneElement(element, props);
 
@@ -38,9 +40,14 @@ jest.mock('../../packages/polaris-viz-core/src/hooks/useChartContext', () => {
         width: 600,
         height: 400,
       },
+      comparisonIndexes: [],
+      comparisonSeriesIndexes: [],
+      scrollContainer: null,
     }),
   };
 });
+
+export const useChartContextMock = useChartContext as jest.Mock;
 
 jest.mock(
   '../../packages/polaris-viz-core/src/styles/shared/_variables.scss',
