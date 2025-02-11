@@ -17,12 +17,12 @@ NoSeriesNoTitle.args = {
         {
           key: 'Sessions from Google ads',
           value: '5250',
-          color: DARK_THEME.seriesColors.limited[0],
+          color: DARK_THEME.seriesColors.all[0],
         },
         {
           key: 'Sessions from Facebook ads',
           value: '650',
-          color: DARK_THEME.seriesColors.limited[1],
+          color: DARK_THEME.seriesColors.all[1],
         },
       ],
     },

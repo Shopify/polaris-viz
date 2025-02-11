@@ -11,6 +11,7 @@ import {
   ChartState,
   DEFAULT_CHART_PROPS,
   usePolarisVizContext,
+  useThemeSeriesColors,
 } from '@shopify/polaris-viz-core';
 
 import {getTooltipContentRenderer} from '../../utilities/getTooltipContentRenderer';
@@ -18,7 +19,6 @@ import {fillMissingDataPoints} from '../../utilities/fillMissingDataPoints';
 import {getLineChartDataWithDefaults} from '../../utilities/getLineChartDataWithDefaults';
 import {ChartContainer} from '../../components/ChartContainer';
 import {ChartSkeleton} from '../../components/ChartSkeleton';
-import {useThemeSeriesColors} from '../../hooks/useThemeSeriesColors';
 import {
   getXAxisOptionsWithDefaults,
   getYAxisOptionsWithDefaults,
