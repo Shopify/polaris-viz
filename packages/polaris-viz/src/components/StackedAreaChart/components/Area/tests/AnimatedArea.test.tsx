@@ -2,11 +2,14 @@ import {mount} from '@shopify/react-testing';
 import {area, line} from 'd3-shape';
 import {scaleLinear} from 'd3-scale';
 import React from 'react';
+import type {Theme} from '@shopify/polaris-viz-core';
 
-import {mountWithProvider} from '../../../../../test-utilities';
-import {mockDefaultTheme} from '../../../../../test-utilities/mountWithProvider';
+import {
+  mockDefaultTheme,
+  mountWithProvider,
+} from '../../../../../../../polaris-viz-core/src/test-utilities/mountWithProvider';
 import {DARK_THEME} from '../../../../../constants';
-import type {StackedSeries, Theme} from '../../../../../types';
+import type {StackedSeries} from '../../../../../types';
 import type {AreaProps} from '../types';
 import {AnimatedArea} from '../AnimatedArea';
 
@@ -47,7 +50,6 @@ describe('<AnimatedArea />', () => {
     duration: 300,
     id: 'stackedAreas-1',
     index: 0,
-    isImmediate: false,
     lineGenerator,
     selectedTheme: DARK_THEME,
   };

@@ -14,9 +14,12 @@ import {LegendContainer} from '../../LegendContainer';
 import {Crosshair} from '../../../components/Crosshair';
 import {VisuallyHiddenRows} from '../../../components/VisuallyHiddenRows';
 import {Point} from '../../../components/Point';
-import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
+import {triggerSVGMouseMove} from '../../../test-utilities';
 import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
-import {mockDefaultTheme} from '../../../test-utilities/mountWithProvider';
+import {
+  mockDefaultTheme,
+  mountWithProvider,
+} from '../../../../../polaris-viz-core/src/test-utilities/mountWithProvider';
 import {
   TooltipAnimatedContainer,
   TooltipWrapper,

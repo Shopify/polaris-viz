@@ -1,6 +1,11 @@
 import {createContext} from 'react';
-import type {BoundingRect, CharacterWidthOffsets, CharacterWidths} from 'types';
 
+import type {
+  BoundingRect,
+  CharacterWidthOffsets,
+  CharacterWidths,
+  ComparisonSeriesIndex,
+} from '../types';
 import {DEFAULT_THEME_NAME} from '../constants';
 
 export interface ChartContextValues {
@@ -13,6 +18,8 @@ export interface ChartContextValues {
   isTouchDevice: boolean;
   isPerformanceImpacted: boolean;
   scrollContainer?: Element | null;
+  comparisonIndexes: number[];
+  comparisonSeriesIndexes: ComparisonSeriesIndex[];
 }
 
 export const ChartContext = createContext<ChartContextValues>({
@@ -27,4 +34,6 @@ export const ChartContext = createContext<ChartContextValues>({
   theme: DEFAULT_THEME_NAME,
   isTouchDevice: false,
   isPerformanceImpacted: false,
+  comparisonIndexes: [],
+  comparisonSeriesIndexes: [],
 });

@@ -33,6 +33,7 @@ export interface LineSeriesProps {
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
   activeLineIndex?: number;
+  animationDelay?: number;
   hiddenIndexes?: number[];
   theme: string;
   type?: 'default' | 'spark';
@@ -41,6 +42,7 @@ export interface LineSeriesProps {
 
 export function LineSeries({
   activeLineIndex = -1,
+  animationDelay,
   data,
   hiddenIndexes = [],
   index: lineSeriesIndex = 0,
@@ -61,7 +63,7 @@ export function LineSeries({
 
   const previousData = usePrevious(data);
 
-  const {shouldAnimate} = useChartContext();
+  const {shouldAnimate, comparisonIndexes} = useChartContext();
 
   const AnimatedGroup = animated(G);
   const color = data?.color;
@@ -104,9 +106,13 @@ export function LineSeries({
 
   const lineGradientColor = getGradientFromColor(color);
 
-  const isSolidLine = data.isComparison !== true;
-  const solidLineDelay = isSolidLine ? index * ANIMATION_DELAY : 0;
-  const delay = immediate ? 0 : solidLineDelay;
+  const hasMultipleComparisonSeries = comparisonIndexes.length > 1;
+  const isComparisonLine =
+    data.isComparison === true || comparisonIndexes.includes(index);
+
+  const solidLineDelay =
+    animationDelay == null ? index * ANIMATION_DELAY : animationDelay;
+  const delay = immediate || isComparisonLine ? 0 : solidLineDelay;
 
   const hasNulls = (data?: LineChartDataSeriesWithDefaults) =>
     data?.data.some(({value}) => value == null);
@@ -185,40 +191,48 @@ export function LineSeries({
           />
 
           <Mask id={`mask-${id}`}>
-            {dataIsValidForAnimation ? (
-              <AnimatedLine
-                lastY={lastY}
-                delay={delay}
-                lineGenerator={lineGenerator}
-                strokeWidth={strokeWidth}
-                immediate={immediate}
-                index={index}
-                activeLineIndex={activeLineIndex}
-                strokeDasharray={strokeDasharray}
-                fromData={previousData}
-                toData={data}
-                zeroLineY={zeroLineY}
-                zeroLineData={zeroLineData}
-              />
-            ) : (
-              <Fragment>
-                <Path
-                  d={lineShape}
-                  stroke="white"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth={strokeWidth}
-                  style={{
-                    ...getColorVisionStylesForActiveIndex({
+            <G
+              style={{
+                ...(hasMultipleComparisonSeries
+                  ? {}
+                  : getColorVisionStylesForActiveIndex({
                       activeIndex: activeLineIndex,
                       index,
-                    }),
-                    strokeDasharray,
-                    strokeLinecap: 'round',
-                  }}
+                    })),
+              }}
+            >
+              {dataIsValidForAnimation ? (
+                <AnimatedLine
+                  activeLineIndex={activeLineIndex}
+                  delay={delay}
+                  fromData={previousData}
+                  immediate={immediate}
+                  index={index}
+                  isComparisonLine={isComparisonLine}
+                  lastY={lastY}
+                  lineGenerator={lineGenerator}
+                  strokeDasharray={strokeDasharray}
+                  strokeWidth={strokeWidth}
+                  toData={data}
+                  zeroLineData={zeroLineData}
+                  zeroLineY={zeroLineY}
                 />
-              </Fragment>
-            )}
+              ) : (
+                <Fragment>
+                  <Path
+                    d={lineShape}
+                    stroke="white"
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                    strokeWidth={strokeWidth}
+                    style={{
+                      strokeDasharray,
+                      strokeLinecap: 'round',
+                    }}
+                  />
+                </Fragment>
+              )}
+            </G>
           </Mask>
         </Defs>
 
@@ -246,11 +260,7 @@ export function LineSeries({
             strokeWidth * 2 +
             SHAPE_ANIMATION_HEIGHT_BUFFER
           }
-          fill={
-            data.isComparison
-              ? selectedTheme.seriesColors.comparison
-              : `url(#line-${id})`
-          }
+          fill={`url(#line-${id})`}
           mask={`url(#mask-${`${id}`})`}
           style={{pointerEvents: 'none'}}
         />
@@ -264,6 +274,10 @@ export function LineSeries({
             type: COLOR_VISION_SINGLE_ITEM,
             index,
           })}
+          style={{
+            pointerEvents:
+              hasMultipleComparisonSeries && isComparisonLine ? 'none' : 'auto',
+          }}
         />
       </AnimatedGroup>
     </Fragment>

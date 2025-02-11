@@ -1,4 +1,4 @@
-import {BORDER_RADIUS, DEFAULT_BORDER_RADIUS} from '../../constants';
+import {BORDER_RADIUS} from '../../constants';
 import {keepValuePositive, getRoundedRectPath} from '../getRoundedRectPath';
 
 describe('keepValuePositive()', () => {

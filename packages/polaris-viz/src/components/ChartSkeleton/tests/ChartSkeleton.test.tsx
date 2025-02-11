@@ -4,7 +4,7 @@ import {ChartSkeleton} from '../ChartSkeleton';
 import {
   mountWithProvider,
   mockDefaultTheme,
-} from '../../../test-utilities/mountWithProvider';
+} from '../../../../../polaris-viz-core/src/test-utilities/mountWithProvider';
 import {Shimmer} from '../components';
 import {DEFAULT_CHART_CONTEXT as MOCK_DEFAULT_CHART_CONTEXT} from '../../../storybook/constants';
 

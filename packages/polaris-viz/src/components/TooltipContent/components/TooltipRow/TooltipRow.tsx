@@ -38,9 +38,7 @@ export function TooltipRow({
         <div style={{width: PREVIEW_ICON_SIZE}}>
           {renderSeriesIcon?.() ?? (
             <SeriesIcon
-              color={
-                isComparison ? selectedTheme.seriesColors.comparison : color!
-              }
+              color={color}
               shape={shape}
               lineStyle={isComparison ? 'dotted' : 'solid'}
             />

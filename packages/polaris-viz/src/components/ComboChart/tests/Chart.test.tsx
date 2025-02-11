@@ -8,6 +8,8 @@ import {LegendContainer} from '../../LegendContainer';
 import {Annotations, YAxisAnnotations} from '../../Annotations';
 import {AxisLabel} from '../components';
 import {YAxis} from '../../YAxis';
+import {DEFAULT_CHART_CONTEXT as MOCK_DEFAULT_CHART_CONTEXT} from '../../../storybook/constants';
+import {useChartContextMock} from '../../../../../../tests/setup/tests';
 
 jest.mock('../../../hooks/useEstimateStringWidth', () => ({
   useEstimateStringWidth: () => 100,
@@ -27,12 +29,6 @@ jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
   ...jest.requireActual('@shopify/polaris-viz-core/src/utilities'),
   estimateStringWidth: jest.fn(() => 100),
   getAverageColor: jest.fn(() => 'red'),
-}));
-
-jest.mock('@shopify/polaris-viz-core/src/hooks/useChartContext', () => ({
-  useChartContext: jest.fn(() => ({
-    containerBounds: {height: 400, width: 800, x: 0, y: 0},
-  })),
 }));
 
 const DATA: DataGroup[] = [
@@ -81,6 +77,13 @@ const PROPS: ChartProps = {
 };
 
 describe('<Chart />', () => {
+  beforeAll(() => {
+    useChartContextMock.mockReturnValue({
+      ...MOCK_DEFAULT_CHART_CONTEXT,
+      containerBounds: {height: 400, width: 800, x: 0, y: 0},
+    });
+  });
+
   describe('<LegendContainer />', () => {
     it('renders <LegendContainer /> when showLegend is true', () => {
       const chart = mount(<Chart {...PROPS} showLegend />);

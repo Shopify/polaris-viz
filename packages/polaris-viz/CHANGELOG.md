@@ -9,7 +9,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Do not render inactive items in the tooltip when a `DataSeries` is hovered/focused.
+- Allow `LineChart` to render multiple comparison series.
 
 ## [16.3.0] - 2025-02-21
 

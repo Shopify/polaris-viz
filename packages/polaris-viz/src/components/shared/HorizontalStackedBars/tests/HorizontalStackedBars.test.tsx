@@ -5,7 +5,7 @@ import {BORDER_RADIUS} from '@shopify/polaris-viz-core';
 import {
   mountWithProvider,
   mockDefaultTheme,
-} from '../../../../test-utilities/mountWithProvider';
+} from '../../../../../../polaris-viz-core/src/test-utilities/mountWithProvider';
 import type {HorizontalStackedBarsProps} from '../HorizontalStackedBars';
 import {HorizontalStackedBars} from '../HorizontalStackedBars';
 import {StackedBar} from '../components';
