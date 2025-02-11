@@ -37,7 +37,7 @@ InteractiveCustomLegend.args = {
           }}
           {...getColorVisionEventAttrs(index)}
         >
-          <SquareColorPreview color={DARK_THEME.seriesColors.limited[index]} />
+          <SquareColorPreview color={DARK_THEME.seriesColors.all[index]} />
           {name}
         </li>
       ))}

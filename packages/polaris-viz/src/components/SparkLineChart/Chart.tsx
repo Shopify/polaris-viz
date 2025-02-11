@@ -6,9 +6,9 @@ import {
   useChartContext,
   useFilteredSparkLineData,
   useSparkLine,
+  useThemeSeriesColors,
 } from '@shopify/polaris-viz-core';
 
-import {useThemeSeriesColors} from '../../hooks/useThemeSeriesColors';
 import {useTheme} from '../../hooks';
 import {XMLNS} from '../../constants';
 

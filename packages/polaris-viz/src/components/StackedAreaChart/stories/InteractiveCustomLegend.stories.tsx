@@ -36,7 +36,7 @@ InteractiveCustomLegend.args = {
         >
           <LinePreview
             lineStyle="solid"
-            color={DARK_THEME.seriesColors.limited[index]}
+            color={DARK_THEME.seriesColors.all[index]}
           />
           {name}
         </li>

@@ -353,7 +353,7 @@ describe('<Chart />', () => {
           themes: {
             [DEFAULT_THEME_NAME]: {
               seriesColors: {
-                limited: ['#00A', '#00B', '#00C', '#00D'],
+                all: ['#00A', '#00B', '#00C', '#00D'],
               },
             },
           },

@@ -3,7 +3,6 @@ import {getSeriesColors} from '../getSeriesColors';
 
 const SELECTED_THEME = {
   seriesColors: {
-    limited: ['#9479F7', '#578FE1', '#CF68C1', '#5B97AD'],
     all: [
       '#41778B',
       '#8DAEEF',
@@ -28,18 +27,6 @@ describe('getSeriesColors', () => {
 
   beforeEach(() => {
     spy.mockReset();
-  });
-
-  it('returns limited', () => {
-    expect(getSeriesColors(0, SELECTED_THEME)).toStrictEqual(
-      SELECTED_THEME.seriesColors.limited,
-    );
-    expect(getSeriesColors(2, SELECTED_THEME)).toStrictEqual(
-      SELECTED_THEME.seriesColors.limited,
-    );
-    expect(getSeriesColors(4, SELECTED_THEME)).toStrictEqual(
-      SELECTED_THEME.seriesColors.limited,
-    );
   });
 
   it('returns all', () => {

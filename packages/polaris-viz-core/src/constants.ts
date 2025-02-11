@@ -2,7 +2,6 @@ import {createElement} from 'react';
 import type {SpringConfig} from '@react-spring/core';
 
 import variables from './styles/shared/_variables.scss';
-import {createGradient} from './utilities/createGradient';
 import type {SvgComponents, Theme} from './types';
 import {InternalChartType, ChartState, Hue} from './types';
 
@@ -156,15 +155,6 @@ export const DARK_THEME: Theme = {
     empty: variables.colorGray140,
     comparison: variables.colorDarkComparison,
     single: NEUTRAL_SINGLE_GRADIENT,
-    limited: [
-      createGradient(variables.colorIndigo70, variables.colorIndigo90),
-      createGradient(variables.colorBlue70, variables.colorBlue90),
-      createGradient(variables.colorMagenta70, variables.colorMagenta90),
-      createGradient(variables.colorTeal70, variables.colorTeal90),
-      createGradient(variables.colorPurple50, variables.colorPurple70),
-      createGradient(variables.colorOrange60, variables.colorOrange80),
-      createGradient(variables.colorYellow20, variables.colorYellow40),
-    ],
     all: [
       variables.colorTeal90,
       variables.colorBlue50,
@@ -259,48 +249,18 @@ export const DARK_THEME: Theme = {
   },
 };
 
-const LIGHT_BLUE = [
-  {offset: 0, color: '#079EE1'},
-  {offset: 100, color: '#2EB9F5'},
-];
-
-const INDIGO = [
-  {offset: 0, color: '#6A42E9'},
-  {offset: 100, color: '#8F71EF'},
-];
-
-const BLUE = [
-  {offset: 0, color: '#3E69EA'},
-  {offset: 100, color: '#7594F0'},
-];
-
-const MAGENTA = [
-  {offset: 0, color: '#D147AC'},
-  {offset: 100, color: '#DD76C1'},
-];
-
-const TEAL = [
-  {offset: 0, color: '#1D9595'},
-  {offset: 100, color: '#2CD2D2'},
-];
-
-const PURPLE = [
-  {offset: 0, color: '#A249DF'},
-  {offset: 100, color: '#BD7DE8'},
-];
-
-const LIGHT_BLUE_09_SOLID = 'rgba(19, 172, 240, 1)';
-const INDIGO_10_SOLID = 'rgba(106, 66, 233, 1)';
-const BLUE_08_SOLID = 'rgba(89, 126, 237, 1)';
-const MAGENTA_10_SOLID = 'rgba(209, 71, 172, 1)';
-const TEAL_12_SOLID = 'rgba(35, 186, 186, 1)';
-const PURPLE_10_SOLID = 'rgba(155, 60, 221, 1)';
-const INDIGIO_07_SOLID = 'rgba(158, 132, 242, 1)';
-const LIGHT_BLUE_13_SOLID = 'rgba(18, 138, 192, 1)';
-const MAGENTA_09_SOLID = 'rgba(215, 94, 183, 1)';
-const BLUE_10_SOLID = 'rgba(48, 94, 232, 1)';
-const PURPLE_08_SOLID = 'rgba(175, 99, 228, 1)';
-const TEAL_10_SOLID = 'rgba(51, 219, 219, 1)';
+const LIGHT_BLUE_10_SOLID = '#13ACF0';
+const INDIGO_10_SOLID = '#6A42E9';
+const BLUE_08_SOLID = '#597EED';
+const MAGENTA_10_SOLID = '#D147AC';
+const TEAL_12_SOLID = '#23BABA';
+const PURPLE_10_SOLID = '#9B3CDD';
+const INDIGIO_07_SOLID = '#9E84F2';
+const LIGHT_BLUE_13_SOLID = '#128AC0';
+const MAGENTA_09_SOLID = '#D75EB7';
+const BLUE_10_SOLID = '#305EE8';
+const PURPLE_08_SOLID = '#AF63E4';
+const TEAL_10_SOLID = '#33DBDB';
 
 export const LIGHT_THEME: Theme = {
   seriesColors: {
@@ -310,9 +270,8 @@ export const LIGHT_THEME: Theme = {
       {offset: 0, color: '#0A97D5'},
       {offset: 100, color: '#50C3F7'},
     ],
-    limited: [LIGHT_BLUE, INDIGO, BLUE, MAGENTA, TEAL, PURPLE],
     all: [
-      LIGHT_BLUE_09_SOLID,
+      LIGHT_BLUE_10_SOLID,
       INDIGO_10_SOLID,
       BLUE_08_SOLID,
       MAGENTA_10_SOLID,
@@ -409,15 +368,6 @@ export const PRINT_THEME = {
     empty: variables.colorGray20,
     comparison: variables.colorLightComparison,
     single: variables.colorIndigo90,
-    limited: [
-      variables.colorIndigo70,
-      variables.colorBlue70,
-      variables.colorMagenta70,
-      variables.colorTeal70,
-      variables.colorPurple70,
-      variables.colorOrange70,
-      variables.colorYellow70,
-    ],
     all: [
       variables.colorTeal90,
       variables.colorBlue70,

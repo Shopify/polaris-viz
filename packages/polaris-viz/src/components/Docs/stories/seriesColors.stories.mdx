@@ -53,31 +53,11 @@ export interface GradientStop {
     }
   />
   <PropertyTable.Row
-    property={`seriesColors.limited`}
-    type={'Color[]'}
-    description={
-      <>
-        Defines the colors used in the series on charts that have from 2 to 4
-        series
-      </>
-    }
-  />
-  <PropertyTable.Row
     property={`seriesColors.all`}
     type={'Color[]'}
     description={
       <>
-        Defines the colors used in the series on charts that have from 5 to 7
-        series
-      </>
-    }
-  />
-  <PropertyTable.Row
-    property={`seriesColors.all`}
-    type={'Color[]'}
-    description={
-      <>
-        Defines the colors used in the series on charts that have more than 7
+        Defines the colors used in the series on charts with more than a single
         series
       </>
     }
@@ -130,7 +110,7 @@ export interface GradientStop {
       themes={{
         ${DEFAULT_THEME_NAME}: {
           seriesColors: {
-            limited: [
+            all: [
               'yellow',
               'lime',
               'aqua',
@@ -150,7 +130,7 @@ export interface GradientStop {
         themes={{
           [DEFAULT_THEME_NAME]: {
             seriesColors: {
-              limited: ['yellow', 'lime', 'aqua', 'Teal'],
+              all: ['yellow', 'lime', 'aqua', 'Teal'],
             },
           },
         }}

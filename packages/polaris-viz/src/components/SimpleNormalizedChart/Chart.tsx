@@ -6,6 +6,7 @@ import {
   getColorVisionEventAttrs,
   getColorVisionStylesForActiveIndex,
   isInfinity,
+  useThemeSeriesColors,
 } from '@shopify/polaris-viz-core';
 import type {
   Direction,
@@ -14,7 +15,6 @@ import type {
 } from '@shopify/polaris-viz-core';
 
 import type {ComparisonMetricProps} from '../ComparisonMetric';
-import {useThemeSeriesColors} from '../../hooks/useThemeSeriesColors';
 import {
   useColorVisionEvents,
   useTheme,
