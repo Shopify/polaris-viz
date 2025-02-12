@@ -61,7 +61,9 @@ export function TooltipContent({
                     seriesIndex,
                   ) => {
                     if (
+                      // TODO: Check this
                       data[0].data.length > 2 &&
+                      isComparison !== true &&
                       activeColorVisionIndex !== -1 &&
                       seriesIndex !== activeColorVisionIndex
                     ) {
