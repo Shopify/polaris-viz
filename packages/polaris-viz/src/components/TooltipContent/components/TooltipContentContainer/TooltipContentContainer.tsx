@@ -5,7 +5,7 @@ import {
   useTheme,
 } from '@shopify/polaris-viz-core';
 import type {ReactNode} from 'react';
-import {useState} from 'react';
+import {useRef, useState} from 'react';
 
 import {useWatchColorVisionEvents} from '../../../../hooks';
 import {TOOLTIP_BG_OPACITY} from '../../../../constants';
@@ -38,9 +38,21 @@ export function TooltipContentContainer({
 
   const [activeColorVisionIndex, setActiveIndex] = useState(-1);
 
+  const resetTimer = useRef<number>(0);
+
   useWatchColorVisionEvents({
     type: COLOR_VISION_SINGLE_ITEM,
-    onIndexChange: ({detail}) => setActiveIndex(detail.index),
+    onIndexChange: ({detail}) => {
+      window.clearTimeout(resetTimer.current);
+
+      if (detail.index === -1) {
+        resetTimer.current = window.setTimeout(() => {
+          setActiveIndex(-1);
+        }, 100);
+      } else {
+        setActiveIndex(detail.index);
+      }
+    },
     enabled: !ignoreColorVisionEvents,
   });
 

@@ -324,7 +324,6 @@ function TooltipWrapperRaw(props: BaseProps) {
 
   return (
     <TooltipAnimatedContainer
-      activePointIndex={position.activeIndex}
       bandwidth={bandwidth}
       chartBounds={chartBounds}
       chartType={chartType}
