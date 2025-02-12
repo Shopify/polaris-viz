@@ -10,5 +10,5 @@ import {Template} from './data';
 export const SeriesColorsUpToSixteen: Story<LineChartProps> = Template.bind({});
 
 SeriesColorsUpToSixteen.args = {
-  data: generateMultipleSeries(16, 'dates'),
+  data: generateMultipleSeries(6, 'dates'),
 };

@@ -57,11 +57,17 @@ export function renderLinearPredictiveTooltipContent(
       const isPredictiveStartKey = metadata?.startKey === activeKey;
       const isHidden = isNull || isPredictiveStartKey;
 
+      if (
+        isComparison !== true &&
+        activeColorVisionIndex !== -1 &&
+        index !== activeColorVisionIndex
+      ) {
+        return null;
+      }
+
       return (
         <TooltipRow
-          activeIndex={activeColorVisionIndex}
           color={color}
-          index={index}
           isHidden={isHidden}
           key={`row-${seriesIndex}`}
           label={formatters.keyFormatter(key)}

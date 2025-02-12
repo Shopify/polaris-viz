@@ -1,7 +1,4 @@
-import {
-  useTheme,
-  getColorVisionStylesForActiveIndex,
-} from '@shopify/polaris-viz-core';
+import {useTheme} from '@shopify/polaris-viz-core';
 import type {Shape, Color} from '@shopify/polaris-viz-core';
 
 import {PREVIEW_ICON_SIZE} from '../../../../constants';
@@ -11,8 +8,6 @@ import {TITLE_MARGIN} from '../../constants';
 import styles from './TooltipRow.scss';
 
 interface Props {
-  activeIndex: number;
-  index: number;
   label: string;
   shape: Shape;
   value: string;
@@ -23,9 +18,7 @@ interface Props {
 }
 
 export function TooltipRow({
-  activeIndex,
   color,
-  index,
   isComparison = false,
   isHidden = false,
   label,
@@ -40,13 +33,7 @@ export function TooltipRow({
   }
 
   return (
-    <div
-      className={styles.Row}
-      style={getColorVisionStylesForActiveIndex({
-        activeIndex,
-        index,
-      })}
-    >
+    <div className={styles.Row}>
       {color != null && (
         <div style={{width: PREVIEW_ICON_SIZE}}>
           {renderSeriesIcon?.() ?? (

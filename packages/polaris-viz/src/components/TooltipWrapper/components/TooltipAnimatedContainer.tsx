@@ -3,6 +3,7 @@ import {useEffect, useRef, useState, useMemo} from 'react';
 import type {BoundingRect, Dimensions} from '@shopify/polaris-viz-core';
 import {useChartContext, InternalChartType} from '@shopify/polaris-viz-core';
 
+import {useResizeObserver} from '../../../hooks/useResizeObserver';
 import type {Margin} from '../../../types';
 import type {TooltipPositionOffset} from '../types';
 import {DEFAULT_TOOLTIP_POSITION} from '../constants';
@@ -15,7 +16,6 @@ import styles from './TooltipAnimatedContainer.scss';
 export interface TooltipAnimatedContainerProps {
   children: ReactNode;
   margin: Margin;
-  activePointIndex: number;
   currentX: number;
   currentY: number;
   chartBounds: BoundingRect;
@@ -26,7 +26,6 @@ export interface TooltipAnimatedContainerProps {
 }
 
 export function TooltipAnimatedContainer({
-  activePointIndex,
   bandwidth = 0,
   chartBounds,
   chartType,
@@ -44,10 +43,11 @@ export function TooltipAnimatedContainer({
     isTouchDevice,
   } = useChartContext();
 
-  const tooltipRef = useRef<HTMLDivElement | null>(null);
   const [tooltipDimensions, setTooltipDimensions] =
     useState<Dimensions | null>(null);
   const firstRender = useRef(true);
+
+  const {setRef, entry} = useResizeObserver();
 
   const getAlteredPositionFunction = useMemo(() => {
     switch (chartType) {
@@ -106,12 +106,23 @@ export function TooltipAnimatedContainer({
   ]);
 
   useEffect(() => {
-    if (tooltipRef.current == null) {
+    if (entry == null) {
       return;
     }
 
-    setTooltipDimensions(tooltipRef.current.getBoundingClientRect());
-  }, [activePointIndex]);
+    setTooltipDimensions((previous: Dimensions | null) => {
+      const {width, height} = entry.target.getBoundingClientRect();
+
+      if (previous?.width === width && previous?.height === height) {
+        return previous;
+      }
+
+      return {
+        width,
+        height,
+      };
+    });
+  }, [entry]);
 
   return (
     <div
@@ -125,7 +136,7 @@ export function TooltipAnimatedContainer({
         transform: `translate3d(${Math.round(x)}px, ${Math.round(y)}px, 0px)`,
         transition: immediate ? 'none' : 'opacity 300ms ease, transform 150ms',
       }}
-      ref={tooltipRef}
+      ref={setRef}
       aria-hidden="true"
     >
       {children}
