@@ -1,3 +1,4 @@
+import React from 'react';
 import {mount} from '@shopify/react-testing';
 import {scaleBand} from 'd3-scale';
 import {ChartContext} from '@shopify/polaris-viz-core';
@@ -5,7 +6,10 @@ import {ChartContext} from '@shopify/polaris-viz-core';
 import {SingleTextLine} from '../../../../Labels';
 import {ScaleIcon} from '../../ScaleIcon';
 import {ScaleIconTooltip} from '../../ScaleIconTooltip';
-import {FunnelChartLabels} from '../FunnelChartLabels';
+import {FunnelChartLabels, LABEL_VERTICAL_OFFSET} from '../FunnelChartLabels';
+import {TrendIndicator} from '../../../../TrendIndicator';
+import {LINE_HEIGHT} from '../../../../../constants';
+import type {MetaDataTrendIndicator} from '../../../types';
 
 describe('<FunnelChartLabels />', () => {
   const mockContext = {
@@ -21,18 +25,44 @@ describe('<FunnelChartLabels />', () => {
   const mockProps = {
     formattedValues: ['1,000', '750', '500'],
     labels: ['Step 1', 'Step 2', 'Step 3'],
-    labelWidth: 150,
-    barWidth: 100,
+    labelWidth: 200,
+    barWidth: 150,
     percentages: ['100%', '75%', '50%'],
     xScale: scaleBand().domain(['0', '1', '2']).range([0, 300]),
     shouldApplyScaling: false,
     renderScaleIconTooltipContent: () => <div>Tooltip content</div>,
+    trends: [
+      {
+        reached: {
+          value: '10%',
+          trend: 'positive',
+          direction: 'upward',
+        },
+      },
+      {
+        reached: {
+          value: '20%',
+          trend: 'negative',
+          direction: 'downward',
+        },
+      },
+      {
+        reached: {
+          value: '30%',
+          trend: 'neutral',
+          direction: 'upward',
+        },
+      },
+    ] as MetaDataTrendIndicator,
   };
 
   const wrapper = (props = mockProps) => {
     return mount(
       <ChartContext.Provider value={mockContext}>
-        <FunnelChartLabels {...props} />
+        <svg>
+          <FunnelChartLabels {...props} />
+        </svg>
+        ,
       </ChartContext.Provider>,
     );
   };
@@ -40,9 +70,8 @@ describe('<FunnelChartLabels />', () => {
   describe('text elements', () => {
     it('renders expected number of text elements', () => {
       const component = wrapper();
-      const texts = component.findAll(SingleTextLine);
-      // 3 labels + 3 percentages + 3 values
-      expect(texts).toHaveLength(9);
+
+      expect(component).toContainReactComponentTimes(SingleTextLine, 9);
     });
 
     it('renders labels, percentages, and values', () => {
@@ -77,6 +106,61 @@ describe('<FunnelChartLabels />', () => {
       });
       expect(component).toContainReactComponent(SingleTextLine, {
         text: '100%',
+      });
+    });
+
+    it('hides all formatted values when any label has insufficient space', () => {
+      const propsWithMixedWidths = {
+        ...mockProps,
+        // Enough space for first two labels
+        labelWidth: 150,
+        barWidth: 50,
+      };
+
+      const component = wrapper(propsWithMixedWidths);
+
+      expect(component).toContainReactComponentTimes(SingleTextLine, 6);
+
+      // Verify no formatted values are shown
+      expect(component).not.toContainReactComponent(SingleTextLine, {
+        text: '1,000',
+      });
+      expect(component).not.toContainReactComponent(SingleTextLine, {
+        text: '750',
+      });
+      expect(component).not.toContainReactComponent(SingleTextLine, {
+        text: '500',
+      });
+    });
+  });
+
+  describe('trend indicators', () => {
+    it('renders trend indicators for all labels when provided', () => {
+      const component = wrapper(mockProps);
+      expect(component.findAll(TrendIndicator)).toHaveLength(3);
+    });
+
+    it('positions all trend indicators inline when there is enough space', () => {
+      const component = wrapper({
+        ...mockProps,
+        labelWidth: 200,
+        barWidth: 200,
+      });
+
+      expect(component).toContainReactComponentTimes('g', 3, {
+        transform: expect.stringContaining(`${-LABEL_VERTICAL_OFFSET}`),
+      });
+    });
+
+    it('positions all trend indicators below when there is not enough space', () => {
+      const component = wrapper({
+        ...mockProps,
+        labelWidth: 50,
+        barWidth: 50,
+      });
+
+      expect(component).toContainReactComponentTimes('g', 3, {
+        transform: expect.stringContaining(`${LINE_HEIGHT}`),
       });
     });
   });

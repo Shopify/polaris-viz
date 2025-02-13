@@ -2,67 +2,17 @@ import {useMemo} from 'react';
 import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import type {MetaDataTrendIndicator, FunnelChartMetaData} from '../types';
+import type {FunnelChartNextProps} from '../FunnelChartNext';
 
-interface DropOffCalculationParams {
-  previousStepValue: number | null;
-  currentStepValue: number | null;
-  comparisonPreviousStepValue: number | null;
-  comparisonCurrentStepValue: number | null;
+export interface UseBuildFunnelTrendsProps {
+  data: DataSeries[];
+  percentageFormatter: FunnelChartNextProps['percentageFormatter'];
 }
 
-function hasValidValues(params: DropOffCalculationParams): params is {
-  previousStepValue: number;
-  currentStepValue: number;
-  comparisonPreviousStepValue: number;
-  comparisonCurrentStepValue: number;
-} {
-  return Object.values(params).every((value): value is number => value != null);
-}
-
-function calculateDroppedPercentageChange({
-  previousStepValue,
-  currentStepValue,
-  comparisonPreviousStepValue,
-  comparisonCurrentStepValue,
-}: DropOffCalculationParams): number {
-  if (
-    !hasValidValues({
-      previousStepValue,
-      currentStepValue,
-      comparisonPreviousStepValue,
-      comparisonCurrentStepValue,
-    })
-  )
-    return 0;
-
-  const currentDropped = previousStepValue! - currentStepValue!;
-  const comparisonDropped =
-    comparisonPreviousStepValue! - comparisonCurrentStepValue!;
-
-  if (currentDropped === 0) return 0;
-
-  return (
-    ((comparisonDropped - currentDropped) / Math.abs(currentDropped)) * 100
-  );
-}
-
-function formatDroppedTrend(percentageChange: number): MetaDataTrendIndicator {
-  if (percentageChange === 0) {
-    return {
-      value: `${Math.abs(percentageChange).toFixed(1)}%`,
-      trend: 'neutral',
-      direction: 'upward',
-    };
-  }
-
-  return {
-    value: `${Math.abs(percentageChange).toFixed(1)}%`,
-    trend: percentageChange < 0 ? 'negative' : 'positive',
-    direction: percentageChange < 0 ? 'upward' : 'downward',
-  };
-}
-
-export function useBuildFunnelTrends(data: DataSeries[]) {
+export function useBuildFunnelTrends({
+  data,
+  percentageFormatter,
+}: UseBuildFunnelTrendsProps) {
   return useMemo(() => {
     const primarySeries = data.find((series) => !series.isComparison);
     const comparisonSeries = data.find((series) => series.isComparison);
@@ -90,7 +40,9 @@ export function useBuildFunnelTrends(data: DataSeries[]) {
       });
 
       const droppedTrend =
-        index === 0 ? undefined : formatDroppedTrend(droppedPercentageChange);
+        index === 0
+          ? undefined
+          : formatDroppedTrend(droppedPercentageChange, percentageFormatter);
 
       trends[index] = {
         reached: reachedTrend,
@@ -99,5 +51,62 @@ export function useBuildFunnelTrends(data: DataSeries[]) {
     });
 
     return {trends};
-  }, [data]);
+  }, [data, percentageFormatter]);
+}
+
+interface DropOffCalculationParams {
+  previousStepValue: number | null;
+  currentStepValue: number | null;
+  comparisonPreviousStepValue: number | null;
+  comparisonCurrentStepValue: number | null;
+}
+
+function calculateDroppedPercentageChange({
+  previousStepValue,
+  currentStepValue,
+  comparisonPreviousStepValue,
+  comparisonCurrentStepValue,
+}: DropOffCalculationParams): number {
+  const hasEmptyValues =
+    previousStepValue == null ||
+    currentStepValue == null ||
+    comparisonPreviousStepValue == null ||
+    comparisonCurrentStepValue == null;
+
+  if (hasEmptyValues) return 0;
+
+  const currentDropped = previousStepValue! - currentStepValue!;
+  const comparisonDropped =
+    comparisonPreviousStepValue! - comparisonCurrentStepValue!;
+
+  if (currentDropped === 0) return 0;
+
+  return (
+    ((comparisonDropped - currentDropped) / Math.abs(currentDropped)) * 100
+  );
+}
+
+function formatDroppedTrend(
+  percentageChange: number,
+  percentageFormatter: FunnelChartNextProps['percentageFormatter'],
+): MetaDataTrendIndicator {
+  const absolutePercentageChange = Math.abs(percentageChange);
+  const defaultFormattedPercentage = `${absolutePercentageChange}%`;
+  const formattedPercentage = percentageFormatter
+    ? percentageFormatter(absolutePercentageChange)
+    : defaultFormattedPercentage;
+
+  if (percentageChange === 0) {
+    return {
+      value: formattedPercentage,
+      trend: 'neutral',
+      direction: 'upward',
+    };
+  }
+
+  return {
+    value: formattedPercentage,
+    trend: percentageChange < 0 ? 'negative' : 'positive',
+    direction: percentageChange < 0 ? 'upward' : 'downward',
+  };
 }

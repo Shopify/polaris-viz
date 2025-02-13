@@ -10,8 +10,10 @@ import {
   uniqueId,
   LinearGradientWithStops,
   useChartContext,
+  clamp,
 } from '@shopify/polaris-viz-core';
 
+import {SCROLLBAR_WIDTH} from '../TooltipWrapper';
 import {useFunnelBarScaling} from '../../hooks';
 import {
   FunnelChartConnector,
@@ -67,7 +69,7 @@ export function Chart({
   const [tooltipIndex, setTooltipIndex] = useState<number | null>(null);
   const {containerBounds} = useChartContext();
   const dataSeries = data[0].data;
-  const calculatedTrends = useBuildFunnelTrends(data);
+  const calculatedTrends = useBuildFunnelTrends({data, percentageFormatter});
   const trends = calculatedTrends?.trends;
   const xValues = dataSeries.map(({key}) => key) as string[];
   const yValues = dataSeries.map(({value}) => value) as [number, number];
@@ -255,13 +257,25 @@ export function Chart({
 
   function getXPosition(activeDataSeries: DataPoint) {
     const currentX = xScale(activeDataSeries.key.toString()) ?? 0;
+    let xPosition;
 
     if (shouldPositionTooltipRight(activeDataSeries)) {
-      return chartX + currentX + barWidth + TOOLTIP_HORIZONTAL_OFFSET;
+      xPosition = chartX + currentX + barWidth + TOOLTIP_HORIZONTAL_OFFSET;
+    } else {
+      const xOffset = (barWidth - TOOLTIP_WIDTH) / 2;
+      xPosition = chartX + currentX + xOffset;
     }
 
-    const xOffset = (barWidth - TOOLTIP_WIDTH) / 2;
-    return chartX + currentX + xOffset;
+    // Clamp the position to ensure tooltip stays within viewport
+    return clamp({
+      amount: xPosition,
+      min: TOOLTIP_HORIZONTAL_OFFSET,
+      max:
+        window.innerWidth -
+        TOOLTIP_WIDTH -
+        TOOLTIP_HORIZONTAL_OFFSET -
+        SCROLLBAR_WIDTH,
+    });
   }
 
   function getYPosition(activeDataSeries: DataPoint) {

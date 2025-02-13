@@ -1,9 +1,9 @@
 import type {Root} from '@shopify/react-testing';
 import {mount} from '@shopify/react-testing';
 import React from 'react';
-import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import {useBuildFunnelTrends} from '../useBuildFunnelTrends';
+import type {UseBuildFunnelTrendsProps} from '../useBuildFunnelTrends';
 
 function parseData(result: Root<any>) {
   if (!result.domNode?.dataset.data) {
@@ -13,55 +13,61 @@ function parseData(result: Root<any>) {
 }
 
 describe('useBuildFunnelTrends', () => {
-  const mockData: DataSeries[] = [
-    {
-      name: 'Primary',
-      data: [
-        {value: 1000, key: '0'},
-        {value: 800, key: '1'},
-        {value: 400, key: '2'},
-      ],
-      isComparison: false,
-      metadata: {
-        trends: {
-          0: {
-            value: '10.0%',
-            trend: 'positive',
-            direction: 'upward',
-          },
-          1: {
-            value: '20.0%',
-            trend: 'positive',
-            direction: 'upward',
-          },
-          2: {
-            value: '50.0%',
-            trend: 'negative',
-            direction: 'downward',
+  const mockProps: UseBuildFunnelTrendsProps = {
+    data: [
+      {
+        name: 'Primary',
+        data: [
+          {value: 1000, key: '0'},
+          {value: 800, key: '1'},
+          {value: 400, key: '2'},
+        ],
+        isComparison: false,
+        metadata: {
+          trends: {
+            0: {
+              value: '10%',
+              trend: 'positive',
+              direction: 'upward',
+            },
+            1: {
+              value: '20%',
+              trend: 'positive',
+              direction: 'upward',
+            },
+            2: {
+              value: '50%',
+              trend: 'negative',
+              direction: 'downward',
+            },
           },
         },
       },
-    },
-    {
-      name: 'Comparison',
-      data: [
-        {value: 900, key: '0'},
-        {value: 600, key: '1'},
-        {value: 200, key: '2'},
-      ],
-      isComparison: true,
-    },
-  ];
+      {
+        name: 'Comparison',
+        data: [
+          {value: 900, key: '0'},
+          {value: 600, key: '1'},
+          {value: 200, key: '2'},
+        ],
+        isComparison: true,
+      },
+    ],
+    percentageFormatter: (value) => `${value}%`,
+  };
 
   it('returns undefined when primary series is missing', () => {
     function TestComponent() {
-      const result = useBuildFunnelTrends([
-        {
-          name: 'Comparison',
-          data: [],
-          isComparison: true,
-        },
-      ]);
+      const result = useBuildFunnelTrends({
+        ...mockProps,
+        data: [
+          {
+            name: 'Comparison',
+            data: [],
+            isComparison: true,
+          },
+        ],
+      });
 
       return <span data-data={JSON.stringify(result)} />;
     }
@@ -74,13 +80,16 @@ describe('useBuildFunnelTrends', () => {
 
   it('returns undefined when comparison series is missing', () => {
     function TestComponent() {
-      const result = useBuildFunnelTrends([
-        {
-          name: 'Primary',
-          data: [],
-          isComparison: false,
-        },
-      ]);
+      const result = useBuildFunnelTrends({
+        ...mockProps,
+        data: [
+          {
+            name: 'Primary',
+            data: [],
+            isComparison: false,
+          },
+        ],
+      });
 
       return <span data-data={JSON.stringify(result)} />;
     }
@@ -93,7 +102,7 @@ describe('useBuildFunnelTrends', () => {
 
   it('calculates trends correctly for valid data', () => {
     function TestComponent() {
-      const result = useBuildFunnelTrends(mockData);
+      const result = useBuildFunnelTrends(mockProps);
       return <span data-data={JSON.stringify(result)} />;
     }
 
@@ -104,31 +113,31 @@ describe('useBuildFunnelTrends', () => {
       trends: {
         0: {
           reached: {
-            value: '10.0%',
+            value: '10%',
             trend: 'positive',
             direction: 'upward',
           },
         },
         1: {
           reached: {
-            value: '20.0%',
+            value: '20%',
             trend: 'positive',
             direction: 'upward',
           },
           dropped: {
-            value: '50.0%',
+            value: '50%',
             trend: 'positive',
             direction: 'downward',
           },
         },
         2: {
           reached: {
-            value: '50.0%',
+            value: '50%',
             trend: 'negative',
             direction: 'downward',
           },
           dropped: {
-            value: '0.0%',
+            value: '0%',
             trend: 'neutral',
             direction: 'upward',
           },
@@ -139,7 +148,7 @@ describe('useBuildFunnelTrends', () => {
 
   it('does not include dropped trend for the first step', () => {
     function TestComponent() {
-      const result = useBuildFunnelTrends(mockData);
+      const result = useBuildFunnelTrends(mockProps);
       return <span data-data={JSON.stringify(result)} />;
     }
 
@@ -148,7 +157,7 @@ describe('useBuildFunnelTrends', () => {
 
     expect(data.trends[0]).toStrictEqual({
       reached: {
-        value: '10.0%',
+        value: '10%',
         trend: 'positive',
         direction: 'upward',
       },
