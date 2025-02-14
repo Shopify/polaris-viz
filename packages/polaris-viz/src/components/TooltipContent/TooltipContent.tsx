@@ -60,16 +60,18 @@ export function TooltipContent({
                     {key, value, color, isComparison, isHidden},
                     seriesIndex,
                   ) => {
-                    const indexOffset = data[dataIndex - 1]
-                      ? data[dataIndex - 1].data.length
-                      : 0;
+                    if (
+                      data[0].data.length > 2 &&
+                      activeColorVisionIndex !== -1 &&
+                      seriesIndex !== activeColorVisionIndex
+                    ) {
+                      return null;
+                    }
 
                     return (
                       <TooltipRow
                         key={`row-${seriesIndex}`}
-                        activeIndex={activeColorVisionIndex}
                         color={color}
-                        index={seriesIndex + indexOffset}
                         isComparison={isComparison}
                         isHidden={isHidden}
                         label={key}

@@ -55,6 +55,28 @@ jest.mock('@shopify/polaris-viz-core/src/hooks/useChartContext', () => ({
   })),
 }));
 
+jest.mock('../../../hooks/useResizeObserver', () => {
+  return {
+    useResizeObserver: () => {
+      return {
+        setRef: () => {},
+        entry: {
+          contentRect: {
+            width: 100,
+            height: 100,
+          },
+          target: {
+            getBoundingClientRect: () => ({
+              width: 100,
+              height: 100,
+            }),
+          },
+        },
+      };
+    },
+  };
+});
+
 const MOCK_PROPS: Props = {
   annotationsLookupTable: {},
   data: [

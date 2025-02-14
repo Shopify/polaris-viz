@@ -90,32 +90,54 @@ export function renderLinearTooltipContent(
 
       const hasTitle = dataSeries.some(({isHidden}) => isHidden !== true);
 
+      const content = dataSeries
+        .map(
+          ({
+            name,
+            data,
+            color,
+            isComparison,
+            groupIndex,
+            styleOverride,
+            isHidden,
+            metadata,
+          }) => {
+            const item = data[tooltipData.activeIndex];
+
+            if (
+              metadata?.relatedIndex !== activeColorVisionIndex &&
+              activeColorVisionIndex !== -1 &&
+              groupIndex !== activeColorVisionIndex
+            ) {
+              return null;
+            }
+
+            return (
+              <TooltipRow
+                color={color}
+                isComparison={isComparison}
+                isHidden={isHidden}
+                key={`row-${groupIndex}`}
+                label={name}
+                renderSeriesIcon={() => renderSeriesIcon(color, styleOverride)}
+                shape={styleOverride?.tooltip?.shape ?? 'Line'}
+                value={formatters.valueFormatter(item.value ?? 0)}
+              />
+            );
+          },
+        )
+        .filter(Boolean);
+
+      if (content.length === 0) {
+        return null;
+      }
+
       return (
         <TooltipSeries isEmpty={!hasTitle} key={seriesName}>
           {hasTitle && (
             <TooltipSeriesName theme={theme}>{seriesName}</TooltipSeriesName>
           )}
-          {dataSeries.map(
-            ({name, data, color, groupIndex, styleOverride, isHidden}) => {
-              const item = data[tooltipData.activeIndex];
-
-              return (
-                <TooltipRow
-                  activeIndex={activeColorVisionIndex}
-                  color={color}
-                  index={groupIndex}
-                  isHidden={isHidden}
-                  key={`row-${groupIndex}`}
-                  label={name}
-                  renderSeriesIcon={() =>
-                    renderSeriesIcon(color, styleOverride)
-                  }
-                  shape={styleOverride?.tooltip?.shape ?? 'Line'}
-                  value={formatters.valueFormatter(item.value ?? 0)}
-                />
-              );
-            },
-          )}
+          {content}
         </TooltipSeries>
       );
     });
