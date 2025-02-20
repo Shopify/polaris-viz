@@ -1,4 +1,5 @@
 import type {Story} from '@storybook/react';
+import type {DataSeries} from '@shopify/polaris-viz-core';
 
 import type {LineChartProps} from '../LineChart';
 import {LineChart} from '../LineChart';
@@ -22,23 +23,35 @@ export const DEFAULT_PROPS: Partial<LineChartProps> = {
   },
 };
 
-export const DEFAULT_DATA = [
+export const DEFAULT_DATA: DataSeries[] = [
   {
     name: 'Apr 1 – Apr 14, 2020',
     data: [
       {value: 333, key: '2020-04-01T12:00:00'},
-      {value: 797, key: '2020-04-02T12:00:00'},
+      {
+        value: 797,
+        key: '2020-04-02T12:00:00',
+        trend: {value: '123', direction: 'upward', trend: 'positive'},
+      },
       {value: 234, key: '2020-04-03T12:00:00'},
       {value: 534, key: '2020-04-04T12:00:00'},
-      {value: 132, key: '2020-04-05T12:00:00'},
+      {value: 132, key: '2020-04-05T12:00:00', trend: {value: null}},
       {value: 159, key: '2020-04-06T12:00:00'},
       {value: 239, key: '2020-04-07T12:00:00'},
       {value: 708, key: '2020-04-08T12:00:00'},
-      {value: 234, key: '2020-04-09T12:00:00'},
+      {
+        value: 234,
+        key: '2020-04-09T12:00:00',
+        trend: {value: '123', direction: 'downward'},
+      },
       {value: 645, key: '2020-04-10T12:00:00'},
       {value: 543, key: '2020-04-11T12:00:00'},
       {value: 89, key: '2020-04-12T12:00:00'},
-      {value: 849, key: '2020-04-13T12:00:00'},
+      {
+        value: 849,
+        key: '2020-04-13T12:00:00',
+        trend: {value: '123', direction: 'upward', trend: 'negative'},
+      },
       {value: 129, key: '2020-04-14T12:00:00'},
     ],
   },
@@ -46,7 +59,7 @@ export const DEFAULT_DATA = [
     name: 'Previous month',
     data: [
       {value: 709, key: '2020-03-02T12:00:00'},
-      {value: 238, key: '2020-03-01T12:00:00'},
+      {value: 238, key: '2020-03-01T12:00:00', trend: {value: null}},
       {value: 190, key: '2020-03-03T12:00:00'},
       {value: 90, key: '2020-03-04T12:00:00'},
       {value: 237, key: '2020-03-05T12:00:00'},
