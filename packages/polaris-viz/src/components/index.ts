@@ -40,6 +40,7 @@ export {
   TooltipTitle,
   TooltipRow,
   TooltipSeries,
+  getTooltipContentColumnCount,
 } from './TooltipContent';
 export type {TooltipContentProps} from './TooltipContent';
 export {ConicGradientWithStops} from './ConicGradientWithStops';

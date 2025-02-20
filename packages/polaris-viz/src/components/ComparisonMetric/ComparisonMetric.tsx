@@ -1,4 +1,4 @@
-import type {Trend} from 'types';
+import type {Trend} from '@shopify/polaris-viz-core';
 
 import {TrendIndicator} from '../TrendIndicator';
 

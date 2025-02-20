@@ -6,6 +6,7 @@ export type LabelFormatter = (value: string | number | null) => string;
 export interface DataPoint {
   key: number | string;
   value: number | null;
+  trend?: TrendIndicator;
 }
 
 export interface DataSeries {
@@ -30,6 +31,16 @@ interface StyleOverride {
   tooltip?: {
     shape?: Shape;
   };
+}
+
+export type Trend = 'positive' | 'negative' | 'neutral';
+export type TrendDirection = 'upward' | 'downward';
+
+export interface TrendIndicator {
+  accessibilityLabel?: string;
+  direction?: TrendDirection;
+  trend?: Trend;
+  value?: string | null;
 }
 
 export interface DataGroup {

@@ -10,9 +10,9 @@ import {
   TooltipContentContainer,
   TooltipRow,
   TooltipSeries,
-  TooltipSeriesName,
   TooltipTitle,
-} from './components/';
+} from './components';
+import {getTooltipContentColumnCount} from './utilities/get-tooltip-content-column-count';
 
 export interface TooltipContentProps {
   data: TooltipData[];
@@ -50,18 +50,25 @@ export function TooltipContent({
         <Fragment>
           {title != null && <TooltipTitle theme={theme}>{title}</TooltipTitle>}
 
-          {data.map(({data: series, name, shape}, dataIndex) => {
+          {data.map((tooltipData, dataIndex) => {
+            const {data: series, name, shape} = tooltipData;
+
             const hasName = name != null;
             const isEmpty = !hasName && series.length === 0;
 
+            if (isEmpty) {
+              return null;
+            }
+
             return (
-              <TooltipSeries isEmpty={isEmpty} key={dataIndex}>
-                {hasName && (
-                  <TooltipSeriesName theme={theme}>{name}</TooltipSeriesName>
-                )}
+              <TooltipSeries
+                key={dataIndex}
+                columnCount={getTooltipContentColumnCount(tooltipData)}
+                name={name}
+              >
                 {series.map(
                   (
-                    {key, value, color, isComparison, isHidden},
+                    {key, value, color, isComparison, isHidden, trend},
                     seriesIndex,
                   ) => {
                     // This check is for when we are rendering multiple series lines
@@ -69,6 +76,7 @@ export function TooltipContent({
                     // We only want to render the active series line and it's
                     // matching comparison series line.
                     if (
+                      !isHidden &&
                       // If we more than 2 series lines...
                       isMultiSeries &&
                       // and the series is not a comparison series...
@@ -93,12 +101,12 @@ export function TooltipContent({
 
                     return (
                       <TooltipRow
-                        key={`row-${seriesIndex}`}
                         color={color}
                         isComparison={isComparison}
-                        isHidden={isHidden}
+                        key={`row-${seriesIndex}`}
                         label={key}
                         shape={shape}
+                        trend={trend}
                         value={value}
                       />
                     );
