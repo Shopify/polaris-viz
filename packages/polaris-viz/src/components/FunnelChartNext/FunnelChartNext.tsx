@@ -10,6 +10,7 @@ import {ChartContainer} from '../../components/ChartContainer';
 import {ChartSkeleton} from '../';
 
 import {Chart} from './Chart';
+import type {FunnelChartDataSeries} from './types';
 
 const DEFAULT_LABEL_FORMATTER: LabelFormatter = (value) => `${value}`;
 const DEFAULT_TOOLTIP_LABELS = {
@@ -18,6 +19,7 @@ const DEFAULT_TOOLTIP_LABELS = {
 } as const;
 
 export type FunnelChartNextProps = {
+  data: FunnelChartDataSeries[];
   tooltipLabels?: {
     reached: string;
     dropped: string;

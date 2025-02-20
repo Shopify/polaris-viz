@@ -20,6 +20,7 @@ interface Props {
     activeColorVisionIndex: number;
   }) => ReactNode;
   maxWidth: number;
+  minWidth?: number;
   theme: string;
   color?: string;
   ignoreColorVisionEvents?: boolean;
@@ -31,6 +32,7 @@ export function TooltipContentContainer({
   theme,
   color,
   ignoreColorVisionEvents = false,
+  minWidth,
 }: Props) {
   const {isFirefox} = useBrowserCheck();
 
@@ -67,6 +69,7 @@ export function TooltipContentContainer({
               isFirefox ? 1 : TOOLTIP_BG_OPACITY,
             ),
         maxWidth,
+        minWidth,
         fontFamily: FONT_FAMILY,
       }}
     >
