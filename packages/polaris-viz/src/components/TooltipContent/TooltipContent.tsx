@@ -9,9 +9,9 @@ import {
   TooltipContentContainer,
   TooltipRow,
   TooltipSeries,
-  TooltipSeriesName,
   TooltipTitle,
-} from './components/';
+  getColumnCount,
+} from './components';
 
 export interface TooltipContentProps {
   data: TooltipData[];
@@ -46,36 +46,44 @@ export function TooltipContent({
         <Fragment>
           {title != null && <TooltipTitle theme={theme}>{title}</TooltipTitle>}
 
-          {data.map(({data: series, name, shape}, dataIndex) => {
+          {data.map((tooltipData, dataIndex) => {
+            const {data: series, name, shape} = tooltipData;
+
             const hasName = name != null;
             const isEmpty = !hasName && series.length === 0;
 
+            if (isEmpty) {
+              return null;
+            }
+
             return (
-              <TooltipSeries isEmpty={isEmpty} key={dataIndex}>
-                {hasName && (
-                  <TooltipSeriesName theme={theme}>{name}</TooltipSeriesName>
-                )}
+              <TooltipSeries
+                key={dataIndex}
+                columnCount={getColumnCount(tooltipData)}
+                name={name}
+              >
                 {series.map(
                   (
-                    {key, value, color, isComparison, isHidden},
+                    {key, value, color, isComparison, isHidden, trend},
                     seriesIndex,
                   ) => {
                     if (
                       data[0].data.length > 2 &&
                       activeColorVisionIndex !== -1 &&
-                      seriesIndex !== activeColorVisionIndex
+                      seriesIndex !== activeColorVisionIndex &&
+                      !isHidden
                     ) {
                       return null;
                     }
 
                     return (
                       <TooltipRow
-                        key={`row-${seriesIndex}`}
                         color={color}
                         isComparison={isComparison}
-                        isHidden={isHidden}
+                        key={`row-${seriesIndex}`}
                         label={key}
                         shape={shape}
+                        trend={trend}
                         value={value}
                       />
                     );

@@ -3,3 +3,4 @@ export {TooltipContentContainer} from './TooltipContentContainer';
 export {TooltipTitle} from './TooltipTitle';
 export {TooltipSeriesName} from './TooltipSeriesName';
 export {TooltipSeries} from './TooltipSeries';
+export {getColumnCount} from './TooltipRow';
