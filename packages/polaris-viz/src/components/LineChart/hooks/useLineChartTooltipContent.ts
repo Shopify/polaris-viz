@@ -46,7 +46,7 @@ export function useLineChartTooltipContent({
         if (!seriesData[activeIndex]) {
           return;
         }
-        const {value} = seriesData[activeIndex];
+        const {value, trend} = seriesData[activeIndex];
 
         tooltipData[0].data.push({
           key: `${seriesNameFormatter(name ?? '')}`,
@@ -54,6 +54,7 @@ export function useLineChartTooltipContent({
           color: color!,
           isComparison,
           isHidden: hiddenIndexes.includes(index),
+          trend,
         });
       });
 

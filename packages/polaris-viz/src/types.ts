@@ -6,6 +6,7 @@ import type {
   Shape,
   LabelFormatter,
   LineStyle,
+  TrendIndicator,
 } from '@shopify/polaris-viz-core';
 import type {Series, SeriesPoint} from 'd3-shape';
 import type {ScaleLinear} from 'd3-scale';
@@ -75,6 +76,7 @@ export interface RenderTooltipDataPoint {
   key: number | string;
   value: number | string | null;
   isHidden?: boolean;
+  trend?: TrendIndicator;
 }
 
 export interface TooltipFormatters {
@@ -104,6 +106,7 @@ export interface TooltipData {
     color?: Color;
     isComparison?: boolean;
     isHidden?: boolean;
+    trend?: TrendIndicatorProps;
   }[];
   name?: string;
 }
@@ -240,9 +243,6 @@ export interface InnerValueContents {
 }
 
 export type RenderInnerValueContent = (values: InnerValueContents) => ReactNode;
-
-export type Trend = 'positive' | 'negative' | 'neutral';
-export type TrendDirection = 'upward' | 'downward';
 
 export interface ColorVisionEventReturn extends CustomEvent {
   detail: {

@@ -158,4 +158,7 @@ export type {
   TargetLine,
   ErrorBoundaryResponse,
   Position,
+  TrendIndicator,
+  Trend,
+  TrendDirection,
 } from './types';

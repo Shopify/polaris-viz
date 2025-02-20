@@ -3,7 +3,7 @@ import type {DataSeries} from '@shopify/polaris-viz-core';
 export function fillMissingDataPoints(
   dataSeries: DataSeries[],
   isLinearData: boolean,
-) {
+): DataSeries[] {
   if (isLinearData) {
     const areAnyComparison = dataSeries.some(
       ({isComparison}) => isComparison === true,

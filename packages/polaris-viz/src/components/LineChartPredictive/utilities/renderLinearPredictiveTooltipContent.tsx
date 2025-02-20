@@ -60,7 +60,8 @@ export function renderLinearPredictiveTooltipContent(
       if (
         isComparison !== true &&
         activeColorVisionIndex !== -1 &&
-        index !== activeColorVisionIndex
+        index !== activeColorVisionIndex &&
+        !isHidden
       ) {
         return null;
       }
@@ -68,7 +69,6 @@ export function renderLinearPredictiveTooltipContent(
       return (
         <TooltipRow
           color={color}
-          isHidden={isHidden}
           key={`row-${seriesIndex}`}
           label={formatters.keyFormatter(key)}
           renderSeriesIcon={() => renderSeriesIcon(color, isComparison)}

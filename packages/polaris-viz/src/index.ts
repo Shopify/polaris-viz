@@ -54,8 +54,6 @@ export type {
   InnerValueContents,
   RenderInnerValueContent,
   TooltipData,
-  Trend,
-  TrendDirection,
   RenderTooltipContentData,
   RenderLegendContent,
   TooltipOptions,
@@ -91,6 +89,8 @@ export type {
   GradientStop,
   DataPoint,
   ChartState,
+  Trend,
+  TrendDirection,
 } from '@shopify/polaris-viz-core';
 
 export {
