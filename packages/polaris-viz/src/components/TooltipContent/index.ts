@@ -6,4 +6,5 @@ export {
   TooltipSeriesName,
   TooltipRow,
   TooltipSeries,
+  getColumnCount,
 } from './components';

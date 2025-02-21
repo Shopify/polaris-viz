@@ -1,36 +1,38 @@
 import {useTheme} from '@shopify/polaris-viz-core';
-import type {Shape, Color} from '@shopify/polaris-viz-core';
+import type {
+  Shape,
+  Color,
+  TrendIndicator as TrendIndicatorType,
+} from '@shopify/polaris-viz-core';
+import type {TooltipData} from 'types';
 
+import {TrendIndicator} from '../../../TrendIndicator';
 import {PREVIEW_ICON_SIZE} from '../../../../constants';
 import {SeriesIcon} from '../../../shared/SeriesIcon';
 import {TITLE_MARGIN} from '../../constants';
 
 import styles from './TooltipRow.scss';
 
-interface Props {
+export interface Props {
   label: string;
   shape: Shape;
   value: string;
   color?: Color;
   isComparison?: boolean;
-  isHidden?: boolean;
   renderSeriesIcon?: () => React.ReactNode;
+  trend?: TrendIndicatorType;
 }
 
 export function TooltipRow({
   color,
   isComparison = false,
-  isHidden = false,
   label,
   renderSeriesIcon,
   shape,
+  trend,
   value,
 }: Props) {
   const selectedTheme = useTheme();
-
-  if (isHidden) {
-    return null;
-  }
 
   return (
     <div className={styles.Row}>
@@ -64,6 +66,20 @@ export function TooltipRow({
       >
         {value}
       </span>
+      {trend != null && (
+        <div className={styles.Trend}>
+          <TrendIndicator {...trend} />
+        </div>
+      )}
     </div>
   );
+}
+
+const DEFAULT_COLUMN_COUNT = 2;
+
+export function getColumnCount(data: TooltipData) {
+  const hasTrend = data.data.some(({trend}) => trend != null);
+  const hasColor = data.data.some(({color}) => color != null);
+
+  return DEFAULT_COLUMN_COUNT + (hasColor ? 1 : 0) + (hasTrend ? 1 : 0);
 }

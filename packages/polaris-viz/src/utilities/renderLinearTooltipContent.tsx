@@ -3,14 +3,18 @@ import type {ReactNode} from 'react';
 import {Fragment} from 'react';
 
 import {
+  getColumnCount,
   TooltipSeries,
   TooltipContentContainer,
-  TooltipSeriesName,
   TooltipTitle,
   TooltipRow,
   LinePreview,
 } from '../components';
-import type {RenderTooltipContentData, TooltipFormatters} from '../types';
+import type {
+  RenderTooltipContentData,
+  TooltipData,
+  TooltipFormatters,
+} from '../types';
 
 interface Group {
   title: string;
@@ -107,7 +111,8 @@ export function renderLinearTooltipContent(
             if (
               metadata?.relatedIndex !== activeColorVisionIndex &&
               activeColorVisionIndex !== -1 &&
-              groupIndex !== activeColorVisionIndex
+              groupIndex !== activeColorVisionIndex &&
+              !isHidden
             ) {
               return null;
             }
@@ -116,7 +121,6 @@ export function renderLinearTooltipContent(
               <TooltipRow
                 color={color}
                 isComparison={isComparison}
-                isHidden={isHidden}
                 key={`row-${groupIndex}`}
                 label={name}
                 renderSeriesIcon={() => renderSeriesIcon(color, styleOverride)}
@@ -128,15 +132,16 @@ export function renderLinearTooltipContent(
         )
         .filter(Boolean);
 
-      if (content.length === 0) {
+      if (content.length === 0 || !hasTitle) {
         return null;
       }
 
       return (
-        <TooltipSeries isEmpty={!hasTitle} key={seriesName}>
-          {hasTitle && (
-            <TooltipSeriesName theme={theme}>{seriesName}</TooltipSeriesName>
-          )}
+        <TooltipSeries
+          key={seriesName}
+          name={seriesName.toString()}
+          columnCount={getColumnCount(tooltipData.data[0] as TooltipData)}
+        >
           {content}
         </TooltipSeries>
       );

@@ -1,7 +1,7 @@
+import type {TrendIndicator as TrendIndicatorType} from '@shopify/polaris-viz-core';
 import {useTheme, FONT_FAMILY} from '@shopify/polaris-viz-core';
 
 import {getFontSize} from '../../utilities/getFontSize';
-import type {Trend, TrendDirection} from '../../types';
 
 import {ArrowDown, ArrowUp, Svg} from './components/';
 import {estimateTrendIndicatorWidth} from './utilities/estimateTrendIndicatorWidth';
@@ -16,13 +16,9 @@ import {
 
 const TREND_FONT_WEIGHT = 650;
 
-export interface TrendIndicatorProps {
-  accessibilityLabel?: string;
-  direction?: TrendDirection;
+export interface TrendIndicatorProps extends TrendIndicatorType {
   tabIndex?: number;
   theme?: string;
-  trend?: Trend;
-  value?: string;
 }
 
 export function TrendIndicator({
