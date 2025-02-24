@@ -6,7 +6,9 @@ import {
   BORDER_RADIUS,
   useChartContext,
 } from '@shopify/polaris-viz-core';
+import type {TooltipAttrData} from 'components/TooltipWrapper/utilities/getTooltipDataAttr';
 
+import {getTooltipDataAttr} from '../../TooltipWrapper';
 import {getFontSize} from '../../../utilities/getFontSize';
 import {useWatchColorVisionEvents, useTheme} from '../../../hooks';
 import {estimateStringWidthWithOffset, getBarId} from '../../../utilities';
@@ -30,7 +32,11 @@ export interface HorizontalStackedBarsProps {
   animationDelay: number;
   ariaLabel: string;
   barHeight: number;
+  chartYPosition: number;
+  chartXPosition: number;
+  containerWidth: number;
   dataKeys: string[];
+  groupHeight: number;
   groupIndex: number;
   id: string;
   name: string;
@@ -65,7 +71,11 @@ export function HorizontalStackedBars({
   activeGroupIndex,
   animationDelay,
   barHeight,
+  chartYPosition,
+  chartXPosition,
+  containerWidth,
   dataKeys,
+  groupHeight,
   groupIndex,
   id,
   name,
@@ -76,9 +86,11 @@ export function HorizontalStackedBars({
   labelFormatter,
 }: HorizontalStackedBarsProps) {
   const selectedTheme = useTheme();
-  const {theme} = useChartContext();
+  const {theme, containerBounds} = useChartContext();
   const [activeBarIndex, setActiveBarIndex] = useState(-1);
   const hideGroupLabel = selectedTheme.groupLabel.hide;
+
+  const shouldRenderLabels = checkIfShouldRenderLabels();
 
   const fontSize = getFontSize();
 
@@ -120,7 +132,9 @@ export function HorizontalStackedBars({
   const isNegative = groupSum && groupSum < 0;
   const label = labelFormatter(groupSum);
 
-  const labelWidth = estimateStringWidthWithOffset(`${label}`, fontSize);
+  const labelWidth = shouldRenderLabels
+    ? estimateStringWidthWithOffset(`${label}`, fontSize)
+    : 0;
 
   const minGroupStartPoint = stackedValues[groupIndex].reduce((min, item) => {
     const start = item[0];
@@ -136,6 +150,24 @@ export function HorizontalStackedBars({
     ? xScale(minGroupStartPoint) - labelWidth - HORIZONTAL_BAR_LABEL_OFFSET
     : xScale(maxGroupEndPoint) + HORIZONTAL_BAR_LABEL_OFFSET;
 
+  const tooltipX = getTooltipX();
+
+  const tooltipAttrData: TooltipAttrData = {
+    index: groupIndex,
+    x: tooltipX,
+    y:
+      containerBounds.y +
+      chartYPosition +
+      groupHeight * groupIndex +
+      groupHeight / 2,
+    seriesBounds: {
+      x: containerBounds.x + chartXPosition,
+      y: containerBounds.y + chartYPosition + groupHeight * groupIndex,
+      width: tooltipX,
+      height: groupHeight,
+    },
+  };
+
   return (
     <g
       style={{
@@ -143,6 +175,13 @@ export function HorizontalStackedBars({
       }}
       aria-hidden="true"
     >
+      <rect
+        {...getTooltipDataAttr(tooltipAttrData)}
+        y={-HORIZONTAL_GROUP_LABEL_HEIGHT}
+        height={groupHeight}
+        width={containerWidth}
+      />
+
       {stackedValues[groupIndex].map((item, seriesIndex) => {
         const [start, end] = item;
 
@@ -180,6 +219,7 @@ export function HorizontalStackedBars({
                 key={`${name}${barId}`}
                 seriesIndex={seriesIndex}
                 setActiveBarIndex={setActiveBarIndex}
+                tooltipAttrData={tooltipAttrData}
                 width={width}
                 x={x}
                 zeroPosition={xScale(0)}
@@ -188,7 +228,7 @@ export function HorizontalStackedBars({
           </Fragment>
         );
       })}
-      {!isSimple && !hideGroupLabel && (
+      {shouldRenderLabels && (
         <LabelWrapper animationDelay={animationDelay} x={groupLabelX}>
           <Label
             barHeight={barHeight}
@@ -202,4 +242,48 @@ export function HorizontalStackedBars({
       )}
     </g>
   );
+
+  function getTooltipX() {
+    let tooltipX = containerBounds.x + chartXPosition;
+    const stackedWidth = getStackedWidth(stackedValues[groupIndex], xScale);
+
+    if (shouldRenderLabels) {
+      tooltipX += groupLabelX + labelWidth;
+    } else {
+      tooltipX += stackedWidth;
+    }
+
+    if (isNegative) {
+      tooltipX = containerBounds.x + chartXPosition + xScale(0) - stackedWidth;
+    }
+
+    return tooltipX;
+  }
+
+  function checkIfShouldRenderLabels() {
+    if (isSimple) {
+      return true;
+    }
+
+    return !hideGroupLabel;
+  }
+}
+
+function getStackedWidth(stackedValues: FormattedStackedSeries, xScale) {
+  let start = 0;
+  let end = 0;
+
+  stackedValues.forEach((range) => {
+    const [stackStart, stackEnd] = range;
+    if (stackStart >= 0 && stackEnd >= 0) {
+      if (stackStart < start) {
+        start = stackStart;
+      }
+      if (stackEnd > end) {
+        end = stackEnd;
+      }
+    }
+  });
+
+  return Math.abs(xScale(end) - xScale(start));
 }

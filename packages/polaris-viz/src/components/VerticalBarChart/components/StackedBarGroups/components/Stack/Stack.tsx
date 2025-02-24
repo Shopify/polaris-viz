@@ -10,6 +10,8 @@ import {
 } from '@shopify/polaris-viz-core';
 import {useSpring, animated} from '@react-spring/web';
 
+import type {TooltipAttrData} from '../../../../../TooltipWrapper/utilities/getTooltipDataAttr';
+import {getTooltipDataAttr} from '../../../../../TooltipWrapper/utilities/getTooltipDataAttr';
 import type {
   FormattedStackedSeries,
   StackedBarGapDirections,
@@ -31,6 +33,7 @@ interface StackProps {
   gaps: {[key: number]: StackedBarGapDirections};
   groupIndex: number;
   id: string;
+  tooltipData: TooltipAttrData;
   width: number;
   x: number | undefined;
   yScale: ScaleLinear<number, number>;
@@ -43,6 +46,7 @@ export function Stack({
   gaps,
   groupIndex,
   id,
+  tooltipData,
   width,
   x,
   yScale,
@@ -114,15 +118,16 @@ export function Stack({
               aria-hidden="true"
             />
             <rect
+              {...getColorVisionEventAttrs({
+                type: COLOR_VISION_SINGLE_ITEM,
+                index,
+              })}
+              {...getTooltipDataAttr(tooltipData)}
               className={styles.Bar}
               fill="transparent"
               height={height + STACKED_BAR_GAP}
               width={width}
               transform={`translate(${x},${y})`}
-              {...getColorVisionEventAttrs({
-                type: COLOR_VISION_SINGLE_ITEM,
-                index,
-              })}
               tabIndex={-1}
               role="listitem"
               aria-label={ariaLabel}

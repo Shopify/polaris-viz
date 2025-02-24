@@ -43,5 +43,5 @@ export function useHorizontalSeriesColors(data: DataSeries[]) {
     return seriesColors.slice(0, data.length);
   }, [data, selectedTheme]);
 
-  return {longestSeriesCount, seriesColors, longestSeriesIndex};
+  return {longestSeriesCount, seriesColors};
 }

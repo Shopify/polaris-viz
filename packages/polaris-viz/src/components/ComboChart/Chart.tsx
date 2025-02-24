@@ -1,29 +1,25 @@
 import {useState} from 'react';
 import * as React from 'react';
 import {
-  ChartMargin,
-  DataType,
   COLOR_VISION_SINGLE_ITEM,
   useTheme,
   useChartPositions,
   LINE_HEIGHT,
-  InternalChartType,
 } from '@shopify/polaris-viz-core';
 import type {
   DataGroup,
-  BoundingRect,
+  // BoundingRect,
   XAxisOptions,
   LabelFormatter,
 } from '@shopify/polaris-viz-core';
 
-import {useVerticalBarChart} from '../VerticalBarChart';
+// import {useVerticalBarChart} from '../VerticalBarChart';
 import {ChartElements} from '../ChartElements';
 import {
   Annotations,
   checkAvailableAnnotations,
   YAxisAnnotations,
 } from '../Annotations';
-import {TooltipWrapper} from '../TooltipWrapper';
 import type {
   AnnotationLookupTable,
   RenderLegendContent,
@@ -43,7 +39,7 @@ import {useDualAxisScale} from './hooks/useDualAxisScale';
 import {useXScale} from './hooks/useXScale';
 import {ComboBarChart, ComboLineChart, AxisLabel} from './components';
 import {useSplitDataForCharts} from './hooks/useSplitDataForCharts';
-import {useComboChartTooltipContent} from './hooks/useComboChartTooltipContent';
+// import {useComboChartTooltipContent} from './hooks/useComboChartTooltipContent';
 import {useComboChartPositions} from './hooks/useComboChartPositions';
 
 export interface ChartProps {
@@ -60,7 +56,7 @@ export interface ChartProps {
 export function Chart({
   annotationsLookupTable,
   data,
-  renderTooltipContent,
+  // renderTooltipContent,
   showLegend,
   theme,
   xAxisOptions,
@@ -74,8 +70,8 @@ export function Chart({
   const colors = useThemeSeriesColorsForDataGroup(data, selectedTheme);
 
   const [xAxisHeight, setXAxisHeight] = useState(LINE_HEIGHT);
-  const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [, setSvgRef] = useState<SVGSVGElement | null>(null);
+  const [activeIndex] = useState<number | null>(null);
   const [annotationsHeight, setAnnotationsHeight] = useState(0);
 
   const {legend, setLegendDimensions, height, width} = useLegend({
@@ -156,29 +152,29 @@ export function Chart({
   const hideXAxis = false;
   const labelWidth = drawableWidth / labels.length;
 
-  const chartBounds: BoundingRect = {
-    width,
-    height,
-    x: chartXPosition,
-    y: chartYPosition,
-  };
+  // const chartBounds: BoundingRect = {
+  //   width,
+  //   height,
+  //   x: chartXPosition,
+  //   y: chartYPosition,
+  // };
 
-  const getTooltipMarkup = useComboChartTooltipContent({
-    renderTooltipContent,
-    data,
-    seriesColors: colors,
-    seriesNameFormatter,
-  });
+  // const getTooltipMarkup = useComboChartTooltipContent({
+  //   renderTooltipContent,
+  //   data,
+  //   seriesColors: colors,
+  //   seriesNameFormatter,
+  // });
 
   const {hasXAxisAnnotations, hasYAxisAnnotations} = checkAvailableAnnotations(
     annotationsLookupTable,
   );
 
-  const {xScale: barXScale} = useVerticalBarChart({
-    data: barChartData.series,
-    drawableWidth,
-    labels,
-  });
+  // const {xScale: barXScale} = useVerticalBarChart({
+  //   data: barChartData.series,
+  //   drawableWidth,
+  //   labels,
+  // });
 
   return (
     <ChartElements.Div height={height} width={width}>
@@ -316,21 +312,6 @@ export function Chart({
           />
         )}
       </ChartElements.Svg>
-
-      <TooltipWrapper
-        bandwidth={labelWidth}
-        chartBounds={chartBounds}
-        chartType={InternalChartType.Bar}
-        data={barChartData.series}
-        focusElementDataType={DataType.BarGroup}
-        getMarkup={getTooltipMarkup}
-        longestSeriesIndex={0}
-        margin={ChartMargin}
-        onIndexChange={(index) => setActiveIndex(index)}
-        parentElement={svgRef}
-        xScale={barXScale}
-        yScale={barYScale}
-      />
 
       {showLegend && (
         <LegendContainer

@@ -1,7 +1,6 @@
 import {useMemo, useState} from 'react';
 import {
   DataType,
-  getColorVisionEventAttrs,
   COLOR_VISION_GROUP_ITEM,
   getColorVisionStylesForActiveIndex,
   LOAD_ANIMATION_DURATION,
@@ -13,12 +12,8 @@ import type {
   YAxisOptions,
 } from '@shopify/polaris-viz-core';
 
-import {
-  HORIZONTAL_GROUP_LABEL_HEIGHT,
-  HORIZONTAL_SPACE_BETWEEN_SINGLE,
-} from '../../../constants';
 import {useWatchColorVisionEvents} from '../../../hooks';
-import type {FormattedStackedSeries} from '../../../types';
+import type {FormattedStackedSeries, LongestLabel} from '../../../types';
 import {GroupLabel} from '../GroupLabel';
 import {HorizontalStackedBars} from '../HorizontalStackedBars';
 import {HorizontalBars} from '../HorizontalBars';
@@ -29,13 +24,17 @@ export interface HorizontalGroupProps {
   areAllNegative: boolean;
   ariaLabel: string;
   barHeight: number;
+  chartXPosition: number;
+  chartYPosition: number;
   containerWidth: number;
   data: DataSeries[];
   groupHeight: number;
+  highestValueForSeries: number[];
   id: string;
   index: number;
   isSimple: boolean;
   isStacked: boolean;
+  longestLabel: LongestLabel;
   name: string;
   stackedValues: FormattedStackedSeries[];
   xAxisOptions: Required<XAxisOptions>;
@@ -48,6 +47,8 @@ export function HorizontalGroup({
   areAllNegative,
   ariaLabel,
   barHeight,
+  chartXPosition,
+  chartYPosition,
   containerWidth,
   data,
   groupHeight,
@@ -58,8 +59,8 @@ export function HorizontalGroup({
   name,
   stackedValues,
   xAxisOptions,
-  yAxisOptions,
   xScale,
+  yAxisOptions,
   zeroPosition,
 }: HorizontalGroupProps) {
   const [activeGroupIndex, setActiveGroupIndex] = useState(-1);
@@ -75,16 +76,6 @@ export function HorizontalGroup({
     return data.map(({name}) => name ?? '');
   }, [data]);
 
-  const rowHeight = useMemo(() => {
-    const barPlusSpaceHeight = barHeight + HORIZONTAL_SPACE_BETWEEN_SINGLE;
-
-    if (isStacked) {
-      return HORIZONTAL_GROUP_LABEL_HEIGHT + barPlusSpaceHeight;
-    }
-
-    return HORIZONTAL_GROUP_LABEL_HEIGHT + barPlusSpaceHeight * data.length;
-  }, [barHeight, data.length, isStacked]);
-
   const animationDelay =
     index * (LOAD_ANIMATION_DURATION / data[0].data.length);
 
@@ -94,10 +85,6 @@ export function HorizontalGroup({
         activeIndex: activeGroupIndex,
         index,
       })}
-      {...getColorVisionEventAttrs({
-        type: COLOR_VISION_GROUP_ITEM,
-        index,
-      })}
       data-type={DataType.BarGroup}
       data-index={index}
       aria-hidden="false"
@@ -105,13 +92,6 @@ export function HorizontalGroup({
       role="list"
       className={style.Group}
     >
-      <rect
-        fill="transparent"
-        height={groupHeight}
-        width={containerWidth}
-        y={-(groupHeight - rowHeight) / 2}
-      />
-
       <GroupLabel
         areAllNegative={areAllNegative}
         containerWidth={containerWidth}
@@ -125,8 +105,12 @@ export function HorizontalGroup({
           animationDelay={animationDelay}
           ariaLabel={ariaLabel}
           barHeight={barHeight}
+          chartYPosition={chartYPosition}
+          chartXPosition={chartXPosition}
+          containerWidth={containerWidth}
           dataKeys={dataKeys}
           groupIndex={index}
+          groupHeight={groupHeight}
           id={id}
           name={name}
           stackedValues={stackedValues}
@@ -140,8 +124,11 @@ export function HorizontalGroup({
           animationDelay={animationDelay}
           activeGroupIndex={activeGroupIndex}
           barHeight={barHeight}
+          chartYPosition={chartYPosition}
+          chartXPosition={chartXPosition}
           data={data}
           groupIndex={index}
+          groupHeight={groupHeight}
           id={id}
           isSimple={isSimple}
           labelFormatter={xAxisOptions.labelFormatter}

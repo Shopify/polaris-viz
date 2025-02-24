@@ -8,6 +8,10 @@ import {
   getRoundedRectPath,
 } from '@shopify/polaris-viz-core';
 
+// eslint-disable-next-line @shopify/strict-component-boundaries
+import type {TooltipAttrData} from '../../../../TooltipWrapper/utilities/getTooltipDataAttr';
+// eslint-disable-next-line @shopify/strict-component-boundaries
+import {getTooltipDataAttr} from '../../../../TooltipWrapper/utilities/getTooltipDataAttr';
 import {useBarSpringConfig} from '../../../../../hooks/useBarSpringConfig';
 
 export interface StackedBarProps {
@@ -16,6 +20,7 @@ export interface StackedBarProps {
   width: number;
   setActiveBarIndex: Dispatch<SetStateAction<number>>;
   seriesIndex: number;
+  tooltipAttrData: TooltipAttrData;
   height: number;
   color: string;
   borderRadius: string;
@@ -33,6 +38,7 @@ export function StackedBar({
   height,
   seriesIndex,
   setActiveBarIndex,
+  tooltipAttrData,
   width,
   x,
   zeroPosition,
@@ -77,6 +83,7 @@ export function StackedBar({
           type: COLOR_VISION_SINGLE_ITEM,
           index: seriesIndex,
         })}
+        {...getTooltipDataAttr(tooltipAttrData)}
         aria-label={ariaLabel}
         role="img"
         tabIndex={-1}
