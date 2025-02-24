@@ -49,6 +49,10 @@ const MOCK_PROPS: HorizontalStackedBarsProps = {
   animationDelay: 0,
   ariaLabel: '',
   barHeight: 20,
+  chartXPosition: 0,
+  chartYPosition: 0,
+  containerWidth: 100,
+  groupHeight: 20,
   dataKeys: ['Group 1', 'Group 2', 'Group 3'],
   groupIndex: 0,
   id: 'id',
@@ -150,21 +154,20 @@ describe('Zero Value', () => {
   });
 
   describe('Label', () => {
-    it('renders <Label /> when isSimple is false and hideGroupLabel is false', () => {
+    it('renders <Label /> when isSimple is true', () => {
       const chart = mountWithProvider(
         <svg>
-          <HorizontalStackedBars {...MOCK_PROPS} />
+          <HorizontalStackedBars {...MOCK_PROPS} isSimple />
         </svg>,
-        mockDefaultTheme({groupLabel: {hide: false}}),
       );
 
       expect(chart).toContainReactComponent(Label);
     });
 
-    it('does not render <Label /> when isSimple and hideGroup is true', () => {
+    it('does not render <Label /> when isSimple is false and hideGroupLabel is true', () => {
       const chart = mountWithProvider(
         <svg>
-          <HorizontalStackedBars {...MOCK_PROPS} isSimple />
+          <HorizontalStackedBars {...MOCK_PROPS} isSimple={false} />
         </svg>,
         mockDefaultTheme({groupLabel: {hide: true}}),
       );
@@ -172,15 +175,15 @@ describe('Zero Value', () => {
       expect(chart).not.toContainReactComponent(Label);
     });
 
-    it('does not render <Label /> when isSimple and hideGroup is false', () => {
+    it('renders <Label /> when isSimple is false and hideGroupLabel is false', () => {
       const chart = mountWithProvider(
         <svg>
-          <HorizontalStackedBars {...MOCK_PROPS} isSimple />
+          <HorizontalStackedBars {...MOCK_PROPS} isSimple={false} />
         </svg>,
         mockDefaultTheme({groupLabel: {hide: false}}),
       );
 
-      expect(chart).not.toContainReactComponent(Label);
+      expect(chart).toContainReactComponent(Label);
     });
   });
 

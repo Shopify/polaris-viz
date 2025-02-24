@@ -39,6 +39,8 @@ export function ComboBarChart({
 
   return (
     <VerticalBarGroup
+      chartXPosition={0}
+      chartYPosition={0}
       colors={colors}
       data={data.series}
       drawableHeight={drawableHeight}

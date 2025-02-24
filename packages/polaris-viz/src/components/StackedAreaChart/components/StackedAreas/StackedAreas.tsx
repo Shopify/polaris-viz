@@ -1,3 +1,4 @@
+import type {ReactNode} from 'react';
 import {Fragment, useMemo, useState} from 'react';
 import {area, line} from 'd3-shape';
 import type {ScaleLinear} from 'd3-scale';
@@ -26,6 +27,7 @@ interface Props {
   xScale: ScaleLinear<number, number>;
   yScale: ScaleLinear<number, number>;
   theme: string;
+  tooltipAreas: ReactNode;
 }
 
 export function StackedAreas({
@@ -35,6 +37,7 @@ export function StackedAreas({
   colors,
   theme,
   zeroLineValues,
+  tooltipAreas,
 }: Props) {
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
   const previousStackedValues = usePrevious(stackedValues);
@@ -85,6 +88,7 @@ export function StackedAreas({
 
   return (
     <Fragment>
+      {tooltipAreas}
       {stackedValues.map((data, index) => {
         const dataIsValidForAnimation =
           !previousStackedValues ||
@@ -106,6 +110,7 @@ export function StackedAreas({
             key={`${id}-${index}`}
             lineGenerator={lineGenerator}
             selectedTheme={selectedTheme}
+            tooltipAreas={tooltipAreas}
           />
         );
       })}

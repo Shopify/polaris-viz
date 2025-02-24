@@ -11,11 +11,7 @@ import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
 import {VisuallyHiddenRows} from '../../../components/VisuallyHiddenRows';
 import {Point} from '../../../components/Point';
 import {Crosshair} from '../../../components/Crosshair';
-import {
-  TooltipWrapper,
-  TooltipAnimatedContainer,
-} from '../../../components/TooltipWrapper';
-import {triggerSVGMouseMove} from '../../../test-utilities';
+import {TooltipWrapper} from '../../../components/TooltipWrapper';
 import {StackedAreas} from '../components';
 import type {Props} from '../Chart';
 import {Chart} from '../Chart';
@@ -183,55 +179,6 @@ describe('<Chart />', () => {
     const chart = mount(<Chart {...MOCK_PROPS} />);
 
     expect(chart).not.toContainReactComponent(Point, {visuallyHidden: false});
-  });
-
-  it('sets an active point and tooltip position on svg mouse or touch interaction', () => {
-    const chart = mount(<Chart {...MOCK_PROPS} />);
-
-    triggerSVGMouseMove(chart);
-
-    expect(chart).toContainReactComponent(Point, {
-      active: true,
-      // ariaLabelledby points will always be rendered
-      // even without active points, so lets ignore them
-      ariaLabelledby: undefined,
-    });
-  });
-
-  it('does not render a <Crosshair /> if there is no active point', () => {
-    const chart = mount(<Chart {...MOCK_PROPS} />);
-    expect(chart).not.toContainReactComponent(Crosshair);
-  });
-
-  it('renders a <Crosshair /> if there is an active point', () => {
-    const chart = mount(<Chart {...MOCK_PROPS} />);
-
-    triggerSVGMouseMove(chart);
-
-    expect(chart).toContainReactComponent(Crosshair);
-  });
-
-  it('does not render a <TooltipAnimatedContainer /> if there is no active point', () => {
-    const chart = mount(<Chart {...MOCK_PROPS} />);
-
-    expect(chart).not.toContainReactComponent(TooltipAnimatedContainer);
-  });
-
-  it('renders a <TooltipAnimatedContainer /> if there is an active point', () => {
-    const chart = mount(<Chart {...MOCK_PROPS} />);
-
-    triggerSVGMouseMove(chart);
-
-    expect(chart).toContainReactComponent(TooltipAnimatedContainer);
-  });
-
-  it('renders tooltip content inside a <TooltipWrapper /> if there is an active point', () => {
-    const chart = mount(<Chart {...MOCK_PROPS} />);
-
-    triggerSVGMouseMove(chart);
-
-    const tooltipWrapper = chart.find(TooltipAnimatedContainer)!;
-    expect(tooltipWrapper).toContainReactText('Mock Tooltip Content');
   });
 
   it('renders <VisuallyHiddenRows />', () => {
@@ -416,18 +363,35 @@ describe('<Chart />', () => {
   });
 
   describe('<TooltipWrapper />', () => {
-    it('does not render <TooltipWrapper /> data series is empty', () => {
-      const chart = mount(
-        <Chart {...MOCK_PROPS} data={[{name: 'Empty', data: []}]} />,
-      );
-
-      expect(chart).not.toContainReactComponent(TooltipWrapper);
-    });
-
-    it('renders <TooltipWrapper /> data series has data', () => {
+    it('renders', () => {
       const chart = mount(<Chart {...MOCK_PROPS} />);
 
-      expect(chart).toContainReactComponent(TooltipWrapper);
+      expect(chart).toContainReactComponent(TooltipWrapper, {
+        chartType: 'Line',
+        getMarkup: expect.any(Function),
+        id: expect.stringContaining('stackedAreaChart-'),
+        parentElement: expect.any(SVGElement),
+      });
+    });
+  });
+
+  describe('<Crosshair />', () => {
+    it('does not render if there is no active point', () => {
+      const chart = mount(<Chart {...MOCK_PROPS} />);
+
+      expect(chart).not.toContainReactComponent(Crosshair);
+    });
+
+    it('renders if there is an active point', () => {
+      const chart = mount(<Chart {...MOCK_PROPS} />);
+
+      chart.find(TooltipWrapper)!.trigger('onIndexChange', 1);
+
+      expect(chart).toContainReactComponent(Crosshair, {
+        x: 447.5,
+        height: 215,
+        theme: expect.any(String),
+      });
     });
   });
 

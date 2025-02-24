@@ -29,6 +29,7 @@ export function AnimatedArea({
   lineGenerator,
   selectedTheme,
   zeroLineValues,
+  tooltipAreas,
 }: AreaProps) {
   const {shouldAnimate} = useChartContext();
   const delay = animationIndex * (duration / 2);
@@ -69,6 +70,14 @@ export function AnimatedArea({
   }
 
   const gradient = getGradientFromColor(colors[index]);
+  const areaMarkup = (
+    <animated.path
+      key={index}
+      style={{opacity, pointerEvents: 'auto'}}
+      d={animatedAreaShape}
+      fill={`url(#area-${id}-${index})`}
+    />
+  );
 
   return (
     <g
@@ -76,7 +85,6 @@ export function AnimatedArea({
         type: COLOR_VISION_SINGLE_ITEM,
         index,
       })}
-      tabIndex={-1}
     >
       <defs>
         <LinearGradientWithStops
@@ -86,6 +94,7 @@ export function AnimatedArea({
           y1="100%"
           y2="0%"
         />
+        <clipPath id={`clip-${id}-${index}`}>{areaMarkup}</clipPath>
       </defs>
       <g
         style={getColorVisionStylesForActiveIndex({
@@ -103,12 +112,11 @@ export function AnimatedArea({
           stroke={`url(#area-${id}-${index})`}
           strokeWidth={selectedTheme.line.width}
         />
-        <animated.path
-          key={index}
-          style={{opacity}}
-          d={animatedAreaShape}
-          fill={`url(#area-${id}-${index})`}
-        />
+
+        <g clipPath={`url(#clip-${id}-${index})`}>
+          {areaMarkup}
+          {tooltipAreas}
+        </g>
       </g>
     </g>
   );

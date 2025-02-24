@@ -32,7 +32,6 @@ describe('useHorizontalBarSizes()', () => {
     expect(data).toStrictEqual({
       barHeight: 44.333333333333336,
       chartHeight: 380,
-      groupBarsAreaHeight: 88.66666666666667,
       groupHeight: 126.66666666666667,
     });
   });
@@ -51,7 +50,6 @@ describe('useHorizontalBarSizes()', () => {
     expect(data).toStrictEqual({
       barHeight: 28.88888888888889,
       chartHeight: 380,
-      groupBarsAreaHeight: 86.66666666666667,
       groupHeight: 126.66666666666667,
     });
   });
@@ -68,9 +66,12 @@ describe('useHorizontalBarSizes()', () => {
 
       const data = parseData(result);
 
-      expect(data.chartHeight).toStrictEqual(416);
-      expect(data.groupBarsAreaHeight).toStrictEqual(100.66666666666666);
-      expect(data.groupHeight).toStrictEqual(138.66666666666666);
+      expect(data).toStrictEqual(
+        expect.objectContaining({
+          chartHeight: 416,
+          groupHeight: 138.66666666666666,
+        }),
+      );
     });
   });
 

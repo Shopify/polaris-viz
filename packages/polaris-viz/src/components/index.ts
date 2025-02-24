@@ -26,7 +26,6 @@ export {SkipLink} from './SkipLink';
 export {VisuallyHiddenRows} from './VisuallyHiddenRows';
 export {LinePreview} from './LinePreview';
 export type {LinePreviewProps} from './LinePreview';
-export {TooltipWrapper} from './TooltipWrapper';
 export type {TooltipPosition} from './TooltipWrapper';
 export {SimpleBarChart} from './SimpleBarChart';
 export type {SimpleBarChartProps} from './SimpleBarChart';

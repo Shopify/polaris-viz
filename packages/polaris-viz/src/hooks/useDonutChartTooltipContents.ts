@@ -26,7 +26,7 @@ export function useDonutChartTooltipContents({
 
       const tooltipData: RenderTooltipContentData['data'] = [
         {
-          shape: 'Donut',
+          shape: 'Default',
           data: [],
         },
       ];

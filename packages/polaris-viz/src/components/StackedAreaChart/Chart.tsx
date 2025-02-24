@@ -11,7 +11,6 @@ import type {
 import {
   useUniqueId,
   curveStepRounded,
-  DataType,
   useYScale,
   COLOR_VISION_SINGLE_ITEM,
   useChartPositions,
@@ -21,6 +20,8 @@ import {
   useChartContext,
 } from '@shopify/polaris-viz-core';
 
+import {LineChartTooltipTriggers} from '../LineChartTooltipTriggers';
+import {TooltipWrapper} from '../TooltipWrapper';
 import {ChartElements} from '../ChartElements';
 import {
   Annotations,
@@ -35,7 +36,6 @@ import type {
 } from '../../types';
 import {XAxis} from '../XAxis';
 import {LegendContainer, useLegend} from '../LegendContainer';
-import {TooltipWrapper} from '../TooltipWrapper';
 import {
   useLinearChartAnimations,
   useTheme,
@@ -43,7 +43,7 @@ import {
   useColorVisionEvents,
   useLinearLabelsAndDimensions,
 } from '../../hooks';
-import {ChartMargin, ANNOTATIONS_LABELS_OFFSET} from '../../constants';
+import {ANNOTATIONS_LABELS_OFFSET} from '../../constants';
 import {YAxis} from '../YAxis';
 import {Crosshair} from '../Crosshair';
 import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
@@ -113,7 +113,6 @@ export function Chart({
 
   const {
     stackedValues,
-    longestSeriesIndex,
     longestSeriesLength,
     labels: formattedLabels,
   } = useStackedData({
@@ -241,13 +240,6 @@ export function Chart({
     return null;
   }
 
-  const chartBounds = {
-    width,
-    height,
-    x: chartXPosition,
-    y: chartYPosition,
-  };
-
   const {hasXAxisAnnotations, hasYAxisAnnotations} = checkAvailableAnnotations(
     annotationsLookupTable,
   );
@@ -315,6 +307,16 @@ export function Chart({
             yScale={yScale}
             colors={seriesColors}
             theme={theme}
+            tooltipAreas={
+              <LineChartTooltipTriggers
+                chartXPosition={chartXPosition}
+                chartYPosition={chartYPosition}
+                containerBounds={containerBounds}
+                drawableHeight={drawableHeight}
+                drawableWidth={drawableWidth}
+                longestSeriesLength={longestSeriesLength}
+              />
+            }
           />
         </g>
 
@@ -372,22 +374,15 @@ export function Chart({
         )}
       </ChartElements.Svg>
 
-      {longestSeriesLength !== -1 && (
-        <TooltipWrapper
-          chartBounds={chartBounds}
-          chartType={InternalChartType.Line}
-          data={data}
-          focusElementDataType={DataType.Point}
-          getMarkup={getTooltipMarkup}
-          id={tooltipId}
-          longestSeriesIndex={longestSeriesIndex}
-          margin={ChartMargin}
-          onIndexChange={(index) => setActivePointIndex(index)}
-          parentElement={svgRef}
-          usePortal
-          xScale={xScale}
-        />
-      )}
+      <TooltipWrapper
+        chartType={InternalChartType.Line}
+        getMarkup={getTooltipMarkup}
+        id={tooltipId}
+        onIndexChange={(index) =>
+          setActivePointIndex(index === -1 ? null : index)
+        }
+        parentElement={svgRef}
+      />
 
       {showLegend && !isSmallChart && (
         <LegendContainer

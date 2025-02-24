@@ -2,7 +2,6 @@ import {mount} from '@shopify/react-testing';
 import {area, line} from 'd3-shape';
 import {scaleLinear} from 'd3-scale';
 import React from 'react';
-import type {Theme} from '@shopify/polaris-viz-core';
 
 import {
   mockDefaultTheme,
@@ -51,30 +50,32 @@ describe('<AnimatedArea />', () => {
     id: 'stackedAreas-1',
     index: 0,
     lineGenerator,
+    tooltipAreas: <React.Fragment />,
     selectedTheme: DARK_THEME,
   };
 
-  it('renders a path for each series', () => {
+  it('renders an area and a path for each series', () => {
     const stackedArea = mount(
       <svg>
         <AnimatedArea {...mockProps} />
       </svg>,
     );
 
-    expect(stackedArea).toContainReactComponentTimes('path', 2);
+    // We check for 3 because the area is rendered twice. Once to the visible area
+    // and once for the clipPath.
+    expect(stackedArea).toContainReactComponentTimes('path', 3);
   });
 
   it('renders stroke width based on theme', () => {
     const {themes} = mockDefaultTheme({line: {width: 10}});
+
     const stackedArea = mountWithProvider(
       <svg>
-        <AnimatedArea {...mockProps} selectedTheme={themes.Light as Theme} />
+        <AnimatedArea {...mockProps} selectedTheme={themes.Light} />
       </svg>,
     );
 
-    const paths = stackedArea.findAll('path');
-
-    expect(paths[0]).toHaveReactProps({
+    expect(stackedArea).toContainReactComponent('path', {
       strokeWidth: 10,
     });
   });
@@ -84,7 +85,6 @@ describe('<AnimatedArea />', () => {
       <svg>
         <AnimatedArea {...mockProps} />
       </svg>,
-
       mockDefaultTheme({line: {hasSpline: false}}),
     );
 
@@ -96,31 +96,25 @@ describe('<AnimatedArea />', () => {
   });
 
   it('generates props for the paths', () => {
-    const line = 'M0,269L1,0';
-    const area = 'M0,269L1,0L1,0L0,163Z';
-
     const stackedArea = mount(
       <svg>
         <AnimatedArea {...mockProps} />
       </svg>,
     );
 
-    const paths = stackedArea.findAll('path');
-
     // Line
-    expect(paths[0]).toHaveReactProps({
+    expect(stackedArea).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
-      d: line,
+      d: 'M0,269L1,0',
       fill: 'none',
       stroke: 'url(#area-stackedAreas-1-0)',
       strokeWidth: 2,
     });
     // Area
-    expect(paths[1]).toHaveReactProps({
+    expect(stackedArea).toContainReactComponent('path', {
       // eslint-disable-next-line id-length
-      d: area,
+      d: 'M0,269L1,0L1,0L0,163Z',
       fill: 'url(#area-stackedAreas-1-0)',
-      style: {opacity: 0},
     });
   });
 });

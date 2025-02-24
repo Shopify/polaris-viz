@@ -2,7 +2,6 @@ import type {ReactNode} from 'react';
 import {useState, useRef, Fragment, useMemo} from 'react';
 import {
   uniqueId,
-  DataType,
   useYScale,
   LineSeries,
   COLOR_VISION_SINGLE_ITEM,
@@ -17,11 +16,11 @@ import type {
   XAxisOptions,
   YAxisOptions,
   LineChartDataSeriesWithDefaults,
-  BoundingRect,
   LabelFormatter,
 } from '@shopify/polaris-viz-core';
 
 import {hasHiddenComparisonSeries} from '../../utilities/hasHiddenComparisonSeries';
+import {LineChartTooltipTriggers} from '../LineChartTooltipTriggers';
 import {useExternalHideEvents} from '../../hooks/ExternalEvents';
 import {useIndexForLabels} from '../../hooks/useIndexForLabels';
 import {
@@ -39,7 +38,6 @@ import type {
 import {useFormattedLabels} from '../../hooks/useFormattedLabels';
 import {XAxis} from '../XAxis';
 import {useLegend, LegendContainer} from '../LegendContainer';
-import {TooltipWrapper} from '../../components/TooltipWrapper';
 import {
   useTheme,
   useColorVisionEvents,
@@ -47,7 +45,6 @@ import {
   useLinearLabelsAndDimensions,
 } from '../../hooks';
 import {
-  ChartMargin,
   ANNOTATIONS_LABELS_OFFSET,
   Y_AXIS_LABEL_OFFSET,
   CROSSHAIR_ID,
@@ -56,6 +53,7 @@ import {VisuallyHiddenRows} from '../VisuallyHiddenRows';
 import {YAxis} from '../YAxis';
 import {HorizontalGridLines} from '../HorizontalGridLines';
 import {ChartElements} from '../ChartElements';
+import {TooltipWrapper} from '../../components/TooltipWrapper';
 
 import {useLineChartTooltipContent} from './hooks/useLineChartTooltipContent';
 import {PointsAndCrosshair} from './components';
@@ -251,13 +249,6 @@ export function Chart({
     );
   }
 
-  const chartBounds: BoundingRect = {
-    width,
-    height,
-    x: chartXPosition,
-    y: chartYPosition,
-  };
-
   const {hasXAxisAnnotations, hasYAxisAnnotations} = checkAvailableAnnotations(
     annotationsLookupTable,
   );
@@ -327,6 +318,15 @@ export function Chart({
             drawableHeight,
             theme,
           })}
+
+          <LineChartTooltipTriggers
+            chartXPosition={chartXPosition}
+            chartYPosition={chartYPosition}
+            containerBounds={containerBounds}
+            drawableHeight={drawableHeight}
+            drawableWidth={drawableWidth}
+            longestSeriesLength={longestSeriesLength}
+          />
 
           {data.map((singleSeries, index) => {
             if (singleSeries.metadata?.isVisuallyHidden === true) {
@@ -407,16 +407,11 @@ export function Chart({
         )}
       </ChartElements.Svg>
 
-      {longestSeriesLength !== -1 && (
+      {longestSeriesLength > 0 && (
         <TooltipWrapper
-          chartBounds={chartBounds}
           chartType={InternalChartType.Line}
-          focusElementDataType={DataType.Point}
           getMarkup={getTooltipMarkup}
-          data={data}
-          longestSeriesIndex={longestSeriesIndex}
           id={tooltipId.current}
-          margin={ChartMargin}
           onIndexChange={(index) => {
             if (index != null && isPerformanceImpacted) {
               moveCrosshair(index);
@@ -425,9 +420,6 @@ export function Chart({
             }
           }}
           parentElement={svgRef}
-          usePortal
-          xScale={xScale}
-          yScale={yScale}
         />
       )}
 

@@ -2,7 +2,6 @@ import type {ReactNode} from 'react';
 import {useMemo, useState} from 'react';
 import {
   uniqueId,
-  DataType,
   COLOR_VISION_SINGLE_ITEM,
   HORIZONTAL_SPACE_BETWEEN_CHART_AND_AXIS,
   useAriaLabel,
@@ -15,11 +14,12 @@ import type {
   ChartType,
   XAxisOptions,
   YAxisOptions,
-  BoundingRect,
   LabelFormatter,
 } from '@shopify/polaris-viz-core';
 import {animated} from '@react-spring/web';
 
+import {getHighestValueForSeries} from '../../utilities/getHighestValueForSeries';
+import {TooltipWrapper} from '../TooltipWrapper';
 import {ChartElements} from '../ChartElements';
 import {checkAvailableAnnotations} from '../../components/Annotations';
 import {useFormattedLabels} from '../../hooks/useFormattedLabels';
@@ -44,8 +44,6 @@ import {
   useTheme,
 } from '../../hooks';
 import {ChartMargin, ANNOTATIONS_LABELS_OFFSET} from '../../constants';
-import {formatDataIntoGroups} from '../../utilities';
-import {TooltipWrapper} from '../TooltipWrapper';
 
 import {
   VerticalGridLines,
@@ -91,8 +89,7 @@ export function Chart({
   const [xAxisHeight, setXAxisHeight] = useState(LINE_HEIGHT);
   const [annotationsHeight, setAnnotationsHeight] = useState(0);
 
-  const {longestSeriesCount, seriesColors, longestSeriesIndex} =
-    useHorizontalSeriesColors(data);
+  const {longestSeriesCount, seriesColors} = useHorizontalSeriesColors(data);
 
   const {legend, setLegendDimensions, height, width} = useLegend({
     data: [
@@ -108,25 +105,13 @@ export function Chart({
 
   const {allNumbers, longestLabel, areAllNegative} = useDataForHorizontalChart({
     data,
-    isSimple: false,
+    isSimple: xAxisOptions.hide,
     isStacked,
     labelFormatter: xAxisOptions.labelFormatter,
   });
 
   const highestValueForSeries = useMemo(() => {
-    const groups = formatDataIntoGroups(data);
-
-    const maxes = groups.map((numbers) => {
-      const values = numbers.map((value) => value).filter(Boolean) as number[];
-
-      if (values.length === 0) {
-        return 0;
-      }
-
-      return areAllNegative ? Math.min(...values) : Math.max(...values);
-    });
-
-    return maxes;
+    return getHighestValueForSeries(data, areAllNegative);
   }, [data, areAllNegative]);
 
   const {stackedValues, stackedMin, stackedMax} = useHorizontalStackedValues({
@@ -143,20 +128,20 @@ export function Chart({
       stackedMin,
       stackedMax,
       isStacked,
-      maxWidth: width - longestLabel.negative - longestLabel.positive,
+      maxWidth: width,
       labelFormatter: xAxisOptions.labelFormatter,
       longestLabel,
+      isSimple: xAxisOptions.hide,
     });
 
-  const {barHeight, chartHeight, groupBarsAreaHeight, groupHeight} =
-    useHorizontalBarSizes({
-      chartDimensions: {width: drawableWidth, height: drawableHeight},
-      isSimple: xAxisOptions.hide,
-      isStacked,
-      seriesLength: longestSeriesCount,
-      singleBarCount: data.length,
-      xAxisHeight,
-    });
+  const {barHeight, chartHeight, groupHeight} = useHorizontalBarSizes({
+    chartDimensions: {width: drawableWidth, height: drawableHeight},
+    isSimple: xAxisOptions.hide,
+    isStacked,
+    seriesLength: longestSeriesCount,
+    singleBarCount: data.length,
+    xAxisHeight,
+  });
 
   const annotationsDrawableHeight =
     chartYPosition + chartHeight + ANNOTATIONS_LABELS_OFFSET;
@@ -174,15 +159,9 @@ export function Chart({
     chartXPosition,
   });
 
-  const zeroPosition = longestLabel.negative + xScale(0);
+  const zeroPosition = xScale(0);
 
   const labelWidth = drawableWidth / ticks.length;
-  const chartBounds: BoundingRect = {
-    width,
-    height,
-    x: chartXPosition,
-    y: 0,
-  };
 
   const {hasXAxisAnnotations, hasYAxisAnnotations} = checkAvailableAnnotations(
     annotationsLookupTable,
@@ -247,13 +226,17 @@ export function Chart({
                   areAllNegative={areAllNegative}
                   ariaLabel={ariaLabel}
                   barHeight={barHeight}
+                  chartXPosition={chartXPosition}
+                  chartYPosition={chartYPosition}
                   containerWidth={width}
                   data={data}
                   groupHeight={groupHeight}
+                  highestValueForSeries={highestValueForSeries}
                   id={id}
                   index={index}
                   isSimple={false}
                   isStacked={isStacked}
+                  longestLabel={longestLabel}
                   name={name}
                   stackedValues={stackedValues}
                   xAxisOptions={xAxisOptions}
@@ -291,21 +274,11 @@ export function Chart({
         )}
       </ChartElements.Svg>
 
-      {highestValueForSeries.length !== 0 && (
-        <TooltipWrapper
-          bandwidth={groupBarsAreaHeight}
-          chartBounds={chartBounds}
-          chartType={InternalChartType.HorizontalBar}
-          data={data}
-          focusElementDataType={DataType.BarGroup}
-          getMarkup={getTooltipMarkup}
-          margin={ChartMargin}
-          parentElement={svgRef}
-          longestSeriesIndex={longestSeriesIndex}
-          xScale={xScale}
-          type={type}
-        />
-      )}
+      <TooltipWrapper
+        chartType={InternalChartType.HorizontalBar}
+        getMarkup={getTooltipMarkup}
+        parentElement={svgRef}
+      />
 
       {showLegend && (
         <LegendContainer

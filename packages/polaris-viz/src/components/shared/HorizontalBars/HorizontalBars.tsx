@@ -1,4 +1,4 @@
-import {Fragment, useState} from 'react';
+import {Fragment, useMemo, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import type {DataSeries, LabelFormatter} from '@shopify/polaris-viz-core';
 import {
@@ -8,6 +8,8 @@ import {
   clamp,
 } from '@shopify/polaris-viz-core';
 
+import {getHighestValueIndexForSeries} from '../../../utilities/getHighestValueForSeries';
+import {getTooltipDataAttr} from '../../TooltipWrapper';
 import {getFontSize} from '../../../utilities/getFontSize';
 import {getTrendIndicatorData} from '../../../utilities/getTrendIndicatorData';
 import {TREND_INDICATOR_HEIGHT, TrendIndicator} from '../../TrendIndicator';
@@ -33,8 +35,11 @@ const SERIES_DELAY = 150;
 export interface HorizontalBarsProps {
   activeGroupIndex: number;
   barHeight: number;
+  chartYPosition: number;
+  chartXPosition: number;
   data: DataSeries[];
   groupIndex: number;
+  groupHeight: number;
   id: string;
   isSimple: boolean;
   labelFormatter: LabelFormatter;
@@ -50,7 +55,10 @@ export function HorizontalBars({
   activeGroupIndex,
   animationDelay = 0,
   barHeight,
+  chartYPosition,
+  chartXPosition,
   data,
+  groupHeight,
   groupIndex,
   id,
   isSimple,
@@ -62,7 +70,7 @@ export function HorizontalBars({
   areAllNegative,
 }: HorizontalBarsProps) {
   const selectedTheme = useTheme();
-  const {theme} = useChartContext();
+  const {theme, containerBounds} = useChartContext();
 
   const fontSize = getFontSize();
 
@@ -77,11 +85,43 @@ export function HorizontalBars({
     },
   });
 
+  const highestValueIndexForSeries = useMemo(() => {
+    return getHighestValueIndexForSeries(data);
+  }, [data]);
+
+  const {tooltipX} = getBarAndLabelBounds({
+    seriesIndex: highestValueIndexForSeries[groupIndex] ?? -1,
+  });
+
+  const tooltipDataAttr = getTooltipDataAttr({
+    index: groupIndex,
+    x: containerBounds.x + chartXPosition + tooltipX,
+    y:
+      containerBounds.y +
+      chartYPosition +
+      groupHeight * groupIndex +
+      groupHeight / 2,
+    seriesBounds: {
+      x: containerBounds.x + chartXPosition,
+      y: containerBounds.y + chartYPosition + groupHeight * groupIndex,
+      width: tooltipX,
+      height: groupHeight,
+    },
+  });
+
   return (
     <g
       transform={`translate(${zeroPosition},${HORIZONTAL_GROUP_LABEL_HEIGHT})`}
       aria-hidden="true"
     >
+      <rect
+        {...tooltipDataAttr}
+        x={-zeroPosition}
+        y={-HORIZONTAL_GROUP_LABEL_HEIGHT}
+        height={groupHeight}
+        width={containerWidth}
+      />
+
       {data.map((_, seriesIndex) => {
         if (data[seriesIndex].data[groupIndex] == null) {
           return;
@@ -96,50 +136,18 @@ export function HorizontalBars({
           return null;
         }
 
-        const isNegative = value && value < 0;
-        const label = labelFormatter(value);
         const ariaLabel = `${
           data[seriesIndex] ? data[seriesIndex].name : ''
         } ${value}`;
 
-        const {trendIndicatorProps, trendIndicatorWidth} =
-          getTrendIndicatorData(
-            data[seriesIndex]?.metadata?.trends[groupIndex],
-          );
-
-        const labelWidth = estimateStringWidthWithOffset(`${label}`, fontSize);
-
-        function getBarWidthAndLabelX() {
-          const width = Math.abs(xScale(value ?? 0) - xScale(0));
-
-          const itemSpacing =
-            trendIndicatorProps == null
-              ? HORIZONTAL_BAR_LABEL_OFFSET
-              : HORIZONTAL_BAR_LABEL_OFFSET * 2;
-
-          const leftLabelOffset = isSimple
-            ? labelWidth + itemSpacing + trendIndicatorWidth
-            : 0;
-
-          const clampedWidth = clamp({
-            amount: width,
-            min: 1,
-          });
-
-          if (areAllNegative || isNegative) {
-            return {
-              labelX: -(clampedWidth + leftLabelOffset),
-              barWidth: clampedWidth,
-            };
-          }
-
-          return {
-            labelX: clampedWidth + HORIZONTAL_BAR_LABEL_OFFSET,
-            barWidth: clampedWidth,
-          };
-        }
-
-        const {labelX, barWidth} = getBarWidthAndLabelX();
+        const {
+          barWidth,
+          isNegative,
+          label,
+          labelWidth,
+          labelX,
+          trendIndicatorProps,
+        } = getBarAndLabelBounds({seriesIndex});
 
         const y =
           barHeight * seriesIndex +
@@ -174,7 +182,7 @@ export function HorizontalBars({
                   barHeight={barHeight}
                   color={selectedTheme.xAxis.labelColor}
                   fontSize={fontSize}
-                  label={label}
+                  label={label ?? ''}
                   labelWidth={labelWidth}
                   y={y}
                 />
@@ -201,6 +209,7 @@ export function HorizontalBars({
                 type: COLOR_VISION_SINGLE_ITEM,
                 index: seriesIndex,
               })}
+              {...tooltipDataAttr}
               tabIndex={-1}
               role="img"
               aria-label={ariaLabel}
@@ -210,4 +219,83 @@ export function HorizontalBars({
       })}
     </g>
   );
+
+  function getBarAndLabelBounds({seriesIndex}: {seriesIndex: number}) {
+    const series = data[seriesIndex];
+
+    if (series == null) {
+      return {
+        barWidth: 0,
+        isNegative: false,
+        label: null,
+        labelWidth: 0,
+        labelX: 0,
+        trendIndicatorProps: null,
+        tooltipX: 0,
+      };
+    }
+
+    const {value} = data[seriesIndex].data[groupIndex];
+
+    const isNegative = value && value < 0;
+
+    const label = isSimple ? labelFormatter(value) : null;
+    const labelWidth = isSimple
+      ? estimateStringWidthWithOffset(`${label}`, fontSize)
+      : 0;
+
+    const {trendIndicatorProps, trendIndicatorWidth} = getTrendIndicatorData(
+      data[seriesIndex]?.metadata?.trends[groupIndex],
+    );
+
+    const width = Math.abs(xScale(value ?? 0) - xScale(0));
+
+    const itemSpacing =
+      trendIndicatorProps == null
+        ? HORIZONTAL_BAR_LABEL_OFFSET
+        : HORIZONTAL_BAR_LABEL_OFFSET * 2;
+
+    const leftLabelOffset = isSimple
+      ? labelWidth + itemSpacing + trendIndicatorWidth
+      : 0;
+
+    const clampedWidth = clamp({
+      amount: width,
+      min: 1,
+    });
+
+    let labelX = clampedWidth + HORIZONTAL_BAR_LABEL_OFFSET;
+    let barWidth = clampedWidth;
+
+    if (areAllNegative || isNegative) {
+      labelX = -(clampedWidth + leftLabelOffset);
+      barWidth = clampedWidth;
+    }
+
+    let tooltipX = 0;
+
+    if (isSimple) {
+      tooltipX = zeroPosition + labelX + leftLabelOffset;
+
+      if (isNegative || areAllNegative) {
+        tooltipX = zeroPosition;
+      }
+    } else {
+      tooltipX = zeroPosition + barWidth;
+
+      if (isNegative) {
+        tooltipX = zeroPosition;
+      }
+    }
+
+    return {
+      barWidth,
+      isNegative,
+      label,
+      labelWidth,
+      labelX,
+      trendIndicatorProps,
+      tooltipX,
+    };
+  }
 }

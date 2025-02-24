@@ -893,9 +893,6 @@ MissingData.args = {
 export const PatchyData: Story<LineChartProps> = Template.bind({});
 
 PatchyData.args = {
-  tooltipOptions: {
-    renderTooltipContent: () => null,
-  },
   data: [
     {
       name: 'Apr 1 – Apr 14, 2020',

@@ -22,6 +22,8 @@ import {StackedBarGroups} from '../StackedBarGroups';
 
 interface VerticalBarGroupProps {
   colors: Color[];
+  chartXPosition: number;
+  chartYPosition: number;
   data: DataSeries[];
   drawableHeight: number;
   gapWidth: number;
@@ -37,6 +39,9 @@ interface VerticalBarGroupProps {
 }
 
 export function VerticalBarGroup({
+  areAllNegative,
+  chartXPosition,
+  chartYPosition,
   colors,
   data,
   drawableHeight,
@@ -47,9 +52,8 @@ export function VerticalBarGroup({
   sortedData,
   stackedValues,
   xScale,
-  yScale,
   yAxisOptions,
-  areAllNegative,
+  yScale,
 }: VerticalBarGroupProps) {
   const {id: chartId, isPerformanceImpacted} = useChartContext();
 
@@ -104,7 +108,10 @@ export function VerticalBarGroup({
       <StackedBarGroups
         accessibilityData={accessibilityData}
         activeBarGroup={activeBarGroup}
+        chartXPosition={chartXPosition}
+        chartYPosition={chartYPosition}
         colors={colors}
+        data={data}
         drawableHeight={drawableHeight}
         gapWidth={gapWidth}
         id={id}
@@ -127,17 +134,19 @@ export function VerticalBarGroup({
             accessibilityData={accessibilityData}
             activeBarGroup={activeBarGroup}
             animationDelay={animationDelay}
+            areAllNegative={areAllNegative}
             barGroupIndex={index}
+            chartXPosition={chartXPosition}
+            chartYPosition={chartYPosition}
             colors={colors}
             data={item}
-            gapWidth={gapWidth}
             drawableHeight={drawableHeight}
+            gapWidth={gapWidth}
             indexOffset={indexOffset}
             key={index}
             width={xScale.bandwidth()}
             x={xPosition == null ? 0 : xPosition}
             yScale={yScale}
-            areAllNegative={areAllNegative}
           />
         );
       })}

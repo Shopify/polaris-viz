@@ -19,6 +19,7 @@ export function Area({
   index,
   lineGenerator,
   selectedTheme,
+  tooltipAreas,
 }: AreaProps) {
   const opacity = 0.25;
   const areaShape = areaGenerator(data);
@@ -29,6 +30,14 @@ export function Area({
   }
 
   const gradient = getGradientFromColor(colors[index]);
+  const areaMarkup = (
+    <path
+      key={index}
+      style={{opacity}}
+      d={areaShape}
+      fill={`url(#area-${id}-${index})`}
+    />
+  );
 
   return (
     <g
@@ -46,6 +55,7 @@ export function Area({
           y1="100%"
           y2="0%"
         />
+        <clipPath id={`clip-${id}-${index}`}>{areaMarkup}</clipPath>
       </defs>
       <g
         style={getColorVisionStylesForActiveIndex({
@@ -63,12 +73,10 @@ export function Area({
           stroke={`url(#area-${id}-${index})`}
           strokeWidth={selectedTheme.line.width}
         />
-        <path
-          key={index}
-          style={{opacity}}
-          d={areaShape}
-          fill={`url(#area-${id}-${index})`}
-        />
+        <g clipPath={`url(#clip-${id}-${index})`}>
+          {areaMarkup}
+          {tooltipAreas}
+        </g>
       </g>
     </g>
   );

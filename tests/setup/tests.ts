@@ -37,6 +37,8 @@ jest.mock('../../packages/polaris-viz-core/src/hooks/useChartContext', () => {
       isTouchDevice: false,
       isPerformanceImpacted: false,
       containerBounds: {
+        x: 0,
+        y: 0,
         width: 600,
         height: 400,
       },

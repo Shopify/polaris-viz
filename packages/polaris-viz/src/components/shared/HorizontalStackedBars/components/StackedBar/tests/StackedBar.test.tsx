@@ -10,11 +10,15 @@ const MOCK_PROPS: StackedBarProps = {
   setActiveBarIndex: jest.fn(),
   color: 'red',
   height: 15,
-  isAnimated: false,
   seriesIndex: 0,
   borderRadius: BORDER_RADIUS.None,
   width: 100,
   x: 0,
+  zeroPosition: 0,
+  tooltipAttrData: {
+    index: 0,
+  },
+  animationDelay: 0,
 };
 
 describe('<StackedBar />', () => {

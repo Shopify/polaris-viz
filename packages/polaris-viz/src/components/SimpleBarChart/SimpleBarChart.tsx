@@ -11,13 +11,18 @@ import {
   usePolarisVizContext,
 } from '@shopify/polaris-viz-core';
 
+import {getTooltipContentRenderer} from '../../utilities/getTooltipContentRenderer';
 import {
   getXAxisOptionsWithDefaults,
   getYAxisOptionsWithDefaults,
 } from '../../utilities';
 import {ChartContainer} from '../../components/ChartContainer';
 import {ChartSkeleton} from '../../components';
-import type {LegendPosition, RenderLegendContent} from '../../types';
+import type {
+  LegendPosition,
+  RenderLegendContent,
+  TooltipOptions,
+} from '../../types';
 
 import {Chart} from './Chart';
 import type {SimpleBarChartDataSeries} from './types';
@@ -28,6 +33,7 @@ export type SimpleBarChartProps = {
   legendPosition?: LegendPosition;
   seriesNameFormatter?: LabelFormatter;
   showLegend?: boolean;
+  tooltipOptions?: TooltipOptions;
   type?: ChartType;
   xAxisOptions?: XAxisOptions;
   yAxisOptions?: YAxisOptions;
@@ -47,6 +53,7 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
     showLegend = true,
     theme = defaultTheme,
     type = 'default',
+    tooltipOptions,
     xAxisOptions,
     yAxisOptions,
     state,
@@ -57,6 +64,12 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
   };
   const xAxisOptionsWithDefaults = getXAxisOptionsWithDefaults(xAxisOptions);
   const yAxisOptionsWithDefaults = getYAxisOptionsWithDefaults(yAxisOptions);
+
+  const renderTooltip = getTooltipContentRenderer({
+    tooltipOptions,
+    theme,
+    data,
+  });
 
   return (
     <ChartContainer
@@ -80,6 +93,7 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
           renderLegendContent={renderLegendContent}
           seriesNameFormatter={seriesNameFormatter}
           legendPosition={legendPosition}
+          renderTooltipContent={renderTooltip}
           showLegend={showLegend}
           type={type}
           xAxisOptions={xAxisOptionsWithDefaults}
