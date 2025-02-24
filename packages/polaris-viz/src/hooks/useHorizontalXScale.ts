@@ -1,4 +1,5 @@
 import type {LabelFormatter} from '@shopify/polaris-viz-core';
+import {useTheme} from '@shopify/polaris-viz-core';
 
 import {useHorizontalTicksAndScale} from './useHorizontalTicksAndScale';
 
@@ -10,6 +11,7 @@ interface Props {
   stackedMin: number;
   labelFormatter: LabelFormatter;
   longestLabel: {positive: number; negative: number};
+  isSimple: boolean;
 }
 
 export function useHorizontalXScale({
@@ -20,11 +22,21 @@ export function useHorizontalXScale({
   stackedMax = 0,
   stackedMin = 0,
   longestLabel,
+  isSimple,
 }: Props) {
-  let drawableWidth = maxWidth;
+  const selectedTheme = useTheme();
+
+  const hideGroupLabel = selectedTheme.groupLabel.hide;
+  const shouldRenderLabels = isSimple || !hideGroupLabel;
+
+  let drawableWidth = shouldRenderLabels
+    ? maxWidth - longestLabel.negative - longestLabel.positive
+    : maxWidth;
   let chartXPosition = 0;
 
-  const labelWidth = longestLabel.positive + longestLabel.negative;
+  const labelWidth = shouldRenderLabels
+    ? longestLabel.positive + longestLabel.negative
+    : 0;
 
   drawableWidth -= labelWidth;
   chartXPosition += labelWidth / 2;

@@ -147,6 +147,7 @@ export function Arc({
           height={radius * 4}
           width={radius * 4}
           gradient={gradient}
+          index={index}
         />
       </g>
     </Fragment>

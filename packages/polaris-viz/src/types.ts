@@ -262,3 +262,8 @@ export interface LineChartSlotProps {
   yScale: ScaleLinear<number, number>;
   theme: string;
 }
+
+export interface LongestLabel {
+  positive: number;
+  negative: number;
+}

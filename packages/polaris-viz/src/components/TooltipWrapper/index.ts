@@ -7,3 +7,4 @@ export {
 } from './constants';
 export type {TooltipPosition, TooltipPositionParams} from './types';
 export {eventPointNative} from './utilities/eventPoint';
+export {getTooltipDataAttr} from './utilities/getTooltipDataAttr';

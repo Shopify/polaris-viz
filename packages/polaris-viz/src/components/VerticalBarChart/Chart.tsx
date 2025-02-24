@@ -2,7 +2,6 @@ import type {ReactNode} from 'react';
 import {useState, useMemo} from 'react';
 import {
   uniqueId,
-  DataType,
   useYScale,
   estimateStringWidth,
   COLOR_VISION_SINGLE_ITEM,
@@ -18,7 +17,6 @@ import type {
   ChartType,
   XAxisOptions,
   YAxisOptions,
-  BoundingRect,
   LabelFormatter,
 } from '@shopify/polaris-viz-core';
 import {stackOffsetDiverging, stackOrderNone} from 'd3-shape';
@@ -39,7 +37,7 @@ import {useFormattedLabels} from '../../hooks/useFormattedLabels';
 import {XAxis} from '../XAxis';
 import {LegendContainer, useLegend} from '../LegendContainer';
 import {GradientDefs} from '../shared';
-import {ANNOTATIONS_LABELS_OFFSET, ChartMargin} from '../../constants';
+import {ANNOTATIONS_LABELS_OFFSET} from '../../constants';
 import {TooltipWrapper} from '../TooltipWrapper';
 import {getStackedValues, getStackedMinMax} from '../../utilities';
 import {YAxis} from '../YAxis';
@@ -119,7 +117,8 @@ export function Chart({
     labelFormatter: xAxisOptions.labelFormatter,
   });
 
-  const isStacked = type === 'stacked';
+  const isStacked = type === 'stacked' && data.length > 1;
+
   const stackedValues = isStacked
     ? getStackedValues({
         series: data,
@@ -196,13 +195,6 @@ export function Chart({
 
   const annotationsDrawableHeight =
     chartYPosition + drawableHeight + ANNOTATIONS_LABELS_OFFSET;
-
-  const chartBounds: BoundingRect = {
-    width,
-    height,
-    x: chartXPosition,
-    y: chartYPosition,
-  };
 
   const {sortedData, areAllNegative, xScale, gapWidth} = useVerticalBarChart({
     data,
@@ -296,6 +288,8 @@ export function Chart({
             yAxisOptions={yAxisOptions}
             yScale={yScale}
             areAllNegative={areAllNegative}
+            chartXPosition={chartXPosition}
+            chartYPosition={chartYPosition}
           />
         </g>
 
@@ -333,23 +327,11 @@ export function Chart({
         )}
       </ChartElements.Svg>
 
-      {sortedData.length > 0 && (
-        <TooltipWrapper
-          bandwidth={xScale.bandwidth()}
-          chartBounds={chartBounds}
-          chartType={InternalChartType.Bar}
-          data={data}
-          focusElementDataType={DataType.BarGroup}
-          getMarkup={getTooltipMarkup}
-          longestSeriesIndex={indexForLabels}
-          margin={{...ChartMargin, Top: chartYPosition}}
-          parentElement={svgRef}
-          type={type}
-          usePortal
-          xScale={xScale}
-          yScale={yScale}
-        />
-      )}
+      <TooltipWrapper
+        chartType={InternalChartType.Bar}
+        getMarkup={getTooltipMarkup}
+        parentElement={svgRef}
+      />
 
       {showLegend && !isSmallChart && (
         <LegendContainer

@@ -77,6 +77,20 @@ export function getXYFromEventType(event: MouseEvent | TouchEvent): Position {
     : {x: event.pageX, y: event.pageY};
 }
 
+export function getTargetFromEventType(
+  event: MouseEvent | TouchEvent,
+): HTMLElement | SVGSVGElement | null {
+  if ('touches' in event) {
+    const touch = event.touches[0];
+    return document.elementFromPoint(touch.clientX, touch.clientY) as
+      | HTMLElement
+      | SVGSVGElement
+      | null;
+  }
+
+  return event.target as HTMLElement | SVGSVGElement;
+}
+
 export function isMouseEvent(
   event: React.SyntheticEvent,
 ): event is React.MouseEvent {

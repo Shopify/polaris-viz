@@ -24,17 +24,17 @@ const mockProps: HorizontalBarChartProps = {
   xAxisOptions: {
     labelFormatter: (value) => `${value}`,
     hide: false,
+    allowLineWrap: false,
   },
   yAxisOptions: {
     labelFormatter: (value) => `${value}`,
     integersOnly: false,
+    fixedWidth: false,
+    maxYOverride: null,
   },
+  seriesNameFormatter: (value) => `${value}`,
   renderTooltipContent: (value) => `${value}`,
   showLegend: false,
-  containerDimensions: {
-    height: 400,
-    width: 400,
-  },
 };
 
 describe('<HorizontalBarChart />', () => {
@@ -48,7 +48,10 @@ describe('<HorizontalBarChart />', () => {
     const alteredData = [
       {
         name: 'Test',
-        data: [{value: 12, key: 'Label 02'}],
+        data: [
+          {value: 1, key: 'Label 01'},
+          {value: 2, key: 'Label 02'},
+        ],
       },
     ] as DataSeries[];
 
