@@ -7,11 +7,13 @@ import '@shopify/react-testing/matchers';
 
 import type {LineSeriesProps} from '../LineSeries';
 import {LineSeries} from '../LineSeries';
-import {Area} from '../components';
+import {AnimatedLine, Area} from '../components';
 import {
   DEFAULT_THEME_NAME,
   SHAPE_ANIMATION_HEIGHT_BUFFER,
 } from '../../../constants';
+import {useChartContextMock} from '../../../../../../tests/setup/tests';
+import {DEFAULT_CHART_CONTEXT} from '../../../../../../packages/polaris-viz/src/storybook/constants';
 
 const someScale = scaleLinear().domain([0, 100]).range([0, 100]);
 
@@ -138,35 +140,6 @@ describe('<LineSeries />', () => {
   });
 
   describe('theme', () => {
-    describe('theme.seriesColors.comparison', () => {
-      it('gets passed to <Rect> if data series isComparison', () => {
-        const lineSeries = mountWithProvider(
-          <svg>
-            <LineSeries
-              {...defaultProps}
-              data={{
-                ...defaultProps.data,
-                isComparison: true,
-              }}
-            />
-          </svg>,
-          {
-            themes: {
-              [DEFAULT_THEME_NAME]: {
-                seriesColors: {
-                  comparison: 'red',
-                },
-              },
-            },
-          },
-        );
-
-        expect(lineSeries).toContainReactComponent('rect', {
-          fill: 'red',
-        });
-      });
-    });
-
     describe('theme.line.hasSpline', () => {
       it('renders a curved line if true', () => {
         const lineSeries = mountWithProvider(
@@ -200,6 +173,139 @@ describe('<LineSeries />', () => {
           d: 'M0,100L1,50',
         });
       });
+    });
+  });
+
+  describe('animationDelay', () => {
+    it('uses provided animationDelay for non-comparison data', () => {
+      useChartContextMock.mockReturnValue({
+        ...DEFAULT_CHART_CONTEXT,
+        shouldAnimate: true,
+      });
+
+      const lineSeries = mountWithProvider(
+        <svg>
+          <LineSeries {...defaultProps} animationDelay={400} />
+        </svg>,
+      );
+
+      expect(lineSeries).toContainReactComponent(AnimatedLine, {
+        delay: 400,
+      });
+    });
+
+    it('uses 0 for animation delay when series.isComparison is true', () => {
+      useChartContextMock.mockReturnValue({
+        ...DEFAULT_CHART_CONTEXT,
+        shouldAnimate: true,
+      });
+
+      const lineSeries = mountWithProvider(
+        <svg>
+          <LineSeries
+            {...defaultProps}
+            data={{...defaultProps.data, isComparison: true}}
+            animationDelay={400}
+          />
+        </svg>,
+      );
+
+      expect(lineSeries).toContainReactComponent(AnimatedLine, {
+        delay: 0,
+      });
+    });
+
+    it('uses 0 for animation delay when series has a comparison series', () => {
+      useChartContextMock.mockReturnValue({
+        ...DEFAULT_CHART_CONTEXT,
+        shouldAnimate: true,
+        comparisonIndexes: [1],
+      });
+
+      const lineSeries = mountWithProvider(
+        <svg>
+          <LineSeries {...defaultProps} index={1} animationDelay={400} />
+        </svg>,
+      );
+
+      expect(lineSeries).toContainReactComponent(AnimatedLine, {
+        delay: 0,
+      });
+    });
+  });
+
+  it('adds pointer-events: none to comparison lines when multiple comparison series exist', () => {
+    useChartContextMock.mockReturnValue({
+      ...DEFAULT_CHART_CONTEXT,
+      comparisonIndexes: [1, 2],
+    });
+
+    const lineSeries = mountWithProvider(
+      <svg>
+        <LineSeries {...defaultProps} index={1} />
+      </svg>,
+    );
+
+    expect(lineSeries).toContainReactComponent('path', {
+      style: {
+        pointerEvents: 'none',
+      },
+    });
+  });
+
+  it('adds pointer-events: auto to series lines when multiple comparison series exist', () => {
+    useChartContextMock.mockReturnValue({
+      ...DEFAULT_CHART_CONTEXT,
+      comparisonIndexes: [1, 2],
+    });
+
+    const lineSeries = mountWithProvider(
+      <svg>
+        <LineSeries {...defaultProps} index={0} />
+      </svg>,
+    );
+
+    expect(lineSeries).toContainReactComponent('path', {
+      style: {
+        pointerEvents: 'auto',
+      },
+    });
+  });
+
+  it('adds pointer-events: auto to series lines when no comparison series exist', () => {
+    useChartContextMock.mockReturnValue({
+      ...DEFAULT_CHART_CONTEXT,
+      comparisonIndexes: [],
+    });
+
+    const lineSeries = mountWithProvider(
+      <svg>
+        <LineSeries {...defaultProps} index={0} />
+      </svg>,
+    );
+
+    expect(lineSeries).toContainReactComponent('path', {
+      style: {
+        pointerEvents: 'auto',
+      },
+    });
+  });
+
+  it('adds pointer-events: auto to comparison lines when no multiple series exist', () => {
+    const lineSeries = mountWithProvider(
+      <svg>
+        <LineSeries
+          {...defaultProps}
+          data={mockDataWithIsolatedPoints}
+          index={1}
+        />
+      </svg>,
+    );
+
+    expect(lineSeries).toContainReactComponent('path', {
+      style: {
+        pointerEvents: 'auto',
+      },
     });
   });
 });

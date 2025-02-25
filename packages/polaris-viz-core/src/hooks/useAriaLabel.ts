@@ -1,5 +1,6 @@
 import {useCallback} from 'react';
-import type {DataSeries, LabelFormatter} from 'types';
+
+import type {DataSeries, LabelFormatter} from '../types';
 
 interface UseAriaLabelOptions {
   xAxisLabelFormatter?: LabelFormatter;

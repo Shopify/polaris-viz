@@ -79,6 +79,8 @@ export function ChartContainer({
         x: 0,
         y: 0,
       },
+      comparisonIndexes: [],
+      comparisonSeriesIndexes: [],
     };
   }, [prefersReducedMotion, data, isAnimated, theme, type, chartDimensions]);
 

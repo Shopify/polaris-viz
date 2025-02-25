@@ -1,10 +1,10 @@
 import {mount} from '@shopify/react-testing';
-import {useChartContext} from '@shopify/polaris-viz-core';
 
 import type {LegendContainerProps} from '../LegendContainer';
 import {LegendContainer} from '../LegendContainer';
 import {Legend} from '../../Legend';
 import {HiddenLegendTooltip} from '../components/HiddenLegendTooltip';
+import {useChartContextMock} from '../../../../../../tests/setup/tests';
 
 const WIDTH_WITH_OVERFLOW = 10;
 const WIDTH_WITHOUT_OVERFLOW = 100;
@@ -29,8 +29,6 @@ jest.mock('../../../hooks/useResizeObserver', () => {
     },
   };
 });
-
-const mockUseChartContext = useChartContext as jest.Mock;
 
 describe('<LegendContainer />', () => {
   const renderLegendContent = () => (
@@ -74,14 +72,7 @@ describe('<LegendContainer />', () => {
   describe('enableHideOverflow', () => {
     it('does not hide items if false', () => {
       const component = mount(
-        <LegendContainer
-          {...mockProps}
-          containerDimensions={{
-            ...mockProps.containerDimensions,
-            width: WIDTH_WITH_OVERFLOW,
-          }}
-          enableHideOverflow={false}
-        />,
+        <LegendContainer {...mockProps} enableHideOverflow={false} />,
       );
 
       expect(component).not.toContainReactComponent(HiddenLegendTooltip);
@@ -119,7 +110,7 @@ describe('<LegendContainer />', () => {
     });
 
     it('renders HiddenLegendTooltip if there is hidden data', () => {
-      mockUseChartContext.mockReturnValue({
+      useChartContextMock.mockReturnValue({
         containerBounds: {height: 300, width: WIDTH_WITH_OVERFLOW},
       });
 
@@ -131,7 +122,7 @@ describe('<LegendContainer />', () => {
     });
 
     it('does not render HiddenLegendTooltip if there is no hidden data', () => {
-      mockUseChartContext.mockReturnValue({
+      useChartContextMock.mockReturnValue({
         containerBounds: {height: 300, width: WIDTH_WITHOUT_OVERFLOW},
       });
 
@@ -145,7 +136,7 @@ describe('<LegendContainer />', () => {
 
   describe('renderHiddenLegendLabel', () => {
     it('renders the default label if not provided', () => {
-      mockUseChartContext.mockReturnValue({
+      useChartContextMock.mockReturnValue({
         containerBounds: {height: 300, width: WIDTH_WITH_OVERFLOW},
       });
 
@@ -159,8 +150,7 @@ describe('<LegendContainer />', () => {
     });
 
     it('renders a custom label if provided', () => {
-      mockUseChartContext.mockReturnValue({
-        ...mockUseChartContext(),
+      useChartContextMock.mockReturnValue({
         containerBounds: {height: 300, width: WIDTH_WITH_OVERFLOW},
       });
 

@@ -1,9 +1,13 @@
 import {mount} from '@shopify/react-testing';
 
+import {useChartContextMock} from '../../../../../../tests/setup/tests';
 import {YAxis, XAxis} from '../../../components';
-import {mountWithProvider, triggerSVGMouseMove} from '../../../test-utilities';
+import {triggerSVGMouseMove} from '../../../test-utilities';
 import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
-import {mockDefaultTheme} from '../../../test-utilities/mountWithProvider';
+import {
+  mockDefaultTheme,
+  mountWithProvider,
+} from '../../../../../polaris-viz-core/src/test-utilities/mountWithProvider';
 import {
   TooltipAnimatedContainer,
   TooltipWrapper,
@@ -31,13 +35,6 @@ jest.mock('../../TooltipWrapper/utilities/eventPoint', () => {
     },
   };
 });
-
-jest.mock('@shopify/polaris-viz-core/src/hooks/useChartContext', () => ({
-  useChartContext: jest.fn(() => ({
-    ...MOCK_DEFAULT_CHART_CONTEXT,
-    containerBounds: {width: 500, height: 250, x: 0, y: 0},
-  })),
-}));
 
 jest.mock('../../../hooks/useResizeObserver', () => {
   return {
@@ -358,6 +355,11 @@ describe('Chart />', () => {
     });
 
     it('does not render <LegendContainer /> when showLegend is false', () => {
+      useChartContextMock.mockReturnValue({
+        ...MOCK_DEFAULT_CHART_CONTEXT,
+        containerBounds: {width: 500, height: 250},
+      });
+
       const chart = mount(<Chart {...MOCK_PROPS} />);
       const svg = chart.find('svg');
 
@@ -367,12 +369,12 @@ describe('Chart />', () => {
     });
 
     it('does not render <LegendContainer /> when the chart has a height of less than 125', () => {
-      const chart = mount(
-        <Chart
-          {...MOCK_PROPS}
-          containerDimensions={{width: 100, height: 100}}
-        />,
-      );
+      useChartContextMock.mockReturnValue({
+        ...MOCK_DEFAULT_CHART_CONTEXT,
+        containerBounds: {width: 100, height: 100},
+      });
+
+      const chart = mount(<Chart {...MOCK_PROPS} />);
       expect(chart).not.toContainReactComponent(LegendContainer);
     });
   });

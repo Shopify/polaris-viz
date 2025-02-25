@@ -13,6 +13,7 @@ import {
   isLargeDataSet,
   usePolarisVizContext,
   isTouchDevice,
+  getComparisonSeriesIndexes,
 } from '@shopify/polaris-viz-core';
 import type {ChartContextValues} from '@shopify/polaris-viz-core/src/contexts';
 
@@ -62,6 +63,12 @@ export const ChartContainer = (props: Props) => {
       props.isAnimated && !prefersReducedMotion && !dataTooBigToAnimate;
     const printFriendlyTheme = isPrinting ? 'Print' : props.theme;
 
+    const comparisonSeriesIndexes = getComparisonSeriesIndexes(props.data);
+
+    const comparisonIndexes = comparisonSeriesIndexes.map(
+      ({comparisonIndex}) => comparisonIndex,
+    );
+
     return {
       shouldAnimate,
       id,
@@ -72,6 +79,8 @@ export const ChartContainer = (props: Props) => {
       isPerformanceImpacted: dataTooBigToAnimate,
       scrollContainer: props.scrollContainer,
       containerBounds: containerBounds ?? EMPTY_BOUNDS,
+      comparisonSeriesIndexes,
+      comparisonIndexes,
     };
   }, [
     id,
@@ -82,6 +91,7 @@ export const ChartContainer = (props: Props) => {
     dataTooBigToAnimate,
     props.scrollContainer,
     containerBounds,
+    props.data,
   ]);
 
   const {chartContainer, grid} = useTheme(value.theme);

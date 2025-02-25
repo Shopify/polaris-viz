@@ -30,7 +30,6 @@ export {
   ChartMargin,
   MASK_HIGHLIGHT_COLOR,
   MIN_BAR_HEIGHT,
-  NEUTRAL_SINGLE_GRADIENT,
   PRINT_THEME,
   STACKED_BAR_GAP,
   STROKE_WIDTH,
@@ -102,6 +101,7 @@ export {
   OpacityScale,
   isInfinity,
   isTouchDevice,
+  getComparisonSeriesIndexes,
 } from './utilities';
 export {
   useSparkBar,

@@ -1,6 +1,6 @@
 import {scaleQuantize} from 'd3-scale';
-import type {Hue} from 'types';
 
+import type {Hue} from '../../types';
 import {HUES} from '../../constants';
 import variables from '../../styles/shared/_variables.scss';
 

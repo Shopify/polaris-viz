@@ -1,6 +1,8 @@
 import {Fragment, useRef} from 'react';
 import {useSpring} from '@react-spring/core';
+import type {Line} from 'd3-shape';
 
+import type {DataPoint, LineChartDataSeriesWithDefaults} from '../../../../';
 import {
   usePolarisVizContext,
   LINES_LOAD_ANIMATION_CONFIG,
@@ -9,20 +11,37 @@ import {
 import {useSpringConfig} from '../../../../hooks/useSpringConfig';
 import {LINES_TRANSITION_CONFIG} from '../../../../constants';
 
+interface AnimatedLineProps {
+  activeLineIndex: number;
+  delay: number;
+  fromData: LineChartDataSeriesWithDefaults;
+  immediate: boolean;
+  index: number;
+  isComparisonLine: boolean;
+  lastY: number;
+  lineGenerator: Line<DataPoint>;
+  strokeDasharray: string;
+  strokeWidth: number;
+  toData: LineChartDataSeriesWithDefaults;
+  zeroLineData: DataPoint[];
+  zeroLineY: number;
+}
+
 export function AnimatedLine({
-  immediate,
+  activeLineIndex,
+  delay,
   fromData,
+  immediate,
+  index,
+  isComparisonLine,
+  lastY,
+  lineGenerator,
+  strokeDasharray,
+  strokeWidth,
   toData,
   zeroLineData,
-  delay,
-  lineGenerator,
-  activeLineIndex,
-  index,
-  strokeWidth,
-  strokeDasharray,
-  lastY,
   zeroLineY,
-}) {
+}: AnimatedLineProps) {
   const {
     components: {Path},
     animated,
@@ -61,10 +80,12 @@ export function AnimatedLine({
         strokeLinecap="round"
         strokeWidth={strokeWidth}
         style={{
-          ...getColorVisionStylesForActiveIndex({
-            activeIndex: activeLineIndex,
-            index,
-          }),
+          ...(isComparisonLine
+            ? {}
+            : getColorVisionStylesForActiveIndex({
+                activeIndex: activeLineIndex,
+                index,
+              })),
           strokeDasharray,
         }}
       />

@@ -30,12 +30,11 @@ export type UseOverflowLegendProps =
 const LEGEND_GAP = 10;
 
 export function useOverflowLegend(props: UseOverflowLegendProps) {
-  const {
-    direction,
-    enableHideOverflow,
-    legendItemDimensions,
-    data: allData,
-  } = props;
+  const {direction, enableHideOverflow, legendItemDimensions, data} = props;
+
+  const allData = useMemo(() => {
+    return data.filter((legend) => legend.isHidden !== true);
+  }, [data]);
 
   const {displayedData, hiddenData} = useMemo(() => {
     if (

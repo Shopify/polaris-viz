@@ -43,7 +43,7 @@ export function useLegend({
   maxWidth = 0,
   seriesNameFormatter,
 }: Props) {
-  const {containerBounds} = useChartContext();
+  const {containerBounds, comparisonIndexes} = useChartContext();
   const defaultHeight = showLegend ? DEFAULT_LEGEND_HEIGHT : 0;
 
   const [legendDimensions, setLegendDimensions] = useState({
@@ -57,20 +57,26 @@ export function useLegend({
     }
 
     const legends = data.map(({series, shape}) => {
-      return series.map(({name, color, isComparison, data, metadata}) => {
-        return {
-          name: seriesNameFormatter(name ?? ''),
-          ...(data && {
-            value: data
-              .reduce((totalSum, current) => totalSum + (current.value || 0), 0)
-              .toString(),
-          }),
-          ...(metadata && {trend: metadata.trend}),
-          color,
-          shape,
-          isComparison,
-        };
-      });
+      return series.map(
+        ({name, color, isComparison, data, metadata}, seriesIndex) => {
+          return {
+            isHidden: comparisonIndexes.includes(seriesIndex),
+            name: seriesNameFormatter(name ?? ''),
+            ...(data && {
+              value: data
+                .reduce(
+                  (totalSum, current) => totalSum + (current.value || 0),
+                  0,
+                )
+                .toString(),
+            }),
+            ...(metadata && {trend: metadata.trend}),
+            color,
+            shape,
+            isComparison,
+          };
+        },
+      );
     });
 
     return legends.flat().map(({color, ...rest}, index) => {
@@ -79,7 +85,7 @@ export function useLegend({
         color: color ?? colors[index],
       };
     });
-  }, [colors, data, seriesNameFormatter, showLegend]);
+  }, [colors, data, seriesNameFormatter, showLegend, comparisonIndexes]);
 
   const {height, width} = useMemo(() => {
     if (showLegend === false) {

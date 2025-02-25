@@ -1,7 +1,9 @@
 import {mount} from '@shopify/react-testing';
 
-import {mountWithProvider} from '../../test-utilities';
-import {mockDefaultTheme} from '../../test-utilities/mountWithProvider';
+import {
+  mountWithProvider,
+  mockDefaultTheme,
+} from '../../../../polaris-viz-core/src/test-utilities/mountWithProvider';
 
 import type {Props} from './HorizontalGridLines';
 import {HorizontalGridLines} from './HorizontalGridLines';

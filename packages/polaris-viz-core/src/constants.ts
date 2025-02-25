@@ -117,12 +117,6 @@ export const COLOR_VARIABLES = variables;
 
 export const DEFAULT_THEME_NAME = 'Light';
 
-export const NEUTRAL_SINGLE_GRADIENT = [
-  {offset: 0, color: variables.colorIndigo90},
-  {offset: 85, color: variables.colorBlue90},
-  {offset: 100, color: variables.colorBlue70},
-];
-
 const DEFAULT_CHART_BORDER_RADIUS = '0px';
 const DEFAULT_CHART_PADDING = '0px';
 const DEFAULT_SPARK_CHART_MIN_HEIGHT = 40;
@@ -154,7 +148,7 @@ export const DARK_THEME: Theme = {
   seriesColors: {
     empty: variables.colorGray140,
     comparison: variables.colorDarkComparison,
-    single: NEUTRAL_SINGLE_GRADIENT,
+    single: variables.colorBlue90,
     all: [
       variables.colorTeal90,
       variables.colorBlue50,
@@ -266,10 +260,7 @@ export const LIGHT_THEME: Theme = {
   seriesColors: {
     empty: variables.colorGray20,
     comparison: '#0A97D5',
-    single: [
-      {offset: 0, color: '#0A97D5'},
-      {offset: 100, color: '#50C3F7'},
-    ],
+    single: LIGHT_BLUE_10_SOLID,
     all: [
       LIGHT_BLUE_10_SOLID,
       INDIGO_10_SOLID,

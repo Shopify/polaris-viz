@@ -15,6 +15,8 @@ jest.mock('../useTheme', () => ({
   }),
 }));
 
+const useThemeMock = useTheme as jest.Mock;
+
 const MOCK_PROPS: Props = {
   annotationsHeight: 0,
   height: 100,
@@ -130,7 +132,7 @@ describe('useChartPositions()', () => {
 
   describe('grid.horizontalMargin', () => {
     it('returns altered positions', () => {
-      useTheme.mockImplementation(() => ({
+      useThemeMock.mockImplementation(() => ({
         grid: {horizontalMargin: 0},
       }));
 

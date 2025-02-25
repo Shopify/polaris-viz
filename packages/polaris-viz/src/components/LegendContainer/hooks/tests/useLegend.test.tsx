@@ -2,14 +2,10 @@ import type {Root} from '@shopify/react-testing';
 import {mount} from '@shopify/react-testing';
 import type {DataSeries, DataGroup} from '@shopify/polaris-viz-core';
 
+import {useChartContextMock} from '../../../../../../../tests/setup/tests';
 import type {Props} from '../useLegend';
 import {useLegend} from '../useLegend';
-
-jest.mock('@shopify/polaris-viz-core/src/hooks/useChartContext', () => ({
-  useChartContext: jest.fn(() => ({
-    containerBounds: {height: 100, width: 100},
-  })),
-}));
+import {DEFAULT_CHART_CONTEXT as MOCK_DEFAULT_CHART_CONTEXT} from '../../../../storybook/constants';
 
 const DATA: DataSeries[] = [
   {
@@ -48,6 +44,13 @@ function parseData(result: Root<any>) {
 }
 
 describe('useLegend()', () => {
+  beforeAll(() => {
+    useChartContextMock.mockReturnValue({
+      ...MOCK_DEFAULT_CHART_CONTEXT,
+      containerBounds: {height: 100, width: 100},
+    });
+  });
+
   describe('showLegend', () => {
     it('returns data', () => {
       const result = mount(<TestComponent />);
@@ -56,12 +59,12 @@ describe('useLegend()', () => {
 
       expect(data).toStrictEqual({
         legend: [
-          {name: 'Breakfast', shape: 'Line', value: '0'},
-          {name: 'Lunch', shape: 'Line', value: '0'},
-          {name: 'Dinner', shape: 'Line', value: '0'},
-          {name: 'Breakfast', shape: 'Bar', value: '0'},
-          {name: 'Lunch', shape: 'Bar', value: '0'},
-          {name: 'Dinner', shape: 'Bar', value: '0'},
+          {name: 'Breakfast', shape: 'Line', value: '0', isHidden: false},
+          {name: 'Lunch', shape: 'Line', value: '0', isHidden: false},
+          {name: 'Dinner', shape: 'Line', value: '0', isHidden: false},
+          {name: 'Breakfast', shape: 'Bar', value: '0', isHidden: false},
+          {name: 'Lunch', shape: 'Bar', value: '0', isHidden: false},
+          {name: 'Dinner', shape: 'Bar', value: '0', isHidden: false},
         ],
         height: 60,
         width: 100,

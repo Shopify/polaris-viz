@@ -1,5 +1,5 @@
 import type {ReactNode} from 'react';
-import {useState, useRef, Fragment} from 'react';
+import {useState, useRef, Fragment, useMemo} from 'react';
 import {
   uniqueId,
   DataType,
@@ -21,6 +21,7 @@ import type {
   LabelFormatter,
 } from '@shopify/polaris-viz-core';
 
+import {hasHiddenComparisonSeries} from '../../utilities/hasHiddenComparisonSeries';
 import {useExternalHideEvents} from '../../hooks/ExternalEvents';
 import {useIndexForLabels} from '../../hooks/useIndexForLabels';
 import {
@@ -95,8 +96,13 @@ export function Chart({
   yAxisOptions,
 }: ChartProps) {
   const selectedTheme = useTheme(theme);
-  const {isPerformanceImpacted, containerBounds, isTouchDevice} =
-    useChartContext();
+  const {
+    isPerformanceImpacted,
+    containerBounds,
+    isTouchDevice,
+    comparisonIndexes,
+    comparisonSeriesIndexes,
+  } = useChartContext();
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [activeLineIndex, setActiveLineIndex] = useState(-1);
@@ -203,6 +209,22 @@ export function Chart({
     hiddenIndexes: hiddenLineIndexes,
     seriesNameFormatter,
   });
+
+  const animationDelays = useMemo(() => {
+    return data.reduce<{delays: number[]; delayIndex: number}>(
+      (acc, series, index) => {
+        const isHidden =
+          series.metadata?.isVisuallyHidden === true ||
+          comparisonIndexes.includes(index);
+
+        return {
+          delays: [...acc.delays, isHidden ? 0 : acc.delayIndex * 100],
+          delayIndex: isHidden ? acc.delayIndex : acc.delayIndex + 1,
+        };
+      },
+      {delays: [], delayIndex: 0},
+    ).delays;
+  }, [data, comparisonIndexes]);
 
   if (xScale == null || drawableWidth == null || yAxisLabelWidth == null) {
     return null;
@@ -311,11 +333,23 @@ export function Chart({
               return null;
             }
 
+            const isComparisonLineHidden = hasHiddenComparisonSeries({
+              index,
+              activeColorVisionIndex: activeLineIndex,
+              comparisonSeriesIndexes,
+            });
+
             return (
               <LineSeries
                 activeLineIndex={activeLineIndex}
+                animationDelay={animationDelays[index]}
                 data={singleSeries}
-                hiddenIndexes={hiddenLineIndexes}
+                hiddenIndexes={
+                  [
+                    ...hiddenLineIndexes,
+                    isComparisonLineHidden ? index : undefined,
+                  ].filter(Boolean) as number[]
+                }
                 index={index}
                 key={`${name}-${index}`}
                 svgDimensions={{height: drawableHeight, width: drawableWidth}}

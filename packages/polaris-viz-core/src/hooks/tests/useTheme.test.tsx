@@ -1,7 +1,7 @@
 import {mount} from '@shopify/react-testing';
 
-import {mountWithProvider, expectToThrow} from '../../test-utilities';
-import {DARK_THEME, LIGHT_THEME} from '../../../../polaris-viz-core/src';
+import {mountWithProvider} from '../../test-utilities';
+import {LIGHT_THEME} from '../../../../polaris-viz-core/src';
 import {useTheme} from '../useTheme';
 
 describe('useTheme', () => {

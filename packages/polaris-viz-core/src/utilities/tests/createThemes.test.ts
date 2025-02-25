@@ -1,5 +1,5 @@
 import {createTheme, createThemes} from '../';
-import {DARK_THEME, DEFAULT_THEME_NAME, LIGHT_THEME} from '../../constants';
+import {DEFAULT_THEME_NAME, LIGHT_THEME} from '../../constants';
 
 describe('createTheme', () => {
   it('generates a theme with default values, from the partial theme provided', () => {

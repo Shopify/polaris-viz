@@ -146,5 +146,46 @@ describe('useThemeSeriesColors', () => {
         '#4D7FC9',
       ]);
     });
+
+    it('replaces comparison series with the color of the matching non-comparison series', () => {
+      const mockSeries = [
+        {
+          name: 'One',
+          color: 'red',
+          data: [{key: 'January', value: 4237}],
+          metadata: {
+            comparisonIndex: 1,
+          },
+        },
+        {
+          name: 'One Comparison',
+          data: [{key: 'January', value: 5663}],
+          isComparison: true,
+        },
+        {
+          name: 'Two',
+          color: 'blue',
+          data: [{key: 'January', value: 5663}],
+          metadata: {
+            comparisonIndex: 3,
+          },
+        },
+        {
+          name: 'Two Comparison',
+          data: [{key: 'January', value: 5663}],
+          isComparison: true,
+        },
+      ];
+
+      function MockComponent() {
+        const colors = useThemeSeriesColors(mockSeries, SELECTED_THEME);
+        spy(colors);
+        return null;
+      }
+
+      mount(<MockComponent />);
+
+      expect(spy).toHaveBeenCalledWith(['red', 'red', 'blue', 'blue']);
+    });
   });
 });
