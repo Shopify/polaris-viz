@@ -7,9 +7,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
     - uses: actions/setup-node@v3
-      name: Use Node.js 16.13.0
+      name: Use Node.js 18.20.0
       with:
-        node-version: 16.13.0
+        node-version: 18.20.0
         cache: 'yarn'
     - name: 📀 Get yarn cache
       id: yarn-cache
