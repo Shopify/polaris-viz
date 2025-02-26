@@ -9,8 +9,7 @@
   "repository": "https://github.com/Shopify/polaris-viz",
   "publishConfig": {
     "access": "public",
-    "@shopify:registry": "https://registry.npmjs.org",
-    "provenance": true
+    "@shopify:registry": "https://registry.npmjs.org"
   },
   "sideEffects": [
     "**/*.css"
