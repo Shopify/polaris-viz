@@ -1,6 +1,6 @@
 {
   "name": "@shopify/polaris-viz-native",
-  "version": "16.4.0",
+  "version": "16.5.0",
   "main": "build/cjs/index.js",
   "types": "build/ts/index.d.ts",
   "description": "Polaris Viz for React Native",
@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@react-spring/native": "^9.4.5",
-    "@shopify/polaris-viz-core": "^16.4.0",
+    "@shopify/polaris-viz-core": "^16.5.0",
     "d3-scale": "^4.0.2",
     "d3-shape": "^3.1.0",
     "react-native-svg": "12.1.1"
