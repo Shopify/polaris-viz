@@ -7,3 +7,4 @@ export {
   TooltipRow,
   TooltipSeries,
 } from './components';
+export {getTooltipContentColumnCount} from './utilities/get-tooltip-content-column-count';
