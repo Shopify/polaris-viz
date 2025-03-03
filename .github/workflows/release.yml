@@ -18,9 +18,9 @@ jobs:
           token: ${{ secrets.SHOPIFY_GH_ACCESS_TOKEN }}
 
       - name: Setup Node.js
-          uses: actions/setup-node@v2
-          with:
-            node-version: 18.20.0 # Needed as self-hosted runners don't come with yarn
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18.20.0 # Needed as self-hosted runners don't come with yarn
 
       - name: Install Yarn
         run: npm install -g yarn
