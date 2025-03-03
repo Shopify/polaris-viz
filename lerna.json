@@ -1,5 +1,5 @@
 {
-  "version": "16.7.5-alpha.0",
+  "version": "16.7.6-alpha.0",
   "npmClient": "yarn",
   "useWorkspaces": true,
   "ignoreChanges": [
