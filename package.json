@@ -46,7 +46,8 @@
     "postbuild": "node ./scripts/build-validate",
     "open:coverage": "open build/coverage/index.html",
     "test:coverage": "CI=true yarn test --coverage",
-    "posttest:coverage": "yarn open:coverage"
+    "posttest:coverage": "yarn open:coverage",
+    "release": "yarn run lerna publish from-package --yes"
   },
   "size-limit": [
     {
