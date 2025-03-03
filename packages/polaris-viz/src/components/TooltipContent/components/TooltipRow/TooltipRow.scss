@@ -4,16 +4,23 @@
   line-height: 16px;
   font-size: 11px;
   gap: 8px;
-  display: flex;
+  display: grid;
+  grid-template-columns: subgrid;
   align-items: center;
+  grid-column: 1 / -1;
 }
 
 .Value {
   margin-left: auto;
   text-align: right;
   white-space: nowrap;
+  font-feature-settings: 'tnum';
 }
 
 .Truncate {
   @include ellipsis-overflow;
+}
+
+.Trend {
+  margin-top: -2px;
 }
