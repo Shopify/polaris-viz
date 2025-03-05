@@ -3269,8 +3269,8 @@
     fs-extra "^9.0.0"
     glob "^7.1.6"
 
-"@shopify/polaris-viz-core@^16.8.1-alpha.0", "@shopify/polaris-viz-core@file:/Users/mattvickers/src/github.com/Shopify/polaris-viz/packages/polaris-viz-core":
-  version "16.8.1-alpha.0"
+"@shopify/polaris-viz-core@^16.8.2-alpha.0", "@shopify/polaris-viz-core@file:/Users/mattvickers/src/github.com/Shopify/polaris-viz/packages/polaris-viz-core":
+  version "16.8.2-alpha.0"
   resolved "file:packages/polaris-viz-core"
   dependencies:
     "@react-spring/animated" "^9.4.5"
@@ -3282,22 +3282,22 @@
     d3-shape "^3.1.0"
 
 "@shopify/polaris-viz-native@file:/Users/mattvickers/src/github.com/Shopify/polaris-viz/packages/polaris-viz-native":
-  version "16.8.1-alpha.0"
+  version "16.8.2-alpha.0"
   resolved "file:packages/polaris-viz-native"
   dependencies:
     "@react-spring/native" "^9.4.5"
-    "@shopify/polaris-viz-core" "^16.8.0"
+    "@shopify/polaris-viz-core" "^16.8.1-alpha.0"
     d3-scale "^4.0.2"
     d3-shape "^3.1.0"
     react-native-svg "12.1.1"
 
 "@shopify/polaris-viz@file:/Users/mattvickers/src/github.com/Shopify/polaris-viz/packages/polaris-viz":
-  version "16.8.1-alpha.0"
+  version "16.8.2-alpha.0"
   resolved "file:packages/polaris-viz"
   dependencies:
     "@juggle/resize-observer" "^3.3.1"
     "@react-spring/web" "^9.4.5"
-    "@shopify/polaris-viz-core" "^16.8.0"
+    "@shopify/polaris-viz-core" "^16.8.1-alpha.0"
     d3-array "^3.2.0"
     d3-color "^3.1.0"
     d3-path "^3.0.1"
@@ -18588,7 +18588,7 @@ safer-buffer@^2.1.0, "safer-buffer@>= 2.1.2 < 3", "safer-buffer@>= 2.1.2 < 3.0.0
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
 "sandbox@file:/Users/mattvickers/src/github.com/Shopify/polaris-viz/sandbox":
-  version "16.8.1-alpha.0"
+  version "16.8.2-alpha.0"
   resolved "file:sandbox"
   dependencies:
     "@expo/vector-icons" "^12.0.0"
