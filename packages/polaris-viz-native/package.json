@@ -7,6 +7,11 @@
   "private": false,
   "license": "SEE LICENSE IN LICENSE.md",
   "author": "Shopify <dev@shopify.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shopify/polaris-viz.git",
+    "directory": "packages/polaris-viz-native"
+  },
   "files": [
     "build/",
     "!build/tsconfig.tsbuildinfo"
