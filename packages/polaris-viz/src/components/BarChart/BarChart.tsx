@@ -175,12 +175,8 @@ function isValidDate(dateString: string | number | null) {
     return false;
   }
 
-  const parsedDate = Date.parse(dateString.toString());
-  if (isNaN(parsedDate)) {
-    return dateString
-      .toString()
-      .split(' · ')
-      .some((date) => !isNaN(Date.parse(date)));
-  }
-  return true;
+  return dateString
+    .toString()
+    .split(' · ')
+    .some((date) => !isNaN(Date.parse(date)));
 }
