@@ -1,3 +1,13 @@
+## Deprecation Notice
+
+**This package is now deprecated and will no longer receive updates or support effective immediately.**
+
+We have decided to decommission the `polaris-viz` package due to the lack of use and cost to support.
+
+If you have any questions or require assistance during your transition, feel free to reach out to [Shopify support](https://help.shopify.com/support).
+
+Thank you for your understanding!
+
 <a name="polaris-viz" href="#polaris-viz"><img src="./public/polaris_viz_header.png" alt="Polaris viz" /></a><br/><br/>
 
 **Polaris Viz** is Shopify's data visualization system. It's what powers many of our data heavy experiences, including [ShopifyQL Notebooks](https://shopify.engineering/shopify-commerce-data-querying-language-shopifyql).
