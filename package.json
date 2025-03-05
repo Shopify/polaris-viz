@@ -1,6 +1,9 @@
 {
   "name": "@shopify/polaris-viz--root",
   "description": "Shopify’s viz component library",
+  "repository": {
+    "url": "https://github.com/Shopify/polaris-viz"
+  },
   "private": true,
   "workspaces": [
     "sandbox",
@@ -41,12 +44,13 @@
     "build-storybook": "NODE_OPTIONS=--openssl-legacy-provider STORYBOOK_SHOW=consumer build-storybook -o docs-build -s public",
     "build-storybook:chromatic": "NODE_OPTIONS=--openssl-legacy-provider STORYBOOK_SHOW=all build-storybook -s public -o storybook-static-chromatic",
     "add:story": "node ./.storybook/cli.js",
-    "prepublish": "in-publish && yarn run build || :",
+    "prepublish": "in-publish && npm run build || :",
     "prebuild": "yarn run clean",
     "postbuild": "node ./scripts/build-validate",
     "open:coverage": "open build/coverage/index.html",
     "test:coverage": "CI=true yarn test --coverage",
-    "posttest:coverage": "yarn open:coverage"
+    "posttest:coverage": "yarn open:coverage",
+    "publish": "lerna publish from-package --yes"
   },
   "size-limit": [
     {

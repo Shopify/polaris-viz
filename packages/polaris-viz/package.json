@@ -1,12 +1,16 @@
 {
   "name": "@shopify/polaris-viz",
-  "description": "Shopify’s viz component library",
+  "description": "Shopify's viz component library",
   "version": "16.8.0",
   "private": false,
   "license": "SEE LICENSE IN LICENSE.md",
   "author": "Shopify <dev@shopify.com>",
   "homepage": "https://polaris-viz.shopify.com/",
-  "repository": "https://github.com/Shopify/polaris-viz",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shopify/polaris-viz.git",
+    "directory": "packages/polaris-viz"
+  },
   "publishConfig": {
     "access": "public",
     "@shopify:registry": "https://registry.npmjs.org"
