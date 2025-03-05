@@ -1,0 +1,45 @@
+name: Release
+
+# on:
+#   push:
+#     tags:
+#       - v*
+
+on:
+  push:
+    branches:
+      - release-testing
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+        run: npm run lerna -- bootstrap
+
+      - name: Build
+        run: npm run build
+
+      - name: Release
+        run: npm run lerna publish from-package --yes
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SHOPIFY_GH_ACCESS_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
