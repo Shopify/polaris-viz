@@ -1,10 +1,13 @@
 {
   "version": "16.8.0",
-  "npmClient": "yarn",
+  "npmClient": "npm",
   "useWorkspaces": true,
   "ignoreChanges": [
     "**/*.md",
     "**/tests/**",
     "**/test/**"
+  ],
+  "npmClientArgs": [
+    "--legacy-peer-deps"
   ]
 }
