@@ -1,7 +1,7 @@
 {
   "name": "@shopify/polaris-viz",
   "description": "Shopify's viz component library",
-  "version": "16.9.0-alpha.0",
+  "version": "16.10.0-alpha.0",
   "private": false,
   "license": "SEE LICENSE IN LICENSE.md",
   "author": "Shopify <dev@shopify.com>",
@@ -35,7 +35,7 @@
   "dependencies": {
     "@juggle/resize-observer": "^3.3.1",
     "@react-spring/web": "^9.4.5",
-    "@shopify/polaris-viz-core": "^16.9.0-alpha.0",
+    "@shopify/polaris-viz-core": "^16.10.0-alpha.0",
     "d3-array": "^3.2.0",
     "d3-color": "^3.1.0",
     "d3-path": "^3.0.1",
