@@ -1,4 +1,4 @@
-## Deprecation Notice
+# Deprecation Notice
 
 **This package is now deprecated and will no longer receive updates or support effective immediately.**
 
