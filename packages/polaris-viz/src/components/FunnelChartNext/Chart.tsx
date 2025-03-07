@@ -39,6 +39,7 @@ import {
   TOOLTIP_HEIGHT,
   TOOLTIP_WIDTH,
   TOOLTIP_RIGHT_POSITION_THRESHOLD,
+  TOOLTIP_BOTTOM_OFFSET,
 } from './constants';
 import {useBuildFunnelTrends} from './utilities/useBuildFunnelTrends';
 
@@ -286,7 +287,7 @@ export function Chart({
       return yPosition;
     }
 
-    return yPosition - TOOLTIP_HEIGHT;
+    return yPosition - TOOLTIP_HEIGHT - TOOLTIP_BOTTOM_OFFSET;
   }
 
   function getBarHeightPercentage(value: number) {
