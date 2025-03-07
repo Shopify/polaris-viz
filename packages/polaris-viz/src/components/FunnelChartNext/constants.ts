@@ -5,6 +5,7 @@ export const TOOLTIP_HORIZONTAL_OFFSET = 10;
 export const LINE_OFFSET = 3;
 export const LINE_WIDTH = 1;
 export const TOOLTIP_HEIGHT = 130;
+export const TOOLTIP_BOTTOM_OFFSET = 5;
 export const TOOLTIP_RIGHT_POSITION_THRESHOLD = 65;
 export const SHORT_TOOLTIP_HEIGHT = 65;
 export const GAP = 1;
