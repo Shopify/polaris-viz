@@ -62,6 +62,9 @@ const DATA: DataSeries[] = [
 const MOCK_PROPS: HorizontalBarsProps = {
   activeGroupIndex: -1,
   barHeight: 20,
+  chartXPosition: 0,
+  chartYPosition: 0,
+  groupHeight: 20,
   groupIndex: 0,
   id: 'id',
   isSimple: false,

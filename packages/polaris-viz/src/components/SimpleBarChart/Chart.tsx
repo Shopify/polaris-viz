@@ -1,9 +1,11 @@
-import {useMemo} from 'react';
+import type {ReactNode} from 'react';
+import {useMemo, useState} from 'react';
 import {
   uniqueId,
   COLOR_VISION_SINGLE_ITEM,
   useAriaLabel,
   useChartContext,
+  InternalChartType,
 } from '@shopify/polaris-viz-core';
 import type {
   ChartType,
@@ -13,6 +15,8 @@ import type {
 } from '@shopify/polaris-viz-core';
 import {animated} from '@react-spring/web';
 
+import {getHighestValueForSeries} from '../../utilities/getHighestValueForSeries';
+import {TooltipWrapper} from '../TooltipWrapper';
 import {getFontSize} from '../../utilities/getFontSize';
 import {ChartElements} from '../ChartElements';
 import {LegendContainer, useLegend} from '../../components/LegendContainer';
@@ -26,9 +30,14 @@ import {
   useHorizontalSeriesColors,
   useHorizontalStackedValues,
   useColorVisionEvents,
+  useBarChartTooltipContent,
 } from '../../hooks';
 import {getContainerAlignmentForLegend} from '../../utilities';
-import type {LegendPosition, RenderLegendContent} from '../../types';
+import type {
+  LegendPosition,
+  RenderLegendContent,
+  RenderTooltipContentData,
+} from '../../types';
 
 import type {SimpleBarChartDataSeries} from './types';
 import {getLongestTrendIndicator} from './utilities';
@@ -40,6 +49,7 @@ export interface ChartProps {
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
+  renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
   renderLegendContent?: RenderLegendContent;
   legendPosition?: LegendPosition;
 }
@@ -48,12 +58,15 @@ export function Chart({
   data,
   renderLegendContent,
   legendPosition = 'bottom-right',
+  renderTooltipContent,
   seriesNameFormatter,
   showLegend,
   type,
   xAxisOptions,
   yAxisOptions,
 }: ChartProps) {
+  const [svgRef, setSvgRef] = useState<SVGSVGElement | null>(null);
+
   const {isTouchDevice} = useChartContext();
   useColorVisionEvents({enabled: data.length > 1 && !isTouchDevice});
 
@@ -102,6 +115,7 @@ export function Chart({
     stackedMax,
     stackedMin,
     longestLabel,
+    isSimple: true,
   });
 
   const {barHeight, groupHeight} = useHorizontalBarSizes({
@@ -119,17 +133,29 @@ export function Chart({
     chartXPosition: 0,
   });
 
-  const zeroPosition =
-    xScale(0) + longestLabel.negative + longestTrendIndicator.negative;
+  const zeroPosition = areAllNegative
+    ? xScale(0) + longestLabel.negative
+    : xScale(0) + longestLabel.negative + longestTrendIndicator.negative;
 
   const getAriaLabel = useAriaLabel(data, {
     xAxisLabelFormatter: labelFormatter,
   });
 
+  const getTooltipMarkup = useBarChartTooltipContent({
+    data,
+    seriesColors,
+    renderTooltipContent,
+    seriesNameFormatter,
+  });
+
+  const highestValueForSeries = useMemo(() => {
+    return getHighestValueForSeries(data, areAllNegative);
+  }, [data, areAllNegative]);
+
   const containerStyle = getContainerAlignmentForLegend(legendPosition, true);
   return (
     <ChartElements.Div style={containerStyle} width="auto" height="auto">
-      <ChartElements.Svg height={height} width={width}>
+      <ChartElements.Svg height={height} width={width} setRef={setSvgRef}>
         <GradientDefs
           direction="horizontal"
           gradientUnits={isStacked ? 'objectBoundingBox' : 'userSpaceOnUse'}
@@ -158,13 +184,17 @@ export function Chart({
                 areAllNegative={areAllNegative}
                 ariaLabel={ariaLabel}
                 barHeight={barHeight}
+                chartXPosition={0}
+                chartYPosition={0}
                 containerWidth={width}
                 data={data}
                 groupHeight={groupHeight}
                 id={id}
                 index={index}
+                highestValueForSeries={highestValueForSeries}
                 isSimple
                 isStacked={isStacked}
+                longestLabel={longestLabel}
                 name={name}
                 stackedValues={stackedValues}
                 xAxisOptions={xAxisOptions}
@@ -176,6 +206,12 @@ export function Chart({
           );
         })}
       </ChartElements.Svg>
+
+      <TooltipWrapper
+        chartType={InternalChartType.HorizontalBar}
+        getMarkup={getTooltipMarkup}
+        parentElement={svgRef}
+      />
 
       {showLegend && (
         <LegendContainer

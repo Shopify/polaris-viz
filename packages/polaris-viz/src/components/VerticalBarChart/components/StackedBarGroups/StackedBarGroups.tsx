@@ -1,16 +1,22 @@
 import {Fragment, useMemo} from 'react';
 import type {ScaleBand, ScaleLinear} from 'd3-scale';
-import type {Color} from '@shopify/polaris-viz-core';
+import type {Color, DataSeries} from '@shopify/polaris-viz-core';
 import {
   getColorVisionEventAttrs,
   DataType,
   COLOR_VISION_GROUP_ITEM,
   getColorVisionStylesForActiveIndex,
   BAR_SPACING,
+  useChartContext,
 } from '@shopify/polaris-viz-core';
+import type {TooltipAttrData} from 'components/TooltipWrapper/utilities/getTooltipDataAttr';
 
+import {getTooltipDataAttr} from '../../../TooltipWrapper';
 import {getLoadAnimationDelay} from '../../../../utilities/getLoadAnimationDelay';
-import {formatAriaLabel} from '../../../VerticalBarChart/utilities';
+import {
+  formatAriaLabel,
+  sortBarChartData,
+} from '../../../VerticalBarChart/utilities';
 import type {AccessibilitySeries} from '../../../VerticalBarChart/types';
 import type {StackedSeries} from '../../../../types';
 import {useStackedGapsForVerticalChart} from '../../hooks';
@@ -21,6 +27,9 @@ import styles from './StackedBarGroups.scss';
 interface StackedBarGroupsProps {
   accessibilityData: AccessibilitySeries[];
   activeBarGroup: number;
+  chartXPosition: number;
+  chartYPosition: number;
+  data: DataSeries[];
   colors: Color[];
   drawableHeight: number;
   gapWidth: number;
@@ -34,6 +43,9 @@ interface StackedBarGroupsProps {
 export function StackedBarGroups({
   accessibilityData,
   activeBarGroup,
+  chartXPosition,
+  chartYPosition,
+  data,
   drawableHeight,
   gapWidth,
   id,
@@ -42,6 +54,7 @@ export function StackedBarGroups({
   xScale,
   yScale,
 }: StackedBarGroupsProps) {
+  const {containerBounds} = useChartContext();
   const width = xScale.bandwidth() - BAR_SPACING;
 
   const formattedStackedValues = useMemo(() => {
@@ -67,13 +80,32 @@ export function StackedBarGroups({
           formattedStackedValues.length,
         );
 
+        const sortedData = sortBarChartData(data);
+        const highestValueForStack =
+          sortedData[groupIndex].reduce(sumPositiveData, 0) ?? 0;
+
+        const hoverAreaX = x - gapWidth / 2;
+        const hoverAreaWidth = xScale.bandwidth() + gapWidth;
+
+        const tooltipData: TooltipAttrData = {
+          index: groupIndex,
+          x:
+            containerBounds.x +
+            chartXPosition +
+            hoverAreaX +
+            hoverAreaWidth / 2,
+          y: containerBounds.y + chartYPosition + yScale(highestValueForStack),
+          seriesBounds: {
+            width: hoverAreaWidth,
+            height: drawableHeight,
+            x: containerBounds.x + chartXPosition + hoverAreaX,
+            y: containerBounds.y + chartYPosition,
+          },
+        };
+
         return (
           <g
             key={groupIndex}
-            {...getColorVisionEventAttrs({
-              type: COLOR_VISION_GROUP_ITEM,
-              index: groupIndex,
-            })}
             className={styles.Group}
             style={getColorVisionStylesForActiveIndex({
               activeIndex: activeBarGroup,
@@ -81,17 +113,23 @@ export function StackedBarGroups({
             })}
             aria-label={groupAriaLabel}
             role="list"
-            data-type={DataType.BarGroup}
-            data-index={groupIndex}
-            aria-hidden="false"
           >
             <rect
+              {...getColorVisionEventAttrs({
+                type: COLOR_VISION_GROUP_ITEM,
+                index: groupIndex,
+              })}
+              {...getTooltipDataAttr(tooltipData)}
+              data-type={DataType.BarGroup}
+              data-index={groupIndex}
+              aria-hidden="false"
+              width={hoverAreaWidth}
+              x={hoverAreaX}
               height={drawableHeight}
-              fill="transparent"
-              x={x - gapWidth / 2}
-              width={xScale.bandwidth() + gapWidth}
-              aria-hidden="true"
+              stroke="red"
+              fill="rgba(0,0,255,0.2)"
             />
+
             <Stack
               activeBarGroup={activeBarGroup}
               animationDelay={animationDelay}
@@ -99,6 +137,7 @@ export function StackedBarGroups({
               gaps={gaps}
               groupIndex={groupIndex}
               id={id}
+              tooltipData={tooltipData}
               width={width}
               x={x}
               yScale={yScale}
@@ -108,4 +147,8 @@ export function StackedBarGroups({
       })}
     </Fragment>
   );
+}
+
+function sumPositiveData(prevValue: number, currValue: number) {
+  return currValue < 0 ? prevValue : prevValue + currValue;
 }
