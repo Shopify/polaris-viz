@@ -38,6 +38,10 @@ export function useBarChartTooltipContent({
       ];
 
       data.forEach(({name, data: seriesData, color}, index) => {
+        if (seriesData[activeIndex] == null) {
+          return;
+        }
+
         const {value} = seriesData[activeIndex];
 
         tooltipData[0].data.push({
@@ -50,7 +54,7 @@ export function useBarChartTooltipContent({
       return renderTooltipContent({
         data: tooltipData,
         activeIndex,
-        title: `${data[0].data[activeIndex].key}`,
+        title: `${data[0].data[activeIndex]?.key}`,
         dataSeries: data,
         theme,
       });

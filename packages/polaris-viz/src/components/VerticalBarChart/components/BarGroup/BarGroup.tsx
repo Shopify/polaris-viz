@@ -36,7 +36,7 @@ export interface BarGroupProps {
   yScale: ScaleLinear<number, number>;
   width: number;
   drawableHeight: number;
-  data: (number | null)[];
+  data: {value: number | null; color: Color; seriesIndex: number}[];
   colors: Color[];
   barGroupIndex: number;
   indexOffset: number;
@@ -131,8 +131,8 @@ export function BarGroup({
   return (
     <Fragment>
       <mask id={maskId}>
-        {data.map((rawValue, index) => {
-          if (rawValue == null) {
+        {data.map(({value, seriesIndex}, index) => {
+          if (value == null) {
             return null;
           }
 
@@ -144,13 +144,13 @@ export function BarGroup({
               key={`${barGroupIndex}${index}`}
             >
               <VerticalBar
-                height={getBarHeight(rawValue)}
+                height={getBarHeight(value)}
                 color={MASK_HIGHLIGHT_COLOR}
                 x={x + (barWidth + BAR_SPACING) * index}
                 zeroPosition={yScale(0)}
-                rawValue={rawValue}
+                rawValue={value}
                 width={barWidth}
-                index={index}
+                index={seriesIndex}
                 animationDelay={animationDelay}
                 areAllNegative={areAllNegative}
               />
@@ -161,6 +161,10 @@ export function BarGroup({
 
       <g mask={`url(#${maskId})`}>
         {gradients.map((gradient, index) => {
+          if (data[index] == null) {
+            return null;
+          }
+
           return (
             <g key={`${maskId}${index}`}>
               <LinearGradientWithStops
@@ -173,12 +177,12 @@ export function BarGroup({
                 width={barWidth - BAR_SPACING}
                 height={drawableHeight + SHAPE_ANIMATION_HEIGHT_BUFFER * 2}
                 data-type={COLOR_VISION_MASK}
-                data-index={index}
+                data-index={data[index].seriesIndex}
                 data-group-index={barGroupIndex}
                 fill={
-                  data[index] === 0
+                  data[index].value === 0
                     ? selectedTheme.bar.zeroValueColor
-                    : `url(#${gradientId}${index})`
+                    : data[index].color
                 }
               />
             </g>
@@ -206,7 +210,7 @@ export function BarGroup({
           aria-hidden="true"
         />
 
-        {data.map((rawValue, index) => {
+        {data.map(({value: rawValue, seriesIndex}, index) => {
           if (rawValue === null) {
             return null;
           }
@@ -239,7 +243,7 @@ export function BarGroup({
               role="listitem"
               {...getColorVisionEventAttrs({
                 type: COLOR_VISION_SINGLE_ITEM,
-                index: index + indexOffset,
+                index: seriesIndex + indexOffset,
                 watch: !isPerformanceImpacted,
               })}
               className={styles.Bar}

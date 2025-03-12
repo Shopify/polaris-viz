@@ -130,7 +130,7 @@ export function Chart({
     : null;
 
   const reducedLabelIndexes = useReducedLabelIndexes({
-    dataLength: data[0] ? data[0].data.length : 0,
+    dataLength: formattedLabels.length,
   });
 
   const {min, max} = getStackedMinMax({
@@ -204,8 +204,11 @@ export function Chart({
     y: chartYPosition,
   };
 
+  const barColors = data.map(({color}) => color!);
+
   const {sortedData, areAllNegative, xScale, gapWidth} = useVerticalBarChart({
     data,
+    colors: barColors,
     drawableWidth,
     labels: formattedLabels,
   });
@@ -215,8 +218,6 @@ export function Chart({
     drawableHeight,
     verticalOverflow: selectedTheme.grid.verticalOverflow,
   });
-
-  const barColors = data.map(({color}) => color!);
 
   const getTooltipMarkup = useBarChartTooltipContent({
     renderTooltipContent,
@@ -230,6 +231,9 @@ export function Chart({
   );
 
   const xAxisLabelHalf = xScale.bandwidth() / 2;
+
+  console.log({formattedLabels});
+  console.log({sortedData});
 
   return (
     <ChartElements.Div height={height} width={width}>

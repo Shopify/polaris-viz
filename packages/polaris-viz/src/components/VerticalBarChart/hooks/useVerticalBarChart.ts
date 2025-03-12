@@ -6,13 +6,21 @@ import {sortBarChartData} from '../utilities/sortBarChartData';
 import {useXScale} from './useXScale';
 
 interface Props {
+  colors: string[];
   data: DataSeries[];
   drawableWidth: number;
   labels: string[];
 }
 
-export function useVerticalBarChart({data, drawableWidth, labels}: Props) {
-  const sortedData = sortBarChartData(data);
+export function useVerticalBarChart({
+  colors,
+  data,
+  drawableWidth,
+  labels,
+}: Props) {
+  const sortedData = sortBarChartData(data, labels, colors);
+
+  console.log({colors});
 
   const areAllNegative = useMemo(() => {
     return ![...sortedData]

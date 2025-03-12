@@ -91,7 +91,7 @@ export function VerticalBarGroup({
         const content = data.map(({data, name}) => {
           return {
             label: name ?? '',
-            value: yAxisOptions.labelFormatter(data[index].value ?? 0),
+            value: yAxisOptions.labelFormatter(data[index]?.value ?? 0),
           };
         });
         return {title, data: content};
@@ -129,7 +129,7 @@ export function VerticalBarGroup({
             animationDelay={animationDelay}
             barGroupIndex={index}
             colors={colors}
-            data={item}
+            data={item.data}
             gapWidth={gapWidth}
             drawableHeight={drawableHeight}
             indexOffset={indexOffset}
