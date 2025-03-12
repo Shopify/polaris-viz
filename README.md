@@ -1,8 +1,8 @@
 # Deprecation Notice
 
-**This package is now deprecated and will no longer receive updates or support effective immediately.**
+**This package is now deprecated**
 
-We have decided to decommission the `polaris-viz` package due to the lack of use and cost to support.
+We have decided to decommission the `polaris-viz` package due to the lack of external use and cost to support. For Shopifolk, we will be moving to an internal-only data viz library.
 
 If you have any questions or require assistance during your transition, feel free to reach out to [Shopify support](https://help.shopify.com/support).
 
