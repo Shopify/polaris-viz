@@ -32,6 +32,7 @@ import {
 } from '../Annotations';
 import type {
   AnnotationLookupTable,
+  RenderAnnotationContentData,
   RenderLegendContent,
   RenderTooltipContentData,
 } from '../../types';
@@ -56,6 +57,7 @@ import {useVerticalBarChart} from './hooks/useVerticalBarChart';
 
 export interface Props {
   data: DataSeries[];
+  renderAnnotationContent?: (data: RenderAnnotationContentData) => ReactNode;
   renderTooltipContent(data: RenderTooltipContentData): ReactNode;
   showLegend: boolean;
   seriesNameFormatter: LabelFormatter;
@@ -72,6 +74,7 @@ export function Chart({
   annotationsLookupTable = {},
   data,
   emptyStateText,
+  renderAnnotationContent,
   renderLegendContent,
   renderTooltipContent,
   showLegend,
@@ -313,6 +316,7 @@ export function Chart({
               labelFormatter={xAxisOptions.labelFormatter}
               onHeightChange={setAnnotationsHeight}
               xScale={xScale}
+              renderAnnotationContent={renderAnnotationContent}
             />
           </g>
         )}

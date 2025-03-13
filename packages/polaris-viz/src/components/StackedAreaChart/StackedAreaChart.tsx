@@ -1,3 +1,4 @@
+import type {ReactNode} from 'react';
 import {Fragment, useRef} from 'react';
 import {
   uniqueId,
@@ -24,6 +25,7 @@ import {ChartSkeleton} from '../ChartSkeleton';
 import {SkipLink} from '../SkipLink';
 import type {
   Annotation,
+  RenderAnnotationContentData,
   RenderLegendContent,
   TooltipOptions,
 } from '../../types';
@@ -41,6 +43,7 @@ export type StackedAreaChartProps = {
   theme?: string;
   xAxisOptions?: Partial<XAxisOptions>;
   yAxisOptions?: Partial<YAxisOptions>;
+  renderAnnotationContent?: (data: RenderAnnotationContentData) => ReactNode;
   renderHiddenLegendLabel?: (count: number) => string;
   seriesNameFormatter?: LabelFormatter;
   scrollContainer?: Element | null;
@@ -65,6 +68,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
     showLegend = true,
     skipLinkText,
     theme = defaultTheme,
+    renderAnnotationContent,
     renderHiddenLegendLabel,
     scrollContainer,
   } = {
@@ -116,6 +120,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
             theme={theme}
             xAxisOptions={xAxisOptionsWithDefaults}
             yAxisOptions={yAxisOptionsWithDefaults}
+            renderAnnotationContent={renderAnnotationContent}
             renderHiddenLegendLabel={renderHiddenLegendLabel}
           />
         )}

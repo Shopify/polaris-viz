@@ -11,12 +11,14 @@ import type {
   AnnotationLookupTable,
   RenderTooltipContentData,
   RenderLegendContent,
+  RenderAnnotationContentData,
 } from '../../types';
 
 import {Chart} from './Chart';
 
 export interface HorizontalBarChartProps {
   data: DataSeries[];
+  renderAnnotationContent?: (data: RenderAnnotationContentData) => ReactNode;
   renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
   seriesNameFormatter: LabelFormatter;
   showLegend: boolean;
@@ -31,6 +33,7 @@ export interface HorizontalBarChartProps {
 export function HorizontalBarChart({
   annotationsLookupTable = {},
   data,
+  renderAnnotationContent,
   renderHiddenLegendLabel,
   renderLegendContent,
   renderTooltipContent,
@@ -50,6 +53,7 @@ export function HorizontalBarChart({
       type={type}
       xAxisOptions={xAxisOptions}
       yAxisOptions={yAxisOptions}
+      renderAnnotationContent={renderAnnotationContent}
       renderLegendContent={renderLegendContent}
       renderHiddenLegendLabel={renderHiddenLegendLabel}
     />

@@ -1,3 +1,4 @@
+import type {ReactNode} from 'react';
 import {useState} from 'react';
 import * as React from 'react';
 import {
@@ -26,6 +27,7 @@ import {
 import {TooltipWrapper} from '../TooltipWrapper';
 import type {
   AnnotationLookupTable,
+  RenderAnnotationContentData,
   RenderLegendContent,
   RenderTooltipContentData,
 } from '../../types';
@@ -49,6 +51,7 @@ import {useComboChartPositions} from './hooks/useComboChartPositions';
 export interface ChartProps {
   annotationsLookupTable: AnnotationLookupTable;
   data: DataGroup[];
+  renderAnnotationContent?: (data: RenderAnnotationContentData) => ReactNode;
   renderTooltipContent(data: RenderTooltipContentData): React.ReactNode;
   seriesNameFormatter: LabelFormatter;
   showLegend: boolean;
@@ -60,6 +63,7 @@ export interface ChartProps {
 export function Chart({
   annotationsLookupTable,
   data,
+  renderAnnotationContent,
   renderTooltipContent,
   showLegend,
   theme,
@@ -268,6 +272,7 @@ export function Chart({
               labelFormatter={xAxisOptions.labelFormatter}
               onHeightChange={setAnnotationsHeight}
               xScale={xScale}
+              renderAnnotationContent={renderAnnotationContent}
             />
           </g>
         )}

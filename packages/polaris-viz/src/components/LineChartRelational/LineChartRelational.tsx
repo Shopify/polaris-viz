@@ -31,6 +31,7 @@ export function LineChartRelational(props: LineChartRelationalProps) {
     tooltipOptions,
     xAxisOptions,
     yAxisOptions,
+    renderAnnotationContent,
     renderHiddenLegendLabel,
   } = {
     ...DEFAULT_CHART_PROPS,
@@ -57,6 +58,7 @@ export function LineChartRelational(props: LineChartRelationalProps) {
       errorText={errorText}
       id={id}
       isAnimated={isAnimated}
+      renderAnnotationContent={renderAnnotationContent}
       renderLegendContent={(
         {getColorVisionStyles, getColorVisionEventAttrs},
         activeIndex,
