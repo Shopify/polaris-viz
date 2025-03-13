@@ -2,16 +2,12 @@ import {mount} from '@shopify/react-testing';
 
 import {useChartContextMock} from '../../../../../../tests/setup/tests';
 import {YAxis, XAxis} from '../../../components';
-import {triggerSVGMouseMove} from '../../../test-utilities';
 import {HorizontalGridLines} from '../../../components/HorizontalGridLines';
 import {
   mockDefaultTheme,
   mountWithProvider,
 } from '../../../../../polaris-viz-core/src/test-utilities/mountWithProvider';
-import {
-  TooltipAnimatedContainer,
-  TooltipWrapper,
-} from '../../../components/TooltipWrapper';
+import {TooltipWrapper} from '../../../components/TooltipWrapper';
 import type {Props} from '../Chart';
 import {Chart} from '../Chart';
 import {StackedBarGroups} from '../components';
@@ -58,8 +54,6 @@ jest.mock('../../../hooks/useResizeObserver', () => {
   };
 });
 
-const renderTooltipContent = () => <p>Mock Tooltip</p>;
-
 const MOCK_PROPS: Props = {
   data: [
     {
@@ -81,7 +75,7 @@ const MOCK_PROPS: Props = {
       name: 'LABEL2',
     },
   ],
-  renderTooltipContent,
+  renderTooltipContent: () => <p>Mock Tooltip</p>,
   xAxisOptions: {
     allowLineWrap: false,
     labelFormatter: jest.fn((value) => `${value}`),
@@ -166,31 +160,6 @@ describe('Chart />', () => {
       const chart = mount(<Chart {...MOCK_PROPS} />);
 
       expect(chart.findAll(TextLine)).toHaveLength(3);
-    });
-  });
-
-  it('does not render <TooltipAnimatedContainer /> if there is no active point', () => {
-    const chart = mount(<Chart {...MOCK_PROPS} />);
-
-    expect(chart).not.toContainReactComponent(TooltipAnimatedContainer);
-  });
-
-  it('renders tooltip content inside a <TooltipAnimatedContainer /> if there is an active point', () => {
-    const chart = mount(<Chart {...MOCK_PROPS} />);
-
-    triggerSVGMouseMove(chart);
-
-    const tooltipContainer = chart.find(TooltipAnimatedContainer)!;
-
-    expect(tooltipContainer).toContainReactText('Mock Tooltip');
-  });
-
-  describe('empty state', () => {
-    it('does not render tooltip for empty state', () => {
-      const chart = mount(<Chart {...MOCK_PROPS} data={[]} />);
-
-      expect(chart).not.toContainReactText('Mock Tooltip');
-      expect(chart).not.toContainReactComponent(TooltipAnimatedContainer);
     });
   });
 
@@ -310,18 +279,14 @@ describe('Chart />', () => {
   });
 
   describe('<TooltipWrapper />', () => {
-    it('does not render <TooltipWrapper /> data series is empty', () => {
-      const chart = mount(
-        <Chart {...MOCK_PROPS} data={[{name: 'Empty', data: []}]} />,
-      );
-
-      expect(chart).not.toContainReactComponent(TooltipWrapper);
-    });
-
-    it('renders <TooltipWrapper /> data series has data', () => {
+    it('renders', () => {
       const chart = mount(<Chart {...MOCK_PROPS} />);
 
-      expect(chart).toContainReactComponent(TooltipWrapper);
+      expect(chart).toContainReactComponent(TooltipWrapper, {
+        chartType: 'Bar',
+        getMarkup: expect.any(Function),
+        parentElement: expect.any(SVGElement),
+      });
     });
   });
 

@@ -30,6 +30,7 @@ import {YAxis} from '../../YAxis';
 import {Annotations, YAxisAnnotations} from '../../Annotations';
 import {normalizeData} from '../../../utilities';
 import {DEFAULT_CHART_CONTEXT as MOCK_DEFAULT_CHART_CONTEXT} from '../../../storybook/constants';
+import {PointsAndCrosshair} from '..';
 
 const MOCK_DATA: Required<LineChartDataSeriesWithDefaults> = {
   name: 'Primary',
@@ -165,9 +166,11 @@ describe('<Chart />', () => {
   it('sets an active point and tooltip position on svg mouse or touch interaction', () => {
     const chart = mount(<Chart {...MOCK_PROPS} />);
 
-    triggerSVGMouseMove(chart);
+    chart.find(TooltipWrapper)!.trigger('onIndexChange', 2);
 
-    expect(chart).toContainReactComponent(Point, {active: true});
+    expect(chart).toContainReactComponent(PointsAndCrosshair, {
+      activeIndex: 2,
+    });
   });
 
   it('renders a <YAxis />', () => {
@@ -240,18 +243,27 @@ describe('<Chart />', () => {
     expect(chart.prop('yAxisOptions').maxYOverride).toStrictEqual(10);
   });
 
-  it('renders tooltip content inside a <TooltipContainer /> if there is an active point', () => {
-    const chart = mount(<Chart {...MOCK_PROPS} />);
+  describe('<TooltipWrapper />', () => {
+    it('renders', () => {
+      const chart = mount(<Chart {...MOCK_PROPS} />);
 
-    // No tooltip if there is no active point
-    expect(chart).not.toContainReactText('Mock Tooltip');
-    expect(chart).not.toContainReactComponent(TooltipAnimatedContainer);
+      expect(chart).toContainReactComponent(TooltipWrapper, {
+        chartType: 'Line',
+        getMarkup: expect.any(Function),
+        id: expect.stringContaining('lineChart-'),
+        parentElement: expect.any(SVGElement),
+      });
+    });
 
-    triggerSVGMouseMove(chart);
+    it('updates activeIndex when onIndexChange is called', () => {
+      const chart = mount(<Chart {...MOCK_PROPS} />);
 
-    const tooltipContainer = chart.find(TooltipAnimatedContainer)!;
+      chart.find(TooltipWrapper)!.trigger('onIndexChange', 2);
 
-    expect(tooltipContainer).toContainReactText('Mock Tooltip');
+      expect(chart).toContainReactComponent(PointsAndCrosshair, {
+        activeIndex: 2,
+      });
+    });
   });
 
   it('renders <VisuallyHiddenRows />', () => {
@@ -276,26 +288,6 @@ describe('<Chart />', () => {
       const chart = mount(<Chart {...MOCK_PROPS} />);
 
       expect(chart.find(Crosshair)).toHaveReactProps({opacity: 0});
-    });
-
-    it('correctly positions <Crosshair /> for single data point', () => {
-      const mockSingleDataPoint: Required<LineChartDataSeriesWithDefaults> = {
-        ...MOCK_DATA,
-        data: [{key: 'Apr 1', value: 1500}],
-      };
-
-      const chart = mount(
-        <Chart {...MOCK_PROPS} data={[mockSingleDataPoint]} />,
-      );
-
-      triggerSVGMouseMove(chart);
-
-      const crosshair = chart.find(Crosshair);
-
-      expect(crosshair).toHaveReactProps({
-        opacity: 1,
-        x: 173.5,
-      });
     });
   });
 

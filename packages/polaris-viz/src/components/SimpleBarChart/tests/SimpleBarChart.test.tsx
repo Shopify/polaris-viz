@@ -16,7 +16,7 @@ const mockProps: SimpleBarChartProps = {
         {value: 3, key: 'Label 03'},
       ],
     },
-  ] as DataSeries[],
+  ],
 };
 
 describe('<SimpleBarChart />', () => {
@@ -39,9 +39,10 @@ describe('<SimpleBarChart />', () => {
         data: [
           {value: 1, key: 'Label 01'},
           {value: 2, key: 'Label 02'},
+          {value: 3, key: 'Label 03'},
         ],
       },
-    ] as DataSeries[];
+    ];
 
     const chart = mount(<SimpleBarChart {...mockProps} />);
     chart.setProps({...mockProps, data: alteredData});

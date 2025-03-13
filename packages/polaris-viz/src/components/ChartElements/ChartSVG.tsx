@@ -1,6 +1,8 @@
 import type {AriaRole, Dispatch, ReactNode, SetStateAction} from 'react';
 import {XMLNS} from '@shopify/polaris-viz-core';
 
+import {getTooltipDataAttr} from '../TooltipWrapper';
+
 import styles from './ChartElements.scss';
 
 interface ChartSVGProps {
@@ -33,6 +35,13 @@ export function ChartSVG({
       aria-label={emptyState ? emptyStateText : undefined}
       ref={setRef}
     >
+      <rect
+        height={height}
+        width={width}
+        {...getTooltipDataAttr({
+          index: -1,
+        })}
+      />
       {children}
     </svg>
   );

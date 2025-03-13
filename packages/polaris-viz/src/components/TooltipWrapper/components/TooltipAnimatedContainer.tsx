@@ -1,109 +1,43 @@
 import type {ReactNode} from 'react';
-import {useEffect, useRef, useState, useMemo} from 'react';
-import type {BoundingRect, Dimensions} from '@shopify/polaris-viz-core';
-import {useChartContext, InternalChartType} from '@shopify/polaris-viz-core';
+import {useEffect, useMemo, useState} from 'react';
+import type {
+  BoundingRect,
+  Dimensions,
+  InternalChartType,
+} from '@shopify/polaris-viz-core';
+import {useChartContext, usePrevious} from '@shopify/polaris-viz-core';
 
 import {useResizeObserver} from '../../../hooks/useResizeObserver';
-import type {Margin} from '../../../types';
-import type {TooltipPositionOffset} from '../types';
-import {DEFAULT_TOOLTIP_POSITION} from '../constants';
-import {getAlteredLineChartPosition} from '../utilities/getAlteredLineChartPosition';
-import {getAlteredHorizontalBarPosition} from '../utilities/getAlteredHorizontalBarPosition';
-import {getAlteredVerticalBarPosition} from '../utilities/getAlteredVerticalBarPosition';
+import {useRepositionTooltip} from '../hooks/useRepositionTooltip';
 
 import styles from './TooltipAnimatedContainer.scss';
 
 export interface TooltipAnimatedContainerProps {
-  children: ReactNode;
-  margin: Margin;
-  currentX: number;
-  currentY: number;
-  chartBounds: BoundingRect;
+  activePointIndex: number | null;
   chartType: InternalChartType;
-  position?: TooltipPositionOffset;
+  children: ReactNode;
+  seriesBounds: BoundingRect | null;
+  x: number;
+  y: number;
   id?: string;
-  bandwidth?: number;
 }
 
 export function TooltipAnimatedContainer({
-  bandwidth = 0,
-  chartBounds,
+  activePointIndex,
   chartType,
   children,
-  currentX,
-  currentY,
   id = '',
-  margin,
-  position = DEFAULT_TOOLTIP_POSITION,
+  seriesBounds,
+  x,
+  y,
 }: TooltipAnimatedContainerProps) {
-  const {
-    isPerformanceImpacted,
-    scrollContainer,
-    containerBounds,
-    isTouchDevice,
-  } = useChartContext();
+  const {isPerformanceImpacted} = useChartContext();
+  const repositionTooltip = useRepositionTooltip();
+  const {setRef, entry} = useResizeObserver();
 
   const [tooltipDimensions, setTooltipDimensions] =
     useState<Dimensions | null>(null);
-  const firstRender = useRef(true);
-
-  const {setRef, entry} = useResizeObserver();
-
-  const getAlteredPositionFunction = useMemo(() => {
-    switch (chartType) {
-      case InternalChartType.Line:
-      case InternalChartType.Donut:
-        return getAlteredLineChartPosition;
-      case InternalChartType.HorizontalBar:
-        return getAlteredHorizontalBarPosition;
-      case InternalChartType.Bar:
-      default:
-        return getAlteredVerticalBarPosition;
-    }
-  }, [chartType]);
-
-  const {x, y, opacity, immediate} = useMemo(() => {
-    if (tooltipDimensions == null) {
-      return {x: 0, y: 0, opacity: 0};
-    }
-
-    const {x, y} = getAlteredPositionFunction({
-      currentX,
-      currentY,
-      position,
-      tooltipDimensions,
-      chartBounds,
-      margin,
-      bandwidth,
-      isPerformanceImpacted,
-      isTouchDevice,
-      containerBounds,
-      scrollContainer,
-    });
-
-    const shouldRenderImmediate = firstRender.current;
-    firstRender.current = false;
-
-    return {
-      x,
-      y,
-      opacity: 1,
-      immediate: isPerformanceImpacted || shouldRenderImmediate,
-    };
-  }, [
-    bandwidth,
-    chartBounds,
-    currentX,
-    currentY,
-    getAlteredPositionFunction,
-    margin,
-    position,
-    isPerformanceImpacted,
-    tooltipDimensions,
-    containerBounds,
-    scrollContainer,
-    isTouchDevice,
-  ]);
+  const previousActivePointIndex = usePrevious(activePointIndex);
 
   useEffect(() => {
     if (entry == null) {
@@ -111,6 +45,10 @@ export function TooltipAnimatedContainer({
     }
 
     setTooltipDimensions((previous: Dimensions | null) => {
+      if (entry == null || entry.target == null) {
+        return previous;
+      }
+
       const {width, height} = entry.target.getBoundingClientRect();
 
       if (previous?.width === width && previous?.height === height) {
@@ -124,6 +62,34 @@ export function TooltipAnimatedContainer({
     });
   }, [entry]);
 
+  const {x: newX, y: newY} = useMemo(() => {
+    // If we don't have any children, we shouldn't alter the position
+    // of the tooltip because there are no tooltip bounds
+    // to actually check.
+    if (children == null) {
+      return {x, y};
+    }
+
+    return repositionTooltip({
+      chartType,
+      seriesBounds,
+      tooltipDimensions,
+      x,
+      y,
+    });
+  }, [
+    chartType,
+    seriesBounds,
+    tooltipDimensions,
+    x,
+    y,
+    repositionTooltip,
+    children,
+  ]);
+
+  const shouldRenderImmediate =
+    previousActivePointIndex === -1 || previousActivePointIndex === null;
+
   return (
     <div
       id={id}
@@ -132,9 +98,15 @@ export function TooltipAnimatedContainer({
       style={{
         top: 0,
         left: 0,
-        opacity,
-        transform: `translate3d(${Math.round(x)}px, ${Math.round(y)}px, 0px)`,
-        transition: immediate ? 'none' : 'opacity 300ms ease, transform 150ms',
+        opacity: !shouldRenderImmediate ? 1 : 0,
+        transform: `translate3d(${Math.round(newX)}px, ${Math.round(
+          newY,
+        )}px, 0px)`,
+        transformOrigin: 'right center',
+        transition: isPerformanceImpacted
+          ? 'none'
+          : `opacity 300ms 150ms ease, transform 150ms ease`,
+        willChange: 'opacity, transform',
       }}
       ref={setRef}
       aria-hidden="true"

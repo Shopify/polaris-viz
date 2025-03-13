@@ -10,8 +10,6 @@ import {
   useChartContext,
   THIN_ARC_CORNER_THICKNESS,
   isInfinity,
-  DataType,
-  ChartMargin,
   InternalChartType,
 } from '@shopify/polaris-viz-core';
 import type {
@@ -19,13 +17,15 @@ import type {
   DataSeries,
   LabelFormatter,
   Direction,
-  BoundingRect,
 } from '@shopify/polaris-viz-core';
 
 import {getAnimationDelayForItems} from '../../utilities/getAnimationDelayForItems';
 import {getContainerAlignmentForLegend} from '../../utilities';
 import {useDonutChartTooltipContents} from '../../hooks/useDonutChartTooltipContents';
-import {TooltipWrapper} from '../../components/TooltipWrapper';
+import {
+  getTooltipDataAttr,
+  TooltipWrapper,
+} from '../../components/TooltipWrapper';
 import type {ComparisonMetricProps} from '../ComparisonMetric';
 import {LegendContainer, useLegend} from '../../components/LegendContainer';
 import {
@@ -102,13 +102,6 @@ export function Chart({
   });
 
   const seriesColor = getSeriesColors(seriesCount, selectedTheme);
-
-  const chartBounds: BoundingRect = {
-    width: containerBounds.width,
-    height: containerBounds.height,
-    x: 0,
-    y: 0,
-  };
 
   const getTooltipMarkup = useDonutChartTooltipContents({
     renderTooltipContent,
@@ -232,6 +225,17 @@ export function Chart({
               ref={setSvgRef}
             >
               <g className={styles.DonutChart}>
+                <rect
+                  x={minX}
+                  y={minY}
+                  width={viewBoxDimensions.width}
+                  height={viewBoxDimensions.height}
+                  {...getTooltipDataAttr({
+                    index: -1,
+                    x: 0,
+                    y: 0,
+                  })}
+                />
                 {emptyState ? (
                   <g aria-hidden>
                     <Arc
@@ -321,14 +325,9 @@ export function Chart({
         />
       )}
       <TooltipWrapper
-        chartBounds={chartBounds}
         chartType={InternalChartType.Donut}
-        focusElementDataType={DataType.Arc}
-        forceActiveIndex={activeIndex}
         getMarkup={getTooltipMarkup}
-        margin={ChartMargin}
         parentElement={svgRef}
-        usePortal
       />
     </div>
   );

@@ -14,6 +14,7 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {Color} from '@shopify/polaris-viz-core';
 
+import {getTooltipDataAttr} from '../../../TooltipWrapper';
 import {getChartId} from '../../../../utilities/getChartId';
 import {getHoverZoneOffset} from '../../../../utilities';
 import {
@@ -32,6 +33,8 @@ const COLOR_VISION_MASK = 'colorVisionMask';
 
 export interface BarGroupProps {
   animationDelay: number;
+  chartXPosition: number;
+  chartYPosition: number;
   x: number;
   yScale: ScaleLinear<number, number>;
   width: number;
@@ -62,9 +65,11 @@ export function BarGroup({
   gapWidth,
   theme,
   areAllNegative,
+  chartXPosition,
+  chartYPosition,
 }: BarGroupProps) {
   const groupAriaLabel = formatAriaLabel(accessibilityData[barGroupIndex]);
-  const {id, isPerformanceImpacted} = useChartContext();
+  const {id, isPerformanceImpacted, containerBounds} = useChartContext();
 
   const selectedTheme = useTheme(theme);
 
@@ -128,6 +133,28 @@ export function BarGroup({
       : color;
   });
 
+  const highestValue = Math.max(
+    ...(data.filter((value) => value != null) as number[]),
+  );
+
+  const hoverAreaWidth = barWidth * dataLength + gapWidth;
+  const hoverAreaX = x - gapWidth / 2;
+
+  const tooltipAttr = getTooltipDataAttr({
+    index: barGroupIndex,
+    x: containerBounds.x + chartXPosition + hoverAreaX + hoverAreaWidth / 2,
+    y:
+      containerBounds.y +
+      chartYPosition +
+      yScale(highestValue > 0 ? highestValue : 0),
+    seriesBounds: {
+      width: hoverAreaWidth,
+      height: drawableHeight,
+      x: containerBounds.x + chartXPosition + hoverAreaX,
+      y: containerBounds.y + chartYPosition,
+    },
+  });
+
   return (
     <Fragment>
       <mask id={maskId}>
@@ -186,24 +213,19 @@ export function BarGroup({
         })}
       </g>
 
-      <g
-        {...getColorVisionEventAttrs({
-          type: COLOR_VISION_GROUP_ITEM,
-          index: barGroupIndex,
-        })}
-        className={styles.BarGroup}
-        data-type={DataType.BarGroup}
-        data-index={barGroupIndex}
-        aria-hidden="false"
-        aria-label={groupAriaLabel}
-        role="list"
-      >
+      <g aria-label={groupAriaLabel} role="list">
         <rect
-          width={barWidth * dataLength + gapWidth}
-          x={x - gapWidth / 2}
+          {...getColorVisionEventAttrs({
+            type: COLOR_VISION_GROUP_ITEM,
+            index: barGroupIndex,
+          })}
+          {...tooltipAttr}
+          className={styles.BarGroup}
+          data-type={DataType.BarGroup}
+          data-index={barGroupIndex}
+          width={hoverAreaWidth}
+          x={hoverAreaX}
           height={drawableHeight}
-          fill="transparent"
-          aria-hidden="true"
         />
 
         {data.map((rawValue, index) => {
@@ -227,21 +249,25 @@ export function BarGroup({
             position: 'vertical',
           });
 
+          const rectX = x + barWidth * index;
+          const rectY = isNegative || areAllNegative ? y : y - offset;
+
           return (
             <rect
               key={index}
-              height={clampedSize}
-              x={x + barWidth * index}
-              y={isNegative || areAllNegative ? y : y - offset}
-              width={barWidth}
-              fill="transparent"
-              aria-label={ariaLabel}
-              role="listitem"
               {...getColorVisionEventAttrs({
                 type: COLOR_VISION_SINGLE_ITEM,
                 index: index + indexOffset,
                 watch: !isPerformanceImpacted,
               })}
+              {...tooltipAttr}
+              height={clampedSize}
+              x={rectX}
+              y={rectY}
+              width={barWidth}
+              fill="transparent"
+              aria-label={ariaLabel}
+              role="listitem"
               className={styles.Bar}
               tabIndex={-1}
             />

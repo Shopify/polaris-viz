@@ -65,7 +65,6 @@ export function useHorizontalBarSizes({
     return {
       barHeight,
       chartHeight,
-      groupBarsAreaHeight,
       groupHeight,
     };
   }, [
