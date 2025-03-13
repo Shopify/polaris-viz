@@ -32,6 +32,7 @@ import type {
   GetXPosition,
   RenderLegendContent,
   RenderTooltipContentData,
+  RenderAnnotationContentData,
 } from '../../types';
 import {XAxis} from '../XAxis';
 import {LegendContainer, useLegend} from '../LegendContainer';
@@ -64,6 +65,7 @@ export interface Props {
   theme: string;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
+  renderAnnotationContent?: (data: RenderAnnotationContentData) => ReactNode;
   renderLegendContent?: RenderLegendContent;
   renderHiddenLegendLabel?: (count: number) => string;
 }
@@ -77,6 +79,7 @@ export function Chart({
   showLegend,
   theme,
   yAxisOptions,
+  renderAnnotationContent,
   renderHiddenLegendLabel,
   seriesNameFormatter,
 }: Props) {
@@ -351,6 +354,7 @@ export function Chart({
               labels={labels}
               labelFormatter={xAxisOptions.labelFormatter}
               onHeightChange={setAnnotationsHeight}
+              renderAnnotationContent={renderAnnotationContent}
               xScale={xScale}
             />
           </g>

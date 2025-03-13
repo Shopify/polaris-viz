@@ -1,3 +1,4 @@
+import type {ReactNode} from 'react';
 import {Fragment, useMemo, useState} from 'react';
 
 import {
@@ -5,7 +6,11 @@ import {
   AnnotationLabel,
   AnnotationLine,
 } from '../../../Annotations';
-import type {Annotation, AnnotationLookupTable} from '../../../../types';
+import type {
+  Annotation,
+  AnnotationLookupTable,
+  RenderAnnotationContentData,
+} from '../../../../types';
 import {useSVGBlurEvent} from '../../../../hooks/useSVGBlurEvent';
 
 import {useHorizontalBarChartYAnnotationsPositions} from './hooks/useHorizontalBarChartYAnnotationsPositions';
@@ -15,6 +20,7 @@ export interface YAxisAnnotationsProps {
   drawableWidth: number;
   groupHeight: number;
   labels: string[];
+  renderAnnotationContent?: (data: RenderAnnotationContentData) => ReactNode;
   zeroPosition: number;
 }
 
@@ -23,6 +29,7 @@ export function HorizontalBarChartYAnnotations({
   drawableWidth,
   groupHeight,
   labels,
+  renderAnnotationContent,
   zeroPosition,
 }: YAxisAnnotationsProps) {
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -115,6 +122,7 @@ export function HorizontalBarChartYAnnotations({
                   onMouseLeave={handleOnMouseLeave}
                   parentRef={ref}
                   position={position}
+                  renderAnnotationContent={renderAnnotationContent}
                   tabIndex={tabIndex}
                   x={drawableWidth - (drawableWidth - x)}
                   y={y}

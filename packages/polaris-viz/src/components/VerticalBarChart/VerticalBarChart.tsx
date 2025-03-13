@@ -9,6 +9,7 @@ import type {ReactNode} from 'react';
 
 import type {
   AnnotationLookupTable,
+  RenderAnnotationContentData,
   RenderLegendContent,
   RenderTooltipContentData,
 } from '../../types';
@@ -18,6 +19,7 @@ import {Chart} from './Chart';
 
 export interface VerticalBarChartProps {
   data: DataSeries[];
+  renderAnnotationContent?: (data: RenderAnnotationContentData) => ReactNode;
   renderTooltipContent(data: RenderTooltipContentData): ReactNode;
   showLegend: boolean;
   xAxisOptions: Required<XAxisOptions>;
@@ -35,6 +37,7 @@ export function VerticalBarChart({
   annotationsLookupTable = {},
   data,
   emptyStateText,
+  renderAnnotationContent,
   renderLegendContent,
   renderTooltipContent,
   showLegend,
@@ -64,6 +67,7 @@ export function VerticalBarChart({
       type={type}
       xAxisOptions={xAxisOptions}
       yAxisOptions={yAxisOptions}
+      renderAnnotationContent={renderAnnotationContent}
       renderHiddenLegendLabel={renderHiddenLegendLabel}
     />
   );

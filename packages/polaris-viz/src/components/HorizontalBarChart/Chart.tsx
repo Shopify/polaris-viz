@@ -25,6 +25,7 @@ import {checkAvailableAnnotations} from '../../components/Annotations';
 import {useFormattedLabels} from '../../hooks/useFormattedLabels';
 import type {
   AnnotationLookupTable,
+  RenderAnnotationContentData,
   RenderLegendContent,
   RenderTooltipContentData,
 } from '../../types';
@@ -62,6 +63,7 @@ export interface ChartProps {
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
+  renderAnnotationContent?: (data: RenderAnnotationContentData) => ReactNode;
   renderHiddenLegendLabel?: (count: number) => string;
   renderLegendContent?: RenderLegendContent;
 }
@@ -69,6 +71,7 @@ export interface ChartProps {
 export function Chart({
   annotationsLookupTable,
   data,
+  renderAnnotationContent,
   renderHiddenLegendLabel,
   renderLegendContent,
   renderTooltipContent,
@@ -273,6 +276,7 @@ export function Chart({
               drawableHeight={annotationsDrawableHeight}
               drawableWidth={drawableWidth}
               onHeightChange={setAnnotationsHeight}
+              renderAnnotationContent={renderAnnotationContent}
               xScale={xScale}
             />
           </g>
@@ -285,6 +289,7 @@ export function Chart({
               drawableWidth={drawableWidth}
               groupHeight={groupHeight}
               labels={unformattedLabels}
+              renderAnnotationContent={renderAnnotationContent}
               zeroPosition={zeroPosition}
             />
           </g>

@@ -1,8 +1,13 @@
+import type {ReactNode} from 'react';
 import {Fragment, useMemo, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {isValueWithinDomain} from '@shopify/polaris-viz-core';
 
-import type {Annotation, AnnotationLookupTable} from '../../../../types';
+import type {
+  Annotation,
+  AnnotationLookupTable,
+  RenderAnnotationContentData,
+} from '../../../../types';
 import {useSVGBlurEvent} from '../../../../hooks/useSVGBlurEvent';
 import {
   AnnotationLabel,
@@ -22,6 +27,7 @@ export interface AnnotationsProps {
   drawableHeight: number;
   drawableWidth: number;
   onHeightChange: (height: number) => void;
+  renderAnnotationContent?: (data: RenderAnnotationContentData) => ReactNode;
   xScale: ScaleLinear<number, number>;
 }
 
@@ -30,6 +36,7 @@ export function HorizontalBarChartXAnnotations({
   drawableHeight,
   drawableWidth,
   onHeightChange,
+  renderAnnotationContent,
   xScale,
 }: AnnotationsProps) {
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -146,6 +153,7 @@ export function HorizontalBarChartXAnnotations({
                   onMouseLeave={handleOnMouseLeave}
                   parentRef={ref}
                   position={position}
+                  renderAnnotationContent={renderAnnotationContent}
                   tabIndex={tabIndex}
                   x={line.x}
                   y={y}
