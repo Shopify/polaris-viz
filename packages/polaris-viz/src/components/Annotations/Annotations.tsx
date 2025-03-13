@@ -2,7 +2,11 @@ import {Fragment, useMemo, useState} from 'react';
 import type {ScaleBand, ScaleLinear} from 'd3-scale';
 import type {LabelFormatter} from '@shopify/polaris-viz-core';
 
-import type {Annotation, AnnotationLookupTable} from '../../types';
+import type {
+  Annotation,
+  AnnotationLookupTable,
+  RenderAnnotationContentData,
+} from '../../types';
 import {useSVGBlurEvent} from '../../hooks/useSVGBlurEvent';
 import {shouldHideAnnotation} from '../../utilities/shouldHideAnnotation';
 import {isShowMoreAnnotationsButtonVisible} from '../../utilities/isShowMoreAnnotationsButtonVisible';
@@ -25,6 +29,9 @@ export interface AnnotationsProps {
   labelFormatter: LabelFormatter;
   labels: string[];
   onHeightChange: (height: number) => void;
+  renderAnnotationContent?: (
+    data: RenderAnnotationContentData,
+  ) => React.ReactNode;
   xScale: ScaleLinear<number, number> | ScaleBand<string>;
 }
 
@@ -37,6 +44,7 @@ export function Annotations({
   onHeightChange,
   xScale,
   labelFormatter,
+  renderAnnotationContent,
 }: AnnotationsProps) {
   const [activeIndex, setActiveIndex] = useState(-1);
   const [isShowingAllAnnotations, setIsShowingAllAnnotations] = useState(false);
@@ -159,6 +167,7 @@ export function Annotations({
                   onMouseLeave={handleOnMouseLeave}
                   parentRef={ref}
                   position={position}
+                  renderAnnotationContent={renderAnnotationContent}
                   tabIndex={tabIndex}
                   x={line.x}
                   y={y}

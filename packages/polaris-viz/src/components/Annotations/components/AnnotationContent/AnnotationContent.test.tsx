@@ -177,6 +177,32 @@ describe('<AnnotationContent />', () => {
     });
   });
 
+  describe('renderAnnotationContent', () => {
+    it('renders custom content', () => {
+      const chart = mount(
+        <AnnotationContent
+          {...MOCK_PROPS}
+          parentRef={svg}
+          renderAnnotationContent={() => (
+            <p>
+              Custom content that is{' '}
+              <span style={{fontWeight: 'bold'}}>bolded</span>
+            </p>
+          )}
+        />,
+      );
+
+      expect(chart).not.toContainReactText(
+        MOCK_PROPS.annotation.content.content,
+      );
+
+      expect(chart).toContainReactComponent('span', {
+        children: 'bolded',
+        style: {fontWeight: 'bold'},
+      });
+    });
+  });
+
   it('renders background with opacity', () => {
     const chart = mount(<AnnotationContent {...MOCK_PROPS} parentRef={svg} />);
 

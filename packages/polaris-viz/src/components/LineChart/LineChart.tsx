@@ -1,3 +1,4 @@
+import type {ReactNode} from 'react';
 import {Fragment, useRef} from 'react';
 import type {
   XAxisOptions,
@@ -29,6 +30,7 @@ import {useTheme} from '../../hooks';
 import type {
   Annotation,
   LineChartSlotProps,
+  RenderAnnotationContentData,
   RenderLegendContent,
   TooltipOptions,
 } from '../../types';
@@ -39,6 +41,7 @@ export type LineChartProps = {
   annotations?: Annotation[];
   errorText?: string;
   emptyStateText?: string;
+  renderAnnotationContent?: (data: RenderAnnotationContentData) => ReactNode;
   renderLegendContent?: RenderLegendContent;
   renderHiddenLegendLabel?: (count: number) => string;
   seriesNameFormatter?: LabelFormatter;
@@ -65,6 +68,7 @@ export function LineChart(props: LineChartProps) {
     id,
     isAnimated,
     onError,
+    renderAnnotationContent,
     renderLegendContent,
     renderHiddenLegendLabel,
     seriesNameFormatter = (value) => `${value}`,
@@ -124,6 +128,7 @@ export function LineChart(props: LineChartProps) {
             annotationsLookupTable={annotationsLookupTable}
             data={dataWithDefaults}
             emptyStateText={emptyStateText}
+            renderAnnotationContent={renderAnnotationContent}
             renderLegendContent={renderLegendContent}
             renderTooltipContent={renderTooltip}
             renderHiddenLegendLabel={renderHiddenLegendLabel}
