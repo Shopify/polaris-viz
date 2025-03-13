@@ -67,6 +67,7 @@ const MOCK_PROPS: ChartProps = {
   annotationsLookupTable: {},
   xAxisOptions,
   yAxisOptions,
+  renderAnnotationContent: jest.fn(() => <p>Mock Annotation</p>),
   renderTooltipContent: jest.fn(() => <p>Mock Tooltip</p>),
   showLegend: false,
   seriesNameFormatter: (value) => `${value}`,

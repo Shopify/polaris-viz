@@ -98,6 +98,10 @@ export interface RenderTooltipContentData {
   formatters?: TooltipFormatters;
 }
 
+export interface RenderAnnotationContentData {
+  annotation: Annotation;
+}
+
 export interface TooltipData {
   shape: Shape;
   data: {

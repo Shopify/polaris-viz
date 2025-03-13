@@ -32,6 +32,7 @@ import {
 import type {
   AnnotationLookupTable,
   LineChartSlotProps,
+  RenderAnnotationContentData,
   RenderHiddenLegendLabel,
   RenderLegendContent,
   RenderTooltipContentData,
@@ -63,27 +64,29 @@ import {useFormatData} from './hooks';
 import {yAxisMinMax} from './utilities';
 
 export interface ChartProps {
-  renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
   annotationsLookupTable: AnnotationLookupTable;
   data: LineChartDataSeriesWithDefaults[];
+  emptyStateText?: string;
+  hideLegendOverflow: boolean;
+  renderAnnotationContent?: (data: RenderAnnotationContentData) => ReactNode;
+  renderHiddenLegendLabel?: RenderHiddenLegendLabel;
+  renderLegendContent?: RenderLegendContent;
+  renderTooltipContent: (data: RenderTooltipContentData) => ReactNode;
   seriesNameFormatter: LabelFormatter;
   showLegend: boolean;
-  hideLegendOverflow: boolean;
-  xAxisOptions: Required<XAxisOptions>;
-  yAxisOptions: Required<YAxisOptions>;
-  emptyStateText?: string;
-  renderLegendContent?: RenderLegendContent;
-  renderHiddenLegendLabel?: RenderHiddenLegendLabel;
   slots?: {
     chart?: (props: LineChartSlotProps) => JSX.Element;
   };
   theme?: string;
+  xAxisOptions: Required<XAxisOptions>;
+  yAxisOptions: Required<YAxisOptions>;
 }
 
 export function Chart({
   annotationsLookupTable,
   emptyStateText,
   data,
+  renderAnnotationContent,
   renderLegendContent,
   renderTooltipContent,
   renderHiddenLegendLabel,
@@ -387,6 +390,7 @@ export function Chart({
               labelFormatter={xAxisOptions.labelFormatter}
               onHeightChange={setAnnotationsHeight}
               xScale={xScale}
+              renderAnnotationContent={renderAnnotationContent}
             />
           </g>
         )}

@@ -83,6 +83,7 @@ const MOCK_PROPS: AnnotationsProps = {
   onHeightChange: jest.fn(),
   xScale: scaleBand(),
   labelFormatter: (value) => `${value}`,
+  renderAnnotationContent: undefined,
 };
 
 describe('<Annotations />', () => {
@@ -214,5 +215,24 @@ describe('<Annotations />', () => {
     );
 
     expect(component).toContainReactComponentTimes(AnnotationLabel, 1);
+  });
+
+  it('renders custom annotation content', () => {
+    const component = mount(
+      <svg>
+        <Annotations
+          {...MOCK_PROPS}
+          renderAnnotationContent={() => <p>Custom content</p>}
+        />
+      </svg>,
+    );
+
+    const labels = component.findAll(AnnotationLabel);
+
+    labels[1].trigger('setActiveIndex', 1);
+
+    expect(component).toContainReactComponent(AnnotationContent, {
+      renderAnnotationContent: expect.any(Function),
+    });
   });
 });

@@ -40,6 +40,11 @@ Annotations.args = {
       },
     },
   ],
+  renderAnnotationContent: (data) => (
+    <p>
+      Rendering custom content for the label <b>{data.annotation.label}</b>
+    </p>
+  ),
   xAxisOptions: {
     labelFormatter: (value) =>
       new Intl.DateTimeFormat('en-US', {
