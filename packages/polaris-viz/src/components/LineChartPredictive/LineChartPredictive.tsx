@@ -28,6 +28,7 @@ export function LineChartPredictive(props: LineChartPredictiveProps) {
     state,
     theme,
     tooltipOptions: initialTooltipOptions,
+    renderAnnotationContent,
     xAxisOptions,
     yAxisOptions,
   } = {
@@ -110,6 +111,7 @@ export function LineChartPredictive(props: LineChartPredictiveProps) {
       tooltipOptions={tooltipOptions}
       xAxisOptions={xAxisOptions}
       yAxisOptions={yAxisOptions}
+      renderAnnotationContent={renderAnnotationContent}
       renderLegendContent={({
         getColorVisionStyles,
         getColorVisionEventAttrs,

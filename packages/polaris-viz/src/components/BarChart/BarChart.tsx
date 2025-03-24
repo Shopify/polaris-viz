@@ -1,3 +1,4 @@
+import type {ReactNode} from 'react';
 import {Fragment, useRef} from 'react';
 import {
   uniqueId,
@@ -20,6 +21,7 @@ import {getTooltipContentRenderer} from '../../utilities/getTooltipContentRender
 import {ChartContainer} from '../../components/ChartContainer';
 import type {
   Annotation,
+  RenderAnnotationContentData,
   RenderLegendContent,
   TooltipOptions,
 } from '../../types';
@@ -49,6 +51,7 @@ export type BarChartProps = {
   type?: ChartType;
   xAxisOptions?: Partial<XAxisOptions>;
   yAxisOptions?: Partial<YAxisOptions>;
+  renderAnnotationContent?: (data: RenderAnnotationContentData) => ReactNode;
   renderHiddenLegendLabel?: (count: number) => string;
   renderBucketLegendLabel?: () => string;
   scrollContainer?: Element | null;
@@ -76,6 +79,7 @@ export function BarChart(props: BarChartProps) {
     xAxisOptions,
     yAxisOptions,
     onError,
+    renderAnnotationContent,
     renderHiddenLegendLabel,
     renderBucketLegendLabel,
     seriesNameFormatter = (value) => `${value}`,
@@ -121,6 +125,7 @@ export function BarChart(props: BarChartProps) {
         annotationsLookupTable={annotationsLookupTable}
         data={data}
         emptyStateText={emptyStateText}
+        renderAnnotationContent={renderAnnotationContent}
         renderLegendContent={renderLegendContent}
         renderTooltipContent={renderTooltip}
         seriesNameFormatter={seriesNameFormatter}
@@ -135,6 +140,7 @@ export function BarChart(props: BarChartProps) {
         annotationsLookupTable={annotationsLookupTable}
         data={data}
         renderHiddenLegendLabel={renderHiddenLegendLabel}
+        renderAnnotationContent={renderAnnotationContent}
         renderLegendContent={renderLegendContent}
         renderTooltipContent={renderTooltip}
         seriesNameFormatter={seriesNameFormatter}

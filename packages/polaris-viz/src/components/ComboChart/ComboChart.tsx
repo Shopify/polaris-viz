@@ -17,6 +17,7 @@ import {getXAxisOptionsWithDefaults, normalizeData} from '../../utilities';
 import {ChartContainer} from '../ChartContainer';
 import type {
   ComboAnnotation,
+  RenderAnnotationContentData,
   RenderLegendContent,
   RenderTooltipContentData,
 } from '../../types';
@@ -27,6 +28,7 @@ import {formatDataForTooltip} from './utilities/formatDataForTooltip';
 export type ComboChartProps = {
   data: DataGroup[];
   annotations?: ComboAnnotation[];
+  renderAnnotationContent?: (data: RenderAnnotationContentData) => ReactNode;
   renderTooltipContent?(data: RenderTooltipContentData): ReactNode;
   seriesNameFormatter?: LabelFormatter;
   showLegend?: boolean;
@@ -43,6 +45,7 @@ export function ComboChart(props: ComboChartProps) {
     onError,
     id,
     isAnimated,
+    renderAnnotationContent,
     renderTooltipContent,
     seriesNameFormatter = (value) => `${value}`,
     showLegend = true,
@@ -86,6 +89,7 @@ export function ComboChart(props: ComboChartProps) {
       <Chart
         annotationsLookupTable={annotationsLookupTable}
         data={data}
+        renderAnnotationContent={renderAnnotationContent}
         renderTooltipContent={renderTooltip}
         seriesNameFormatter={seriesNameFormatter}
         showLegend={showLegend}

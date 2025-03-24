@@ -1,10 +1,10 @@
-import {useEffect, useLayoutEffect, useState} from 'react';
+import {Fragment, useEffect, useLayoutEffect, useState} from 'react';
 import {createPortal} from 'react-dom';
 import {changeColorOpacity, clamp, useTheme} from '@shopify/polaris-viz-core';
 
 import {TOOLTIP_BG_OPACITY} from '../../../../constants';
 import {useBrowserCheck} from '../../../../hooks/useBrowserCheck';
-import type {Annotation} from '../../../../types';
+import type {Annotation, RenderAnnotationContentData} from '../../../../types';
 import type {AnnotationPosition} from '../../types';
 
 import styles from './AnnotationContent.scss';
@@ -18,6 +18,9 @@ export interface AnnotationContentProps {
   onMouseLeave: () => void;
   parentRef: SVGElement | null;
   position: AnnotationPosition;
+  renderAnnotationContent?: (
+    data: RenderAnnotationContentData,
+  ) => React.ReactNode;
   tabIndex: number;
   x: number;
   y: number;
@@ -30,6 +33,7 @@ export function AnnotationContent({
   onMouseLeave,
   parentRef,
   tabIndex,
+  renderAnnotationContent,
   x,
   y,
 }: AnnotationContentProps) {
@@ -93,6 +97,7 @@ export function AnnotationContent({
             selectedTheme.tooltip.backgroundColor,
             isFirefox ? 1 : TOOLTIP_BG_OPACITY,
           ),
+          color: selectedTheme.tooltip.textColor,
         }}
         id={`annotation-content-${index}`}
         role="dialog"
@@ -107,24 +112,30 @@ export function AnnotationContent({
             {title}
           </p>
         )}
-        <p
+        <div
           className={styles.Content}
           style={{color: selectedTheme.tooltip.textColor}}
           data-is-annotation-content
         >
-          {content}
+          {renderAnnotationContent ? (
+            renderAnnotationContent({annotation})
+          ) : (
+            <Fragment>
+              <p style={{color: selectedTheme.tooltip.textColor}}>{content}</p>
 
-          {linkUrl != null && (
-            <a
-              href={linkUrl}
-              className={styles.Link}
-              tabIndex={tabIndex}
-              style={{color: selectedTheme.annotations.linkColor}}
-            >
-              {linkText}
-            </a>
+              {linkUrl != null && (
+                <a
+                  href={linkUrl}
+                  className={styles.Link}
+                  tabIndex={tabIndex}
+                  style={{color: selectedTheme.annotations.linkColor}}
+                >
+                  {linkText}
+                </a>
+              )}
+            </Fragment>
           )}
-        </p>
+        </div>
       </div>
     </Wrapper>,
     parentRef ?? document.body,
