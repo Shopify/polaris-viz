@@ -30,7 +30,7 @@ interface Data {
   key: string;
   value: string;
   color: Color;
-  percent: number;
+  percent: number | null;
 }
 
 export function Tooltip({
@@ -47,23 +47,37 @@ export function Tooltip({
   const previousPoint = dataSeries[activeIndex - 1];
   const isFirst = activeIndex === 0;
 
-  const dropOffPercentage = Math.abs(
-    calculateDropOff(previousPoint?.value ?? 0, point?.value ?? 0),
-  );
+  const currentValue = point?.value ?? null;
+  const previousValue = previousPoint?.value ?? null;
+  const hasValidValues = currentValue !== null && previousValue !== null;
+
+  const getDropOffPercent = () => {
+    if (isFirst || !hasValidValues) return null;
+    return Math.abs(calculateDropOff(previousValue, currentValue));
+  };
+
+  const getReachedPercent = (dropOffPercent: number | null) => {
+    if (isFirst) return 100;
+    if (!hasValidValues) return null;
+    return 100 - dropOffPercent!;
+  };
+
+  const dropOffPercentage = getDropOffPercent();
+  const reachedPercent = getReachedPercent(dropOffPercentage);
 
   const data: Data[] = [
     {
       key: tooltipLabels.reached,
-      value: labelFormatter(point.value),
+      value: currentValue === null ? '-' : labelFormatter(currentValue),
       color: FUNNEL_CHART_SEGMENT_FILL,
-      percent: isFirst ? 100 : 100 - dropOffPercentage,
+      percent: reachedPercent,
     },
   ];
 
-  if (!isFirst) {
+  if (!isFirst && hasValidValues) {
     data.push({
       key: tooltipLabels.dropped,
-      value: labelFormatter((previousPoint?.value ?? 0) - (point.value ?? 0)),
+      value: labelFormatter(previousValue - currentValue),
       percent: dropOffPercentage,
       color: FUNNEL_CHART_CONNECTOR_GRADIENT,
     });
@@ -87,9 +101,9 @@ export function Tooltip({
           </TooltipTitle>
           <div className={styles.Rows}>
             {data.map(({key, value, color, percent}, index) => {
-              const ariaLabel = `${key}: ${value}, ${percentageFormatter(
-                percent,
-              )}`;
+              const formattedPercent =
+                percent === null ? '-' : percentageFormatter(percent);
+              const ariaLabel = `${key}: ${value}, ${formattedPercent}`;
 
               const {trendIndicatorProps} = getTrendIndicatorData(
                 index === 0
@@ -112,7 +126,7 @@ export function Tooltip({
                       <strong>{value}</strong>
                     </span>
                     <span>
-                      <strong>{percentageFormatter(percent)}</strong>
+                      <strong>{formattedPercent}</strong>
                     </span>
                     {trendIndicatorProps && (
                       <div className={styles.TrendIndicator}>
