@@ -16,29 +16,52 @@ export function useFunnelBarScaling({
   yScale,
   values,
 }: UseFunnelBarScalingProps) {
-  const hasZeroValue = values.some((value) => value === 0);
-
-  const tallestBarHeight = yScale(Math.max(...values));
-  const smallestBarHeight = yScale(Math.min(...values));
+  const maxValue = Math.max(...values);
+  const smallestNonZeroValue = Math.min(...values.filter((value) => value > 0));
+  const tallestBarHeight = yScale(maxValue);
+  const smallestBarHeight = yScale(smallestNonZeroValue);
   const smallestToTallestBarRatio = smallestBarHeight / tallestBarHeight;
   const shouldApplyScaling =
-    !hasZeroValue && smallestToTallestBarRatio <= SCALING_RATIO_THRESHOLD;
+    smallestToTallestBarRatio <= SCALING_RATIO_THRESHOLD;
 
   const getBarHeight = useCallback(
     (rawValue: number) => {
       const sanitizedValue = Math.max(0, rawValue);
       const barHeight = sanitizedValue === 0 ? 0 : yScale(sanitizedValue);
-      if (!shouldApplyScaling || barHeight === tallestBarHeight) {
+      if (
+        !shouldApplyScaling ||
+        barHeight === tallestBarHeight ||
+        sanitizedValue === 0
+      ) {
         return barHeight;
       }
 
-      const currentRatio = smallestBarHeight / tallestBarHeight;
-      const scaleFactor = MINIMUM_SEGMENT_HEIGHT_RATIO / currentRatio;
+      // Calculate the ratio of this segment's value compared to the maximum
+      const valueRatio = sanitizedValue / maxValue;
 
-      // Ensure we don't scale larger than the first segment
-      return Math.min(barHeight * scaleFactor, tallestBarHeight * 0.9);
+      /*
+       * Use logarithmic scaling to make small segments more visible in the funnel chart.
+       * This helps when values vary greatly (e.g., 1000 vs 10), ensuring smaller
+       * segments remain meaningful. The logarithmic scale uses exponential growth
+       * rather than linear increments on the y scale, which works well for visualizing
+       * large ranges.
+       */
+      const logBase =
+        MINIMUM_SEGMENT_HEIGHT_RATIO **
+        (1 / Math.log(smallestNonZeroValue / maxValue));
+      const scaledRatio = logBase ** Math.log(valueRatio);
+
+      return (
+        tallestBarHeight * Math.max(scaledRatio, MINIMUM_SEGMENT_HEIGHT_RATIO)
+      );
     },
-    [yScale, shouldApplyScaling, smallestBarHeight, tallestBarHeight],
+    [
+      yScale,
+      shouldApplyScaling,
+      tallestBarHeight,
+      maxValue,
+      smallestNonZeroValue,
+    ],
   );
 
   return {
