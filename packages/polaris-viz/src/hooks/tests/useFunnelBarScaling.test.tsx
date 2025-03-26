@@ -47,22 +47,6 @@ describe('useFunnelBarScaling', () => {
     expect(data.shouldApplyScaling).toBe(true);
   });
 
-  it('returns shouldApplyScaling=false when there is a 0 value', () => {
-    function TestComponent() {
-      const data = useFunnelBarScaling({
-        yScale: mockYScale,
-        values: [0, 100],
-      });
-
-      return <span data-data={`${JSON.stringify(data)}`} />;
-    }
-
-    const result = mount(<TestComponent />);
-    const data = parseData(result);
-
-    expect(data.shouldApplyScaling).toBe(false);
-  });
-
   describe('getBarHeight', () => {
     it('returns original bar height when ratio is above scaling threshold', () => {
       function TestComponent() {
@@ -145,6 +129,61 @@ describe('useFunnelBarScaling', () => {
       const data = parseData(result);
 
       expect(data.height).toBe(0);
+    });
+
+    it('applies logarithmic scaling for values with large differences', () => {
+      function TestComponent() {
+        const data = useFunnelBarScaling({
+          yScale: mockYScale,
+          values: [1, 1000],
+        });
+
+        const heights = {
+          small: data.getBarHeight(1),
+          medium: data.getBarHeight(100),
+          large: data.getBarHeight(1000),
+        };
+
+        return <span data-data={`${JSON.stringify(heights)}`} />;
+      }
+
+      const result = mount(<TestComponent />);
+      const heights = parseData(result);
+
+      // Verify logarithmic behavior - differences between consecutive heights, should be smaller for larger values
+      const smallToMediumRatio =
+        (heights.medium - heights.small) / heights.medium;
+      const mediumToLargeRatio =
+        (heights.large - heights.medium) / heights.large;
+
+      expect(smallToMediumRatio).toBeGreaterThan(mediumToLargeRatio);
+    });
+
+    it('maintains minimum height ratio even with extreme value differences', () => {
+      function TestComponent() {
+        const data = useFunnelBarScaling({
+          yScale: mockYScale,
+          values: [1, 10000],
+        });
+
+        const smallestHeight = data.getBarHeight(1);
+        const tallestHeight = data.getBarHeight(10000);
+
+        return (
+          <span
+            data-data={`${JSON.stringify({
+              smallestHeight,
+              tallestHeight,
+              ratio: smallestHeight / tallestHeight,
+            })}`}
+          />
+        );
+      }
+
+      const result = mount(<TestComponent />);
+      const data = parseData(result);
+
+      expect(data.ratio).toBeGreaterThanOrEqual(MINIMUM_SEGMENT_HEIGHT_RATIO);
     });
   });
 });
