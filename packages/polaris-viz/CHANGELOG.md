@@ -10,6 +10,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Add support for custom annotiation content rendering using `renderAnnotationContent`
+- Improve funnel chart scaling feature with logarithmic scale
 
 ## [16.11.0] - 2025-03-10
 
