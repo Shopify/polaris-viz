@@ -164,4 +164,45 @@ describe('useBuildFunnelTrends', () => {
     });
     expect(data.trends[0].dropped).toBeUndefined();
   });
+
+  describe('null value handling', () => {
+    it('handles null values in data series', () => {
+      function TestComponent() {
+        const result = useBuildFunnelTrends({
+          ...mockProps,
+          data: [
+            {
+              name: 'Primary',
+              data: [
+                {value: 1000, key: '0'},
+                {value: null, key: '1'},
+                {value: 400, key: '2'},
+              ],
+              isComparison: false,
+              metadata: {
+                trends: mockProps.data[0].metadata!.trends,
+              },
+            },
+            {
+              name: 'Comparison',
+              data: [
+                {value: 900, key: '0'},
+                {value: null, key: '1'},
+                {value: 200, key: '2'},
+              ],
+              isComparison: true,
+            },
+          ],
+        });
+        return <span data-data={JSON.stringify(result)} />;
+      }
+
+      const component = mount(<TestComponent />);
+      const data = parseData(component);
+
+      expect(data.trends[1].dropped).toStrictEqual({
+        value: null,
+      });
+    });
+  });
 });

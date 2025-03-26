@@ -66,14 +66,14 @@ function calculateDroppedPercentageChange({
   currentStepValue,
   comparisonPreviousStepValue,
   comparisonCurrentStepValue,
-}: DropOffCalculationParams): number {
+}: DropOffCalculationParams): number | null {
   const hasEmptyValues =
     previousStepValue == null ||
     currentStepValue == null ||
     comparisonPreviousStepValue == null ||
     comparisonCurrentStepValue == null;
 
-  if (hasEmptyValues) return 0;
+  if (hasEmptyValues) return null;
 
   const currentDropped = previousStepValue! - currentStepValue!;
   const comparisonDropped =
@@ -87,9 +87,15 @@ function calculateDroppedPercentageChange({
 }
 
 function formatDroppedTrend(
-  percentageChange: number,
+  percentageChange: number | null,
   percentageFormatter: FunnelChartNextProps['percentageFormatter'],
 ): MetaDataTrendIndicator {
+  if (percentageChange == null) {
+    return {
+      value: null,
+    };
+  }
+
   const absolutePercentageChange = Math.abs(percentageChange);
   const defaultFormattedPercentage = `${absolutePercentageChange}%`;
   const formattedPercentage = percentageFormatter
