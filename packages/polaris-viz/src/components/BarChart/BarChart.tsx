@@ -89,18 +89,22 @@ export function BarChart(props: BarChartProps) {
     ...props,
   };
 
-  const filledData = fillMissingDataPoints(
-    dataSeries,
-    isValidDate(dataSeries[0]?.data[0]?.key),
-  );
+  // const filledData = fillMissingDataPoints(
+  //   dataSeries,
+  //   isValidDate(dataSeries[0]?.data[0]?.key),
+  // );
 
-  const data = maxSeries
-    ? bucketDataSeries({
-        dataSeries: filledData,
-        maxSeries,
-        renderBucketLegendLabel,
-      })
-    : filledData;
+  const filledData = dataSeries;
+
+  // const data = maxSeries
+  //   ? bucketDataSeries({
+  //       dataSeries: filledData,
+  //       maxSeries,
+  //       renderBucketLegendLabel,
+  //     })
+  //   : filledData;
+
+  const data = filledData;
 
   const skipLinkAnchorId = useRef(uniqueId('BarChart'));
 
@@ -118,6 +122,8 @@ export function BarChart(props: BarChartProps) {
     theme,
     data,
   });
+
+  console.log({data});
 
   const ChartByDirection =
     direction === 'vertical' ? (

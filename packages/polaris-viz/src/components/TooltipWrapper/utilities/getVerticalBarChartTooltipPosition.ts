@@ -120,7 +120,9 @@ function formatPositionForTooltip({
     }
 
     const values = data
-      .map((series) => series.data[index].value)
+      .map((series) => {
+        return series.data[index] == null ? null : series.data[index].value;
+      })
       .filter(Boolean) as number[];
 
     return Math.max(...values);

@@ -8,11 +8,11 @@ interface Props {
 
 export function useFormattedLabels({data, labelFormatter}: Props) {
   return useMemo(() => {
-    const formattedLabels: string[] = [];
-    const unformattedLabels: string[] = [];
+    const formattedLabels: Set<string> = new Set([]);
+    const unformattedLabels: Set<string> = new Set([]);
 
     if (data == null || data.length === 0) {
-      return {formattedLabels, unformattedLabels};
+      return {formattedLabels: [], unformattedLabels: []};
     }
 
     data.forEach((series) => {
@@ -20,12 +20,15 @@ export function useFormattedLabels({data, labelFormatter}: Props) {
         return;
       }
 
-      series.data.forEach(({key}, index) => {
-        formattedLabels[index] = labelFormatter?.(`${key}`) ?? `${key}`;
-        unformattedLabels[index] = `${key}`;
+      series.data.forEach(({key}) => {
+        formattedLabels.add(labelFormatter?.(`${key}`) ?? `${key}`);
+        unformattedLabels.add(`${key}`);
       });
     });
 
-    return {formattedLabels, unformattedLabels};
+    return {
+      formattedLabels: [...formattedLabels],
+      unformattedLabels: [...unformattedLabels],
+    };
   }, [data, labelFormatter]);
 }

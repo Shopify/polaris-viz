@@ -1,20 +1,42 @@
-import type {DataSeries} from '@shopify/polaris-viz-core';
+import type {Color, DataSeries} from '@shopify/polaris-viz-core';
 
-export function sortBarChartData(data: DataSeries[]) {
+export function sortBarChartData(
+  data: DataSeries[],
+  labels: string[],
+  colors: Color[],
+) {
   if (data.length === 0) {
     return [];
   }
 
-  const labels = data[0].data.map(({key}) => key);
+  const dataSeries = [];
 
-  return labels.map((_, index) => {
-    return data.map((type) => {
-      const value = type.data[index]?.value;
+  labels.forEach((label) => {
+    dataSeries.push({name: label, data: []});
+  });
+
+  data.forEach((series, seriesIndex) => {
+    if (series.data == null) {
+      return;
+    }
+
+    series.data.forEach(({key, value}, index) => {
       if (value !== null && isNaN(Number(value))) {
-        return null;
+        return;
       }
 
-      return value;
+      if (value == null) {
+        return;
+      }
+
+      dataSeries[index].data.push({
+        key: series.name,
+        seriesIndex,
+        value,
+        color: colors[seriesIndex],
+      });
     });
   });
+
+  return dataSeries;
 }
