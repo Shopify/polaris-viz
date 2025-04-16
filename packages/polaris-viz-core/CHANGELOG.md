@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Changed
+
+- Refactored the import logic for `d3-color` in `changeColorOpacity.ts` to improve maintainability and error handling.
+- Added opacity range validation in `changeColorOpacity` function to ensure values are between 0 and 1.
 
 ## [16.12.0] - 2025-03-27
 
