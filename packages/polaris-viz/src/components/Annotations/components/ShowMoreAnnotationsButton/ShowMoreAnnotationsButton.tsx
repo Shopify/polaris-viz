@@ -1,10 +1,4 @@
-import {
-  estimateStringWidth,
-  FONT_SIZE,
-  LINE_HEIGHT,
-  useChartContext,
-  useTheme,
-} from '@shopify/polaris-viz-core';
+import {FONT_SIZE, LINE_HEIGHT, useTheme} from '@shopify/polaris-viz-core';
 
 import {PILL_HEIGHT, PILL_PADDING, PILL_X_MIN} from '../../constants';
 import {SingleTextLine} from '../../../Labels';
@@ -33,13 +27,11 @@ export function ShowMoreAnnotationsButton({
   tabIndex,
   width,
 }: Props) {
-  const {characterWidths} = useChartContext();
   const selectedTheme = useTheme();
 
   const label = isShowingAllAnnotations
     ? collapseText
     : `${expandText} (${annotationsCount})`;
-  const textWidth = estimateStringWidth(label, characterWidths);
 
   const radius = PILL_HEIGHT / 2;
   const pillWidth = width + Math.abs(PILL_X_MIN);
@@ -79,17 +71,25 @@ export function ShowMoreAnnotationsButton({
       />
 
       <Icon
-        fill={selectedTheme.annotations.textColor}
+        fill={
+          isShowingAllAnnotations
+            ? selectedTheme.annotations.backgroundColor
+            : selectedTheme.annotations.textColor
+        }
         isShowingAllAnnotations={isShowingAllAnnotations}
       />
 
       <SingleTextLine
-        color={selectedTheme.annotations.textColor}
+        color={
+          isShowingAllAnnotations
+            ? selectedTheme.annotations.backgroundColor
+            : selectedTheme.annotations.textColor
+        }
         fontSize={FONT_SIZE}
         text={label}
         targetWidth={pillWidth - PILL_PADDING * 2}
         y={PILL_HEIGHT - LINE_HEIGHT}
-        x={pillWidth / 2 - textWidth / 2}
+        x={pillWidth / 2}
       />
 
       <foreignObject
