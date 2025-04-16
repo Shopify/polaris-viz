@@ -67,7 +67,7 @@ describe('<ShowMoreAnnotationsButton />', () => {
         text: 'Expand annotations (1)',
         targetWidth: 190,
         y: 6,
-        x: 55,
+        x: 105,
       });
     });
   });
