@@ -203,21 +203,9 @@ describe('<AnnotationContent />', () => {
     });
   });
 
-  it('renders background with opacity', () => {
+  it('renders background with provided color', () => {
     const chart = mount(<AnnotationContent {...MOCK_PROPS} parentRef={svg} />);
 
-    expect(chart.find('div')?.prop('style')?.background).toStrictEqual(
-      'rgba(255, 0, 0, 0.8)',
-    );
-  });
-
-  it('renders full opacity background for Firefox', () => {
-    useBrowserCheck.mockImplementation(() => ({isFirefox: true}));
-
-    const chart = mount(<AnnotationContent {...MOCK_PROPS} parentRef={svg} />);
-
-    expect(chart.find('div')?.prop('style')?.background).toStrictEqual(
-      'rgb(255, 0, 0)',
-    );
+    expect(chart.find('div')?.prop('style')?.background).toStrictEqual('red');
   });
 });
