@@ -1,9 +1,7 @@
 import {Fragment, useEffect, useLayoutEffect, useState} from 'react';
 import {createPortal} from 'react-dom';
-import {changeColorOpacity, clamp, useTheme} from '@shopify/polaris-viz-core';
+import {clamp, useTheme} from '@shopify/polaris-viz-core';
 
-import {TOOLTIP_BG_OPACITY} from '../../../../constants';
-import {useBrowserCheck} from '../../../../hooks/useBrowserCheck';
 import type {Annotation, RenderAnnotationContentData} from '../../../../types';
 import type {AnnotationPosition} from '../../types';
 
@@ -38,7 +36,6 @@ export function AnnotationContent({
   y,
 }: AnnotationContentProps) {
   const selectedTheme = useTheme();
-  const {isFirefox} = useBrowserCheck();
 
   const [ref, setRef] = useState<HTMLDivElement | null>(null);
   const [bounds, setBounds] = useState<DOMRect | undefined>();
@@ -91,12 +88,7 @@ export function AnnotationContent({
         style={{
           width: 'fit-content',
           maxWidth: Math.min(drawableWidth, MAX_WIDTH),
-          // Firefox doesn't support blur so we'll remove
-          // the opacity on this element.
-          background: changeColorOpacity(
-            selectedTheme.tooltip.backgroundColor,
-            isFirefox ? 1 : TOOLTIP_BG_OPACITY,
-          ),
+          background: selectedTheme.tooltip.backgroundColor,
           color: selectedTheme.tooltip.textColor,
         }}
         id={`annotation-content-${index}`}
