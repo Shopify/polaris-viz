@@ -24,6 +24,7 @@ export interface Props {
   verticalOverflow?: boolean;
   fixedWidth?: number | false;
   maxYOverride?: number | null;
+  ticksOverride?: number[] | null;
 }
 
 export function useYScale({
@@ -36,6 +37,7 @@ export function useYScale({
   verticalOverflow = true,
   fixedWidth,
   maxYOverride,
+  ticksOverride,
 }: Props) {
   const {characterWidths} = useChartContext();
 
@@ -46,11 +48,10 @@ export function useYScale({
   const [minY, maxY] = useMemo(() => {
     const isDataEmpty = min === 0 && max === 0;
     const minY = min;
-
     let maxY = isDataEmpty ? DEFAULT_MAX_Y : max;
 
-    if (maxYOverride != null && isDataEmpty) {
-      maxY = maxYOverride;
+    if (maxYOverride != null) {
+      maxY = Math.max(maxY, maxYOverride);
     }
 
     if (integersOnly) {
@@ -87,9 +88,7 @@ export function useYScale({
       yScale.domain([Math.min(roundedDownMin, minY), Math.max(0, maxY)]);
     }
 
-    const filteredTicks = integersOnly
-      ? yScale.ticks(maxTicks).filter((tick) => Number.isInteger(tick))
-      : yScale.ticks(maxTicks);
+    const filteredTicks = getFilteredTicks();
 
     const ticks = filteredTicks.map((value) => ({
       value,
@@ -110,6 +109,16 @@ export function useYScale({
     const yAxisLabelWidth = estimateStringWidth(text, characterWidths);
 
     return {yScale, ticks, yAxisLabelWidth};
+
+    function getFilteredTicks() {
+      if (ticksOverride != null) {
+        return ticksOverride;
+      }
+
+      return integersOnly
+        ? yScale.ticks(maxTicks).filter((tick) => Number.isInteger(tick))
+        : yScale.ticks(maxTicks);
+    }
   }, [
     verticalOverflow,
     shouldRoundUp,
@@ -119,6 +128,7 @@ export function useYScale({
     integersOnly,
     maxY,
     minY,
+    ticksOverride,
   ]);
 
   return {

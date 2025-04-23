@@ -1067,3 +1067,35 @@ LongLegend.args = {
     },
   ],
 };
+
+export const TicksOverride: Story<LineChartProps> = (args: LineChartProps) => {
+  return <LineChart {...args} />;
+};
+
+TicksOverride.args = {
+  data: [
+    {
+      name: 'Apr 1 – Apr 14, 2020',
+      data: [
+        {value: 33, key: '2020-04-01T12:00:00'},
+        {value: 97, key: '2020-04-02T12:00:00'},
+        {value: 34, key: '2020-04-03T12:00:00'},
+        {value: 34, key: '2020-04-04T12:00:00'},
+        {value: 32, key: '2020-04-05T12:00:00'},
+        {value: 59, key: '2020-04-06T12:00:00'},
+        {value: 39, key: '2020-04-07T12:00:00'},
+        {value: 8, key: '2020-04-08T12:00:00'},
+        {value: 34, key: '2020-04-09T12:00:00'},
+        {value: 45, key: '2020-04-10T12:00:00'},
+        {value: 43, key: '2020-04-11T12:00:00'},
+        {value: 9, key: '2020-04-12T12:00:00'},
+        {value: 49, key: '2020-04-13T12:00:00'},
+        {value: 29, key: '2020-04-14T12:00:00'},
+      ],
+    },
+  ],
+  yAxisOptions: {
+    maxYOverride: 100,
+    ticksOverride: [0, 10, 20, 40, 70, 100],
+  },
+};

@@ -1,3 +1,4 @@
+import type {Root} from '@shopify/react-testing';
 import {mount} from '@shopify/react-testing';
 import {scaleLinear} from 'd3-scale';
 
@@ -38,7 +39,24 @@ const MOCK_PROPS: Props = {
   min: 50,
 };
 
+function TestComponent(props: Props) {
+  const result = useYScale(props);
+  return <div>{JSON.stringify(result)}</div>;
+}
+
 describe('useYScale()', () => {
+  beforeEach(() => {
+    (scaleLinear as jest.Mock).mockImplementation(() => {
+      const scale = (value: any) => value;
+      scale.ticks = (numTicks: number) => Array.from(Array(numTicks));
+      scale.range = (range: any) => (range ? scale : range);
+      scale.domain = (domain: any) => (domain ? scale : domain);
+      scale.nice = () => scale;
+      scale.copy = () => scale;
+      return scale;
+    });
+  });
+
   afterEach(() => {
     (scaleLinear as jest.Mock).mockReset();
   });
@@ -55,13 +73,7 @@ describe('useYScale()', () => {
       return scale;
     });
 
-    function TestComponent() {
-      useYScale(MOCK_PROPS);
-
-      return null;
-    }
-
-    mount(<TestComponent />);
+    mount(<TestComponent {...MOCK_PROPS} />);
 
     expect(ticksSpy).toHaveBeenCalledWith(4);
   });
@@ -79,17 +91,7 @@ describe('useYScale()', () => {
       return scale;
     });
 
-    function TestComponent() {
-      useYScale({
-        ...MOCK_PROPS,
-        min: -10000,
-        max: 10000,
-      });
-
-      return null;
-    }
-
-    mount(<TestComponent />);
+    mount(<TestComponent {...MOCK_PROPS} min={-10000} max={10000} />);
 
     expect(domainSpy).toHaveBeenCalledWith([-10000, 10000]);
   });
@@ -107,16 +109,7 @@ describe('useYScale()', () => {
       return scale;
     });
 
-    function TestComponent() {
-      useYScale({
-        ...MOCK_PROPS,
-        min: 0,
-        max: 0,
-      });
-      return null;
-    }
-
-    mount(<TestComponent />);
+    mount(<TestComponent {...MOCK_PROPS} min={0} max={0} />);
 
     expect(domainSpy).toHaveBeenCalledWith([0, DEFAULT_MAX_Y]);
   });
@@ -134,16 +127,7 @@ describe('useYScale()', () => {
       return scale;
     });
 
-    function TestComponent() {
-      useYScale({
-        ...MOCK_PROPS,
-        drawableHeight: 250,
-      });
-
-      return null;
-    }
-
-    mount(<TestComponent />);
+    mount(<TestComponent {...MOCK_PROPS} drawableHeight={250} />);
 
     expect(rangeSpy).toHaveBeenCalledWith([250, 0]);
   });
@@ -159,18 +143,12 @@ describe('useYScale()', () => {
       return scale;
     });
 
-    function TestComponent() {
-      const {ticks} = useYScale({
-        ...MOCK_PROPS,
-        formatYAxisLabel: jest.fn((value) => `Formatted value: ${value}`),
-      });
-
-      const {formattedValue} = ticks[0];
-
-      return <p>{formattedValue}</p>;
-    }
-
-    const wrapper = mount(<TestComponent />);
+    const wrapper = mount(
+      <TestComponent
+        {...MOCK_PROPS}
+        formatYAxisLabel={(value) => `Formatted value: ${value}`}
+      />,
+    );
 
     expect(wrapper).toContainReactText('Formatted value: 25');
   });
@@ -188,19 +166,7 @@ describe('useYScale()', () => {
       return scale;
     });
 
-    function TestComponent() {
-      useYScale({
-        ...MOCK_PROPS,
-        drawableHeight: 250,
-        formatYAxisLabel: jest.fn(),
-        min: -1820,
-        max: -543,
-      });
-
-      return null;
-    }
-
-    mount(<TestComponent />);
+    mount(<TestComponent {...MOCK_PROPS} min={-1820} max={-543} />);
 
     expect(domainSpy).toHaveBeenCalledWith([-1820, 0]);
   });
@@ -221,13 +187,7 @@ describe('useYScale()', () => {
 
       (shouldRoundScaleUp as jest.Mock).mockImplementation(jest.fn(() => true));
 
-      function TestComponent() {
-        useYScale({...MOCK_PROPS, max: 10, shouldRoundUp: true});
-
-        return null;
-      }
-
-      mount(<TestComponent />);
+      mount(<TestComponent {...MOCK_PROPS} max={10} shouldRoundUp />);
 
       expect(domainSpy).toHaveBeenNthCalledWith(1, [0, 10]);
     });
@@ -251,13 +211,14 @@ describe('useYScale()', () => {
         jest.fn(() => false),
       );
 
-      function TestComponent() {
-        useYScale({...MOCK_PROPS, min: 0, max: 10, shouldRoundUp: false});
-
-        return null;
-      }
-
-      mount(<TestComponent />);
+      mount(
+        <TestComponent
+          {...MOCK_PROPS}
+          min={0}
+          max={10}
+          shouldRoundUp={false}
+        />,
+      );
 
       // Check that it's called with the min and max data
       expect(domainSpy).toHaveBeenNthCalledWith(1, [0, 10]);
@@ -285,19 +246,15 @@ describe('useYScale()', () => {
         jest.fn(() => false),
       );
 
-      function TestComponent() {
-        useYScale({
-          ...MOCK_PROPS,
-          min: 0,
-          max: 10,
-          shouldRoundUp: false,
-          verticalOverflow: true,
-        });
-
-        return null;
-      }
-
-      mount(<TestComponent />);
+      mount(
+        <TestComponent
+          {...MOCK_PROPS}
+          min={0}
+          max={10}
+          shouldRoundUp={false}
+          verticalOverflow
+        />,
+      );
 
       // Check that it's called with the min and max data
       expect(domainSpy).toHaveBeenNthCalledWith(1, [0, 10]);
@@ -319,18 +276,16 @@ describe('useYScale()', () => {
         return scale;
       });
 
-      function TestComponent() {
-        const {ticks} = useYScale({
-          ...MOCK_PROPS,
-          integersOnly: true,
-        });
+      const result = mount(<TestComponent {...MOCK_PROPS} integersOnly />);
 
-        return <p>{ticks.map(({value}) => `${value.toString()}-`)}</p>;
-      }
-
-      const wrapper = mount(<TestComponent />);
-
-      expect(wrapper).toContainReactText('0-1-');
+      expect(parseResult(result)).toStrictEqual(
+        expect.objectContaining({
+          ticks: [
+            {value: 0, yOffset: 0},
+            {value: 1, yOffset: 1},
+          ],
+        }),
+      );
     });
 
     it('rounds min domain down and max domain up to the nearest integer if true', () => {
@@ -346,18 +301,7 @@ describe('useYScale()', () => {
         return scale;
       });
 
-      function TestComponent() {
-        useYScale({
-          ...MOCK_PROPS,
-          integersOnly: true,
-          min: 0.1,
-          max: 0.9,
-        });
-
-        return null;
-      }
-
-      mount(<TestComponent />);
+      mount(<TestComponent {...MOCK_PROPS} integersOnly min={0.1} max={0.9} />);
 
       expect(domainSpy).toHaveBeenCalledWith([0, 1]);
     });
@@ -382,7 +326,7 @@ describe('useYScale()', () => {
   describe('maxYOverride', () => {
     it('creates a y scale with the domain maximum set to maxYOverride when both min and max are zero', () => {
       let domainSpy = jest.fn();
-      const maxYOverride = 1;
+      const maxYOverride = 20;
       (scaleLinear as jest.Mock).mockImplementation(() => {
         const scale = (value: any) => value;
         scale.ticks = (numTicks: number) => Array.from(Array(numTicks));
@@ -394,20 +338,57 @@ describe('useYScale()', () => {
         return scale;
       });
 
-      function TestComponent() {
-        useYScale({
-          ...MOCK_PROPS,
-          min: 0,
-          max: 0,
-          maxYOverride,
-        });
-
-        return null;
-      }
-
-      mount(<TestComponent />);
+      mount(
+        <TestComponent
+          {...MOCK_PROPS}
+          min={0}
+          max={10}
+          maxYOverride={maxYOverride}
+        />,
+      );
 
       expect(domainSpy).toHaveBeenCalledWith([0, maxYOverride]);
     });
+
+    it('sets the domain maximum to 10 when all values are zero', () => {
+      let domainSpy = jest.fn();
+      (scaleLinear as jest.Mock).mockImplementation(() => {
+        const scale = (value: any) => value;
+        scale.ticks = (numTicks: number) => Array.from(Array(numTicks));
+        scale.range = (range: any) => (range ? scale : range);
+        domainSpy = jest.fn((domain: any) => (domain ? scale : domain));
+        scale.domain = domainSpy;
+        scale.nice = () => scale;
+        scale.copy = () => scale;
+        return scale;
+      });
+
+      mount(<TestComponent {...MOCK_PROPS} min={0} max={0} />);
+
+      expect(domainSpy).toHaveBeenCalledWith([0, 10]);
+    });
+  });
+
+  describe('ticksOverride', () => {
+    it('returns ticks from ticksOverride', () => {
+      const result = mount(
+        <TestComponent {...MOCK_PROPS} ticksOverride={[0, 10, 12, 25]} />,
+      );
+
+      expect(parseResult(result)).toStrictEqual(
+        expect.objectContaining({
+          ticks: [
+            {value: 0, yOffset: 0},
+            {value: 10, yOffset: 10},
+            {value: 12, yOffset: 12},
+            {value: 25, yOffset: 25},
+          ],
+        }),
+      );
+    });
   });
 });
+
+function parseResult(mockComponent: Root<any>) {
+  return JSON.parse(mockComponent.text());
+}

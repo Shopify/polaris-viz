@@ -50,6 +50,21 @@ describe('get-axis-options', () => {
 
       expect(yAxisOptions.maxYOverride).toBe(maxYOverridden);
     });
+
+    it('sets default ticksOverride when not provided', () => {
+      const yAxisOptions = getYAxisOptionsWithDefaults();
+
+      expect(yAxisOptions.ticksOverride).toBeNull();
+    });
+
+    it('overrides ticksOverride when provided', () => {
+      const ticksOverride = [1, 2, 3];
+      const yAxisOptions = getYAxisOptionsWithDefaults({
+        ticksOverride,
+      });
+
+      expect(yAxisOptions.ticksOverride).toBe(ticksOverride);
+    });
   });
 
   describe('getXAxisOptionsWithDefaults()', () => {

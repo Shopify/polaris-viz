@@ -11,6 +11,7 @@ export function getYAxisOptionsWithDefaults(
     integersOnly: false,
     fixedWidth: false,
     maxYOverride: null,
+    ticksOverride: null,
     ...yAxisOptionsFiltered,
   };
 }

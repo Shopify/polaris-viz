@@ -89,6 +89,7 @@ export interface YAxisOptions {
   integersOnly?: boolean;
   fixedWidth?: number | false;
   maxYOverride?: number | null;
+  ticksOverride?: number[] | null;
 }
 
 // === Theme types === //
