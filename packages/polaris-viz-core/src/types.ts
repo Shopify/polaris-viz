@@ -110,6 +110,7 @@ export interface ArcTheme {
 export interface BarTheme {
   zeroValueColor: string;
   borderRadius: number;
+  gap: number | null;
 }
 
 export interface XAxisTheme {
