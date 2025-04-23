@@ -14,6 +14,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Allow `yAxisOptions.maxYOverride` to be used when chart has data.
+- Added `bar.gap` value to override the spacing between `VerticalBarChart` bars.
 
 ## [16.13.0] - 2025-04-22
 

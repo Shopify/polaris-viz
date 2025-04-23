@@ -1,4 +1,5 @@
 import type {DataSeries} from '@shopify/polaris-viz-core';
+import {useTheme} from '@shopify/polaris-viz-core';
 import {useMemo} from 'react';
 
 import {sortBarChartData} from '../utilities/sortBarChartData';
@@ -13,6 +14,9 @@ interface Props {
 
 export function useVerticalBarChart({data, drawableWidth, labels}: Props) {
   const sortedData = sortBarChartData(data);
+  const {
+    bar: {gap: gapOverride},
+  } = useTheme();
 
   const areAllNegative = useMemo(() => {
     return ![...sortedData]
@@ -26,6 +30,7 @@ export function useVerticalBarChart({data, drawableWidth, labels}: Props) {
     drawableWidth,
     data: sortedData,
     labels,
+    gapOverride,
   });
 
   return {sortedData, areAllNegative, xScale, gapWidth};

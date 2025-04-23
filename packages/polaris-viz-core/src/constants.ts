@@ -28,6 +28,7 @@ export const BORDER_RADIUS = {
   Left: `${DEFAULT_BORDER_RADIUS} 0 0 ${DEFAULT_BORDER_RADIUS}`,
   All: `${DEFAULT_BORDER_RADIUS}`,
 };
+export const DEFAULT_BAR_GAP = null;
 
 export const HORIZONTAL_BAR_LABEL_HEIGHT = 12;
 export const HORIZONTAL_BAR_LABEL_OFFSET = 10;
@@ -191,6 +192,7 @@ export const DARK_THEME: Theme = {
   bar: {
     zeroValueColor: variables.colorGray80,
     borderRadius: DEFAULT_BORDER_RADIUS,
+    gap: DEFAULT_BAR_GAP,
   },
   grid: {
     showHorizontalLines: DEFAULT_GRID_SHOW_HORIZONTAL_LINES,
@@ -301,6 +303,7 @@ export const LIGHT_THEME: Theme = {
   bar: {
     zeroValueColor: variables.colorGray70,
     borderRadius: DEFAULT_BORDER_RADIUS,
+    gap: DEFAULT_BAR_GAP,
   },
   grid: {
     showHorizontalLines: DEFAULT_GRID_SHOW_HORIZONTAL_LINES,
