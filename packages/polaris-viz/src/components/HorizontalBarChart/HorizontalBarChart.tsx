@@ -12,6 +12,7 @@ import type {
   RenderTooltipContentData,
   RenderLegendContent,
   RenderAnnotationContentData,
+  BottomOnlyLegendPosition,
 } from '../../types';
 
 import {Chart} from './Chart';
@@ -25,6 +26,7 @@ export interface HorizontalBarChartProps {
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
+  legendPosition?: BottomOnlyLegendPosition;
   renderHiddenLegendLabel?: (count: number) => string;
   renderLegendContent?: RenderLegendContent;
   type?: ChartType;
@@ -33,6 +35,7 @@ export interface HorizontalBarChartProps {
 export function HorizontalBarChart({
   annotationsLookupTable = {},
   data,
+  legendPosition,
   renderAnnotationContent,
   renderHiddenLegendLabel,
   renderLegendContent,
@@ -51,6 +54,7 @@ export function HorizontalBarChart({
       seriesNameFormatter={seriesNameFormatter}
       showLegend={showLegend}
       type={type}
+      legendPosition={legendPosition}
       xAxisOptions={xAxisOptions}
       yAxisOptions={yAxisOptions}
       renderAnnotationContent={renderAnnotationContent}

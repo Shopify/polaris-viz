@@ -1099,3 +1099,19 @@ TicksOverride.args = {
     ticksOverride: [0, 10, 20, 40, 70, 100],
   },
 };
+
+export const LegendPosition = Template.bind({});
+
+LegendPosition.args = {
+  data: [
+    {
+      name: 'Apr 1 – Apr 14, 2020',
+      data: [
+        {value: 33, key: '2020-04-01T12:00:00'},
+        {value: 97, key: '2020-04-02T12:00:00'},
+        {value: 34, key: '2020-04-03T12:00:00'},
+      ],
+    },
+  ],
+  legendPosition: 'right',
+};

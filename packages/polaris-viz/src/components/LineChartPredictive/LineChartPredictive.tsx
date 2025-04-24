@@ -22,6 +22,7 @@ export function LineChartPredictive(props: LineChartPredictiveProps) {
     emptyStateText,
     id,
     isAnimated,
+    legendPosition,
     seriesNameFormatter = (value) => `${value}`,
     showLegend = true,
     skipLinkText,
@@ -111,6 +112,7 @@ export function LineChartPredictive(props: LineChartPredictiveProps) {
       tooltipOptions={tooltipOptions}
       xAxisOptions={xAxisOptions}
       yAxisOptions={yAxisOptions}
+      legendPosition={legendPosition}
       renderAnnotationContent={renderAnnotationContent}
       renderLegendContent={({
         getColorVisionStyles,

@@ -69,10 +69,10 @@ export function LegendContainer({
   const legendItemDimensions = useRef([{width: 0, height: 0}]);
   const [activatorWidth, setActivatorWidth] = useState(0);
 
-  const overflowLegendProps =
+  const overflowLegendProps: UseOverflowLegendProps =
     direction === 'horizontal'
       ? {
-          direction: 'horizontal' as const,
+          direction: 'horizontal',
           data: allData,
           enableHideOverflow,
           legendItemDimensions,
@@ -82,7 +82,7 @@ export function LegendContainer({
           horizontalMargin,
         }
       : ({
-          direction: 'vertical' as const,
+          direction: 'vertical',
           data: allData,
           height: containerBounds.height,
           enableHideOverflow,
@@ -99,7 +99,7 @@ export function LegendContainer({
 
   const styleMap: {[key: string]: CSSProperties} = {
     horizontal: {
-      justifyContent: 'flex-end',
+      justifyContent: position === 'right' ? 'flex-end' : 'flex-start',
       margin: isPositionTop
         ? `0 ${horizontalMargin}px ${LEGENDS_BOTTOM_MARGIN}px ${leftMargin}px`
         : `${LEGENDS_TOP_MARGIN}px ${horizontalMargin}px 0 ${leftMargin}px`,
@@ -119,7 +119,7 @@ export function LegendContainer({
   };
 
   const shouldCenterTiles = (pos) => {
-    if (pos === 'top' || pos === 'bottom') {
+    if (pos === 'top' || pos === 'bottom' || pos === 'center') {
       return {justifyContent: 'center'};
     }
   };

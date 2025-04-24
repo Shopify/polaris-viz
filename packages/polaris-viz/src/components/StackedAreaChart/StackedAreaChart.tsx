@@ -25,6 +25,7 @@ import {ChartSkeleton} from '../ChartSkeleton';
 import {SkipLink} from '../SkipLink';
 import type {
   Annotation,
+  BottomOnlyLegendPosition,
   RenderAnnotationContentData,
   RenderLegendContent,
   TooltipOptions,
@@ -37,6 +38,7 @@ export type StackedAreaChartProps = {
   tooltipOptions?: TooltipOptions;
   state?: ChartState;
   errorText?: string;
+  legendPosition?: BottomOnlyLegendPosition;
   renderLegendContent?: RenderLegendContent;
   showLegend?: boolean;
   skipLinkText?: string;
@@ -63,6 +65,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
     tooltipOptions,
     id,
     isAnimated,
+    legendPosition,
     renderLegendContent,
     seriesNameFormatter = (value) => `${value}`,
     showLegend = true,
@@ -113,6 +116,7 @@ export function StackedAreaChart(props: StackedAreaChartProps) {
           <Chart
             annotationsLookupTable={annotationsLookupTable}
             data={data}
+            legendPosition={legendPosition}
             renderLegendContent={renderLegendContent}
             renderTooltipContent={renderTooltip}
             seriesNameFormatter={seriesNameFormatter}

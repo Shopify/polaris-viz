@@ -10,6 +10,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Added
 
 - Added `yAxisOptions.ticksOverride` property to render custom yAxis ticks instead of the yScale generated values.
+- Added `legendPosition` to `<BarChart />`, `<LineChart />`, `<LineChartPredictive />`, `<LineChartRelational />`& `<StackedAreaChart />`.
 
 ### Changed
 
