@@ -1,5 +1,6 @@
 import {useMemo} from 'react';
 import {scaleBand, scaleLog} from 'd3-scale';
+import {clamp} from '@shopify/polaris-viz-core';
 
 import type {SortedBarChartData} from '../../../types';
 
@@ -14,20 +15,29 @@ const MIN_GROUPS = 2;
 const MAX_GAP = 0.5;
 const MIN_GAP = 0.25;
 
-export function useXScale({
-  drawableWidth,
-  data,
-  labels,
-}: {
+export interface Props {
   drawableWidth: number;
   data: SortedBarChartData;
   labels: string[];
-}) {
+  gapOverride?: number | null;
+}
+
+export function useXScale({drawableWidth, data, labels, gapOverride}: Props) {
   const gapScale = scaleLog()
     .range([MIN_GAP, MAX_GAP])
     .domain([MIN_GROUPS, MAX_GROUPS]);
 
-  const gap = Math.min(gapScale(data.length), MAX_GAP);
+  const baseGap = Math.min(gapScale(data.length), MAX_GAP);
+
+  // If gapOverride is provided, calculate the equivalent gap value
+  // by dividing the pixel gap by the step size
+  const gap = clamp({
+    amount:
+      gapOverride != null
+        ? gapOverride / (drawableWidth / data.length)
+        : baseGap,
+    min: 0,
+  });
 
   const xScale = scaleBand()
     .range([0, drawableWidth])

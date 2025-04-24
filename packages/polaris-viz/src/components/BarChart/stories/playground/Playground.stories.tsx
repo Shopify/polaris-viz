@@ -1,6 +1,10 @@
 import type {Story} from '@storybook/react';
 
-import {BarChart, BarChartProps} from '../../../../components';
+import {
+  BarChart,
+  BarChartProps,
+  PolarisVizProvider,
+} from '../../../../components';
 import type {Annotation} from '../../../../types';
 import {META} from '../meta';
 import {Template} from '../data';
@@ -236,16 +240,35 @@ WebData.args = {
 };
 
 const SingleValuesTemplate: Story<BarChartProps> = (args: BarChartProps) => {
-  return (
-    <div style={{width: 600, height: 400}}>
-      <BarChart {...args} />
-    </div>
-  );
+  return <BarChart {...args} />;
 };
 
 export const SingleValues = SingleValuesTemplate.bind({});
 
 SingleValues.args = {
+  type: 'stacked',
+  data: DATA,
+};
+
+const BarGapOverrideTemplate: Story<BarChartProps> = (args: BarChartProps) => {
+  return (
+    <PolarisVizProvider
+      themes={{
+        Light: {
+          bar: {
+            gap: 0,
+          },
+        },
+      }}
+    >
+      <BarChart {...args} />
+    </PolarisVizProvider>
+  );
+};
+
+export const BarGapOverride = BarGapOverrideTemplate.bind({});
+
+BarGapOverride.args = {
   type: 'stacked',
   data: DATA,
 };
