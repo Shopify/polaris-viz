@@ -164,6 +164,7 @@ export function Chart({
     maxYOverride: yAxisOptions.maxYOverride,
     max: yScaleMax,
     min,
+    ticksOverride: yAxisOptions.ticksOverride,
   };
 
   const {ticks: initialTicks} = useYScale({

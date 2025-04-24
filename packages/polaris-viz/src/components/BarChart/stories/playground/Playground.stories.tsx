@@ -598,7 +598,7 @@ InfinityData.args = {
 export const VerticalTruncate: Story<BarChartProps> = (args: BarChartProps) => {
   return (
     <div style={{width: '100%', height: 100}}>
-      <BarChart {...args} xAxisOptions={{labelFormatter: (x) => `Oct. ${x}`}}/>
+      <BarChart {...args} xAxisOptions={{labelFormatter: (x) => `Oct. ${x}`}} />
     </div>
   );
 };
@@ -610,7 +610,10 @@ VerticalTruncate.args = {
 export const DiagonalTruncate: Story<BarChartProps> = (args: BarChartProps) => {
   return (
     <div style={{width: '100%', height: 100}}>
-      <BarChart {...args} xAxisOptions={{labelFormatter: (x) => `October ${x}, 2024`}}/>
+      <BarChart
+        {...args}
+        xAxisOptions={{labelFormatter: (x) => `October ${x}, 2024`}}
+      />
     </div>
   );
 };
@@ -645,4 +648,16 @@ DiagonalTruncate.args = {
       ],
     },
   ],
-}
+};
+
+export const TicksOverride: Story<BarChartProps> = (args: BarChartProps) => {
+  return <BarChart {...args} />;
+};
+
+TicksOverride.args = {
+  data: DATA,
+  yAxisOptions: {
+    maxYOverride: 100,
+    ticksOverride: [0, 10, 20, 40, 70, 100],
+  },
+};

@@ -163,6 +163,7 @@ export function Chart({
     maxYOverride: yAxisOptions.maxYOverride,
     max: maxY,
     min: minY,
+    ticksOverride: yAxisOptions.ticksOverride,
   };
 
   const {yAxisLabelWidth} = useYScale({
