@@ -32,6 +32,7 @@ import {
 } from '../Annotations';
 import type {
   AnnotationLookupTable,
+  BottomOnlyLegendPosition,
   RenderAnnotationContentData,
   RenderLegendContent,
   RenderTooltipContentData,
@@ -66,6 +67,7 @@ export interface Props {
   yAxisOptions: Required<YAxisOptions>;
   annotationsLookupTable?: AnnotationLookupTable;
   emptyStateText?: string;
+  legendPosition?: BottomOnlyLegendPosition;
   renderLegendContent?: RenderLegendContent;
   renderHiddenLegendLabel?: (count: number) => string;
 }
@@ -74,6 +76,7 @@ export function Chart({
   annotationsLookupTable = {},
   data,
   emptyStateText,
+  legendPosition,
   renderAnnotationContent,
   renderLegendContent,
   renderTooltipContent,
@@ -360,6 +363,7 @@ export function Chart({
         <LegendContainer
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
+          position={legendPosition}
           onDimensionChange={setLegendDimensions}
           renderLegendContent={renderLegendContent}
           enableHideOverflow

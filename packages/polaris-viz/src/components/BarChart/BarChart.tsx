@@ -21,6 +21,7 @@ import {getTooltipContentRenderer} from '../../utilities/getTooltipContentRender
 import {ChartContainer} from '../../components/ChartContainer';
 import type {
   Annotation,
+  BottomOnlyLegendPosition,
   RenderAnnotationContentData,
   RenderLegendContent,
   TooltipOptions,
@@ -42,6 +43,7 @@ export type BarChartProps = {
   annotations?: Annotation[];
   direction?: Direction;
   emptyStateText?: string;
+  legendPosition?: BottomOnlyLegendPosition;
   renderLegendContent?: RenderLegendContent;
   seriesNameFormatter?: LabelFormatter;
   showLegend?: boolean;
@@ -70,6 +72,7 @@ export function BarChart(props: BarChartProps) {
     id,
     isAnimated,
     tooltipOptions,
+    legendPosition,
     renderLegendContent,
     showLegend = true,
     maxSeries,
@@ -125,6 +128,7 @@ export function BarChart(props: BarChartProps) {
         annotationsLookupTable={annotationsLookupTable}
         data={data}
         emptyStateText={emptyStateText}
+        legendPosition={legendPosition}
         renderAnnotationContent={renderAnnotationContent}
         renderLegendContent={renderLegendContent}
         renderTooltipContent={renderTooltip}
@@ -139,6 +143,7 @@ export function BarChart(props: BarChartProps) {
       <HorizontalBarChart
         annotationsLookupTable={annotationsLookupTable}
         data={data}
+        legendPosition={legendPosition}
         renderHiddenLegendLabel={renderHiddenLegendLabel}
         renderAnnotationContent={renderAnnotationContent}
         renderLegendContent={renderLegendContent}

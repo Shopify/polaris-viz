@@ -33,6 +33,7 @@ import type {
   RenderLegendContent,
   RenderTooltipContentData,
   RenderAnnotationContentData,
+  BottomOnlyLegendPosition,
 } from '../../types';
 import {XAxis} from '../XAxis';
 import {LegendContainer, useLegend} from '../LegendContainer';
@@ -65,6 +66,7 @@ export interface Props {
   theme: string;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
+  legendPosition?: BottomOnlyLegendPosition;
   renderAnnotationContent?: (data: RenderAnnotationContentData) => ReactNode;
   renderLegendContent?: RenderLegendContent;
   renderHiddenLegendLabel?: (count: number) => string;
@@ -74,6 +76,7 @@ export function Chart({
   annotationsLookupTable,
   xAxisOptions,
   data,
+  legendPosition,
   renderLegendContent,
   renderTooltipContent,
   showLegend,
@@ -399,6 +402,7 @@ export function Chart({
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
           onDimensionChange={setLegendDimensions}
+          position={legendPosition}
           renderLegendContent={renderLegendContent}
           enableHideOverflow
           renderHiddenLegendLabel={renderHiddenLegendLabel}

@@ -29,6 +29,7 @@ import {SkipLink} from '../SkipLink';
 import {useTheme} from '../../hooks';
 import type {
   Annotation,
+  BottomOnlyLegendPosition,
   LineChartSlotProps,
   RenderAnnotationContentData,
   RenderLegendContent,
@@ -41,6 +42,7 @@ export type LineChartProps = {
   annotations?: Annotation[];
   errorText?: string;
   emptyStateText?: string;
+  legendPosition?: BottomOnlyLegendPosition;
   renderAnnotationContent?: (data: RenderAnnotationContentData) => ReactNode;
   renderLegendContent?: RenderLegendContent;
   renderHiddenLegendLabel?: (count: number) => string;
@@ -68,6 +70,7 @@ export function LineChart(props: LineChartProps) {
     id,
     isAnimated,
     onError,
+    legendPosition,
     renderAnnotationContent,
     renderLegendContent,
     renderHiddenLegendLabel,
@@ -128,6 +131,7 @@ export function LineChart(props: LineChartProps) {
             annotationsLookupTable={annotationsLookupTable}
             data={dataWithDefaults}
             emptyStateText={emptyStateText}
+            legendPosition={legendPosition}
             renderAnnotationContent={renderAnnotationContent}
             renderLegendContent={renderLegendContent}
             renderTooltipContent={renderTooltip}

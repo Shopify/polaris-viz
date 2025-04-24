@@ -29,7 +29,6 @@ export type DonutChartProps = {
   legendFullWidth?: boolean;
   legendPosition?: LegendPosition;
   tooltipOptions?: TooltipOptions;
-
   renderInnerValueContent?: RenderInnerValueContent;
   renderLegendContent?: RenderLegendContent;
   renderHiddenLegendLabel?: RenderHiddenLegendLabel;

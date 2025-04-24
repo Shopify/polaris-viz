@@ -25,6 +25,7 @@ import {checkAvailableAnnotations} from '../../components/Annotations';
 import {useFormattedLabels} from '../../hooks/useFormattedLabels';
 import type {
   AnnotationLookupTable,
+  BottomOnlyLegendPosition,
   RenderAnnotationContentData,
   RenderLegendContent,
   RenderTooltipContentData,
@@ -63,6 +64,7 @@ export interface ChartProps {
   type: ChartType;
   xAxisOptions: Required<XAxisOptions>;
   yAxisOptions: Required<YAxisOptions>;
+  legendPosition?: BottomOnlyLegendPosition;
   renderAnnotationContent?: (data: RenderAnnotationContentData) => ReactNode;
   renderHiddenLegendLabel?: (count: number) => string;
   renderLegendContent?: RenderLegendContent;
@@ -71,6 +73,7 @@ export interface ChartProps {
 export function Chart({
   annotationsLookupTable,
   data,
+  legendPosition,
   renderAnnotationContent,
   renderHiddenLegendLabel,
   renderLegendContent,
@@ -318,6 +321,7 @@ export function Chart({
           data={legend}
           enableHideOverflow
           onDimensionChange={setLegendDimensions}
+          position={legendPosition}
           renderLegendContent={renderLegendContent}
           renderHiddenLegendLabel={renderHiddenLegendLabel}
         />

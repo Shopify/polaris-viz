@@ -31,6 +31,7 @@ import {
 } from '../Annotations';
 import type {
   AnnotationLookupTable,
+  BottomOnlyLegendPosition,
   LineChartSlotProps,
   RenderAnnotationContentData,
   RenderHiddenLegendLabel,
@@ -68,6 +69,7 @@ export interface ChartProps {
   data: LineChartDataSeriesWithDefaults[];
   emptyStateText?: string;
   hideLegendOverflow: boolean;
+  legendPosition?: BottomOnlyLegendPosition;
   renderAnnotationContent?: (data: RenderAnnotationContentData) => ReactNode;
   renderHiddenLegendLabel?: RenderHiddenLegendLabel;
   renderLegendContent?: RenderLegendContent;
@@ -86,6 +88,7 @@ export function Chart({
   annotationsLookupTable,
   emptyStateText,
   data,
+  legendPosition,
   renderAnnotationContent,
   renderLegendContent,
   renderTooltipContent,
@@ -441,6 +444,7 @@ export function Chart({
           colorVisionType={COLOR_VISION_SINGLE_ITEM}
           data={legend}
           onDimensionChange={setLegendDimensions}
+          position={legendPosition}
           renderLegendContent={renderLegendContent}
           renderHiddenLegendLabel={renderHiddenLegendLabel}
           enableHideOverflow={hideLegendOverflow}
