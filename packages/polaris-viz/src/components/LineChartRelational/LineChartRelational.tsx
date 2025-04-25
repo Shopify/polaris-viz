@@ -25,6 +25,7 @@ export function LineChartRelational(props: LineChartRelationalProps) {
     isAnimated,
     seriesNameFormatter = (value) => `${value}`,
     showLegend = true,
+    legendPosition,
     skipLinkText,
     state,
     theme,
@@ -58,6 +59,7 @@ export function LineChartRelational(props: LineChartRelationalProps) {
       errorText={errorText}
       id={id}
       isAnimated={isAnimated}
+      legendPosition={legendPosition}
       renderAnnotationContent={renderAnnotationContent}
       renderLegendContent={(
         {getColorVisionStyles, getColorVisionEventAttrs},

@@ -300,3 +300,27 @@ TicksOverride.args = {
     ticksOverride: [0, 10, 20, 40, 70],
   },
 };
+
+export const LegendPosition = Template.bind({});
+
+LegendPosition.args = {
+  data: [
+    {
+      name: 'Impressions',
+      data: [
+        {key: '2022-07-10', value: 20},
+        {key: '2022-07-11', value: 34},
+        {key: '2022-07-12', value: 15},
+      ],
+    },
+    {
+      name: 'Conversions',
+      data: [
+        {key: '2022-07-10', value: 13},
+        {key: '2022-07-11', value: 76},
+        {key: '2022-07-12', value: 20},
+      ],
+    },
+  ],
+  legendPosition: 'left',
+};

@@ -9,6 +9,7 @@ import type {ReactNode} from 'react';
 
 import type {
   AnnotationLookupTable,
+  BottomOnlyLegendPosition,
   RenderAnnotationContentData,
   RenderLegendContent,
   RenderTooltipContentData,
@@ -28,6 +29,7 @@ export interface VerticalBarChartProps {
   annotationsLookupTable?: AnnotationLookupTable;
   barOptions?: {isStacked: boolean};
   emptyStateText?: string;
+  legendPosition?: BottomOnlyLegendPosition;
   renderLegendContent?: RenderLegendContent;
   type?: ChartType;
   renderHiddenLegendLabel?: (count: number) => string;
@@ -37,6 +39,7 @@ export function VerticalBarChart({
   annotationsLookupTable = {},
   data,
   emptyStateText,
+  legendPosition,
   renderAnnotationContent,
   renderLegendContent,
   renderTooltipContent,
@@ -60,6 +63,7 @@ export function VerticalBarChart({
       annotationsLookupTable={annotationsLookupTable}
       data={seriesWithDefaults}
       emptyStateText={emptyStateText}
+      legendPosition={legendPosition}
       renderLegendContent={renderLegendContent}
       renderTooltipContent={renderTooltipContent}
       seriesNameFormatter={seriesNameFormatter}

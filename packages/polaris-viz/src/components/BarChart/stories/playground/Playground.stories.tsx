@@ -684,3 +684,10 @@ TicksOverride.args = {
     ticksOverride: [0, 10, 20, 40, 70, 100],
   },
 };
+
+export const LegendPosition = Template.bind({});
+
+LegendPosition.args = {
+  data: DATA,
+  legendPosition: 'right',
+};

@@ -215,7 +215,10 @@ export type LegendPosition =
   | 'top'
   | 'right'
   | 'bottom'
-  | 'left';
+  | 'left'
+  | 'center';
+
+export type BottomOnlyLegendPosition = 'left' | 'right' | 'center';
 
 export type MetaDataTrendIndicator = Omit<TrendIndicatorProps, 'theme'>;
 
