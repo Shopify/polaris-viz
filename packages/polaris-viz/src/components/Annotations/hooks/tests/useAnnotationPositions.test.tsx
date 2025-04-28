@@ -29,7 +29,6 @@ const MOCK_PROPS: Props = {
     key3: '2',
   },
   drawableWidth: 1000,
-  isShowingAllAnnotations: false,
   onHeightChange: jest.fn(),
   xScale: scaleBand(),
   labelFormatter: (value) => `${value}`,
@@ -64,9 +63,9 @@ describe('useAnnotationPositions', () => {
 
     const result = parseResult(mockComponent);
 
-    expect(result.positions[0].row).toStrictEqual(1);
-    expect(result.positions[1].row).toStrictEqual(1);
-    expect(result.positions[2].row).toStrictEqual(2);
+    expect(result[0].row).toStrictEqual(1);
+    expect(result[1].row).toStrictEqual(1);
+    expect(result[2].row).toStrictEqual(2);
   });
 
   it('keeps annotations on the same row if they do not overlap', () => {
@@ -83,9 +82,9 @@ describe('useAnnotationPositions', () => {
 
     const result = parseResult(mockComponent);
 
-    expect(result.positions[0].row).toStrictEqual(1);
-    expect(result.positions[1].row).toStrictEqual(1);
-    expect(result.positions[2].row).toStrictEqual(2);
+    expect(result[0].row).toStrictEqual(1);
+    expect(result[1].row).toStrictEqual(1);
+    expect(result[2].row).toStrictEqual(2);
   });
 
   describe('onHeightChange', () => {
@@ -112,51 +111,6 @@ describe('useAnnotationPositions', () => {
       });
 
       expect(MOCK_PROPS.onHeightChange).toHaveBeenCalledTimes(2);
-      expect(MOCK_PROPS.onHeightChange).toHaveBeenLastCalledWith(56);
-    });
-  });
-
-  describe('isShowingAllAnnotations', () => {
-    it('returns all values when true', () => {
-      const mockComponent = mount(
-        <TestComponent
-          {...MOCK_PROPS}
-          isShowingAllAnnotations
-          annotations={[
-            {label: 'Annotation 1', startKey: 'key0'},
-            {label: 'Annotation 2', startKey: 'key1'},
-            {label: 'Annotation 3', startKey: 'key2'},
-            {label: 'Annotation 4', startKey: 'key3'},
-            {label: 'Annotation 5', startKey: 'key4'},
-            {label: 'Annotation 6', startKey: 'key5'},
-          ]}
-        />,
-      );
-
-      const result = parseResult(mockComponent);
-
-      expect(result.hiddenAnnotationsCount).toStrictEqual(0);
-      expect(MOCK_PROPS.onHeightChange).toHaveBeenLastCalledWith(56);
-    });
-
-    it('returns limited value when false', () => {
-      const mockComponent = mount(
-        <TestComponent
-          {...MOCK_PROPS}
-          annotations={[
-            {label: 'Annotation 1', startKey: 'key0'},
-            {label: 'Annotation 2', startKey: 'key1'},
-            {label: 'Annotation 3', startKey: 'key2'},
-            {label: 'Annotation 4', startKey: 'key3'},
-            {label: 'Annotation 5', startKey: 'key4'},
-            {label: 'Annotation 6', startKey: 'key5'},
-          ]}
-        />,
-      );
-
-      const result = parseResult(mockComponent);
-
-      expect(result.hiddenAnnotationsCount).toStrictEqual(0);
       expect(MOCK_PROPS.onHeightChange).toHaveBeenLastCalledWith(56);
     });
   });

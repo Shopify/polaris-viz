@@ -1,4 +1,3 @@
-import type {Dispatch, SetStateAction} from 'react';
 import {Fragment} from 'react';
 import {FONT_SIZE, LINE_HEIGHT, useTheme} from '@shopify/polaris-viz-core';
 
@@ -11,26 +10,24 @@ import styles from './AnnotationLabel.scss';
 
 export interface AnnotationLabelProps {
   ariaLabel: string;
-  hasContent: boolean;
   index: number;
-  isVisible: boolean;
   label: string;
   position: AnnotationPosition;
-  setActiveIndex: Dispatch<SetStateAction<number>>;
+  onMouseEnter: (index: number) => void;
+  onMouseLeave: () => void;
   tabIndex: number;
 }
 
 const PX_OFFSET = 1;
-const CONTENT_LINE_OFFSET = 3;
+const BORDER_RADIUS = 4;
 
 export function AnnotationLabel({
   ariaLabel,
-  hasContent,
   index,
-  isVisible,
   label,
   position,
-  setActiveIndex,
+  onMouseEnter,
+  onMouseLeave,
   tabIndex,
 }: AnnotationLabelProps) {
   const selectedTheme = useTheme();
@@ -42,25 +39,17 @@ export function AnnotationLabel({
 
   const centerX = width / 2;
 
-  return (
-    <g
-      transform={`translate(${x},${y})`}
-      opacity={isVisible ? 1 : 0}
-      aria-hidden
-    >
-      <foreignObject
-        height={PILL_HEIGHT}
-        width={width}
-        style={{overflow: 'visible'}}
-      >
-        <div className={styles.Blur} style={{borderRadius: PILL_HEIGHT / 2}} />
-      </foreignObject>
+  function handleMouseEnter() {
+    onMouseEnter(index);
+  }
 
+  return (
+    <g transform={`translate(${x},${y})`} aria-hidden>
       <rect
         height={PILL_HEIGHT}
         width={width}
         fill={selectedTheme.annotations.backgroundColor}
-        ry={PILL_HEIGHT / 2}
+        ry={BORDER_RADIUS}
         opacity={isFirefox ? 1 : selectedTheme.annotations.pillOpacity}
       />
 
@@ -75,17 +64,6 @@ export function AnnotationLabel({
       />
 
       <Fragment>
-        {hasContent && (
-          <line
-            x1={PILL_PADDING}
-            x2={width - PILL_PADDING}
-            y1={PILL_HEIGHT - CONTENT_LINE_OFFSET}
-            y2={PILL_HEIGHT - CONTENT_LINE_OFFSET}
-            stroke={selectedTheme.annotations.textColor}
-            strokeDasharray="1, 3"
-            strokeWidth={1}
-          />
-        )}
         <foreignObject
           height={PILL_HEIGHT}
           width={width}
@@ -95,10 +73,12 @@ export function AnnotationLabel({
             aria-describedby={`annotation-content-${index}`}
             aria-label={formattedAriaLabel}
             className={styles.Button}
-            onMouseEnter={() => setActiveIndex(index)}
-            onFocus={() => setActiveIndex(index)}
+            onMouseEnter={handleMouseEnter}
+            onFocus={handleMouseEnter}
+            onMouseLeave={onMouseLeave}
+            onBlur={onMouseLeave}
             tabIndex={tabIndex}
-            style={{borderRadius: PILL_HEIGHT / 2}}
+            style={{borderRadius: BORDER_RADIUS}}
           >
             {label}
           </button>

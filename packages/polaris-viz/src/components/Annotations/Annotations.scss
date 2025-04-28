@@ -3,3 +3,16 @@
 .Group {
   @include no-outline;
 }
+
+.Pill {
+  &:hover {
+    rect,
+    path {
+      fill: var(--annotation-hover-color);
+    }
+
+    text {
+      fill: var(--annotation-text-hover-color);
+    }
+  }
+}

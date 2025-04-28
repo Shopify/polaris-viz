@@ -9,19 +9,16 @@ import type {ScaleLinear} from 'd3-scale';
 import type {AnnotationPosition} from '../../../../Annotations';
 import {
   checkForHorizontalSpace,
-  useShowMoreAnnotationsButton,
   PILL_HEIGHT,
   PILL_PADDING,
   PILL_ROW_GAP,
   PILL_X_MIN,
 } from '../../../../Annotations';
-import {COLLAPSED_ANNOTATIONS_COUNT} from '../../../../../constants';
 import type {Annotation} from '../../../../../types';
 
 export interface Props {
   annotations: Annotation[];
   drawableWidth: number;
-  isShowingAllAnnotations: boolean;
   onHeightChange: (height: number) => void;
   xScale: ScaleLinear<number, number>;
 }
@@ -29,14 +26,9 @@ export interface Props {
 export function useHorizontalBarChartXAnnotationPositions({
   annotations,
   drawableWidth,
-  isShowingAllAnnotations,
   onHeightChange,
   xScale,
-}: Props): {
-  hiddenAnnotationsCount: number;
-  positions: AnnotationPosition[];
-  rowCount: number;
-} {
+}: Props): AnnotationPosition[] {
   const {characterWidths} = useChartContext();
 
   const textWidths = useMemo(() => {
@@ -45,7 +37,7 @@ export function useHorizontalBarChartXAnnotationPositions({
     });
   }, [annotations, characterWidths]);
 
-  const {positions, hiddenAnnotationsCount} = useMemo(() => {
+  const {positions} = useMemo(() => {
     let positions = annotations.map((annotation, dataIndex) => {
       const xPosition = xScale(Number(annotation.startKey));
 
@@ -90,27 +82,26 @@ export function useHorizontalBarChartXAnnotationPositions({
       current.y = row * PILL_HEIGHT + row * PILL_ROW_GAP;
     });
 
-    const hiddenAnnotationsCount = positions.filter(
-      ({row}) => row >= COLLAPSED_ANNOTATIONS_COUNT,
-    ).length;
-
-    return {positions, hiddenAnnotationsCount};
+    return {positions};
   }, [annotations, textWidths, xScale, drawableWidth]);
 
-  const {rowCount, totalRowHeight} = useShowMoreAnnotationsButton({
-    isShowingAllAnnotations,
-    positions,
-  });
+  const totalRowHeight = useMemo(() => {
+    return (
+      positions.reduce((total, {y}) => {
+        if (y > total) {
+          return y;
+        }
+
+        return total;
+      }, 0) +
+      PILL_HEIGHT +
+      PILL_ROW_GAP
+    );
+  }, [positions]);
 
   useEffect(() => {
     onHeightChange(totalRowHeight);
   }, [onHeightChange, totalRowHeight]);
 
-  return {
-    positions,
-    rowCount,
-    hiddenAnnotationsCount: isShowingAllAnnotations
-      ? 0
-      : hiddenAnnotationsCount,
-  };
+  return positions;
 }

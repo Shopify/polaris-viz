@@ -98,56 +98,6 @@ describe('<Annotations />', () => {
     expect(component).toContainReactComponentTimes(AnnotationLine, 3);
   });
 
-  it('shows all annotations after <ShowMoreAnnotationsButton /> click', () => {
-    const annotations = normalizeData(
-      [
-        {
-          label: 'Annotation 1',
-          startKey: 'Monday',
-        },
-        {
-          label: 'Annotation 2',
-          startKey: 'Tuesday',
-        },
-        {
-          label: 'Annotation 3',
-          startKey: 'Wednesday',
-        },
-        {
-          label: 'Annotation 4',
-          startKey: 'Thursday',
-        },
-        {
-          label: 'Annotation 5',
-          startKey: 'Friday',
-        },
-        {
-          label: 'Annotation 6',
-          startKey: 'Saturday',
-        },
-      ],
-      'startKey',
-    );
-
-    const component = mount(
-      <svg>
-        <Annotations
-          {...MOCK_PROPS}
-          annotationsLookupTable={annotations}
-          drawableWidth={200}
-        />
-      </svg>,
-    );
-
-    const showMoreButton = component.find(ShowMoreAnnotationsButton);
-
-    expect(component).toContainReactComponentTimes(AnnotationLabel, 2);
-
-    showMoreButton?.trigger('onClick');
-
-    expect(component).toContainReactComponentTimes(AnnotationLabel, 6);
-  });
-
   it('shows content for active annotation', () => {
     const component = mount(
       <svg>
@@ -157,7 +107,7 @@ describe('<Annotations />', () => {
 
     const labels = component.findAll(AnnotationLabel);
 
-    labels[1].trigger('setActiveIndex', 1);
+    labels[1].trigger('onMouseEnter', 1);
 
     expect(component).toContainReactComponent(AnnotationContent);
   });
@@ -229,7 +179,7 @@ describe('<Annotations />', () => {
 
     const labels = component.findAll(AnnotationLabel);
 
-    labels[1].trigger('setActiveIndex', 1);
+    labels[1].trigger('onMouseEnter', 1);
 
     expect(component).toContainReactComponent(AnnotationContent, {
       renderAnnotationContent: expect.any(Function),

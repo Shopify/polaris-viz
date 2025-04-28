@@ -1,12 +1,15 @@
 @import '../../../../styles/shared/accessibility';
-
-.Blur {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-}
+@import '../../../../styles/common';
 
 .Button {
   @include hidden-button;
+  outline: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    @include focus-outline;
+  }
 }

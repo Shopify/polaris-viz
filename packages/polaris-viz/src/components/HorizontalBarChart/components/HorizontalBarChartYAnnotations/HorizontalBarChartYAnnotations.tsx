@@ -1,6 +1,11 @@
 import type {ReactNode} from 'react';
-import {Fragment, useMemo, useState} from 'react';
+import {Fragment, useMemo, useRef, useState} from 'react';
 
+// eslint-disable-next-line @shopify/strict-component-boundaries
+import {
+  CONTENT_Y_OFFSET,
+  LABEL_MOUSEOFF_DELAY,
+} from '../../../Annotations/constants';
 import {
   AnnotationContent,
   AnnotationLabel,
@@ -34,6 +39,7 @@ export function HorizontalBarChartYAnnotations({
 }: YAxisAnnotationsProps) {
   const [activeIndex, setActiveIndex] = useState(-1);
   const [ref, setRef] = useState<SVGGElement | null>(null);
+  const timeoutRef = useRef<number>(0);
 
   const {annotations, dataIndexes} = useMemo(() => {
     const dataIndexes = {};
@@ -71,6 +77,20 @@ export function HorizontalBarChartYAnnotations({
     setActiveIndex(-1);
   };
 
+  function handleLabelMouseEnter(index: number) {
+    setActiveIndex(index);
+  }
+
+  const handleLabelMouseLeave = () => {
+    timeoutRef.current = window.setTimeout(() => {
+      setActiveIndex(-1);
+    }, LABEL_MOUSEOFF_DELAY);
+  };
+
+  function handleContentMouseEnter() {
+    clearTimeout(timeoutRef.current);
+  }
+
   useSVGBlurEvent({
     ref,
     onBlur: handleOnMouseLeave,
@@ -106,12 +126,11 @@ export function HorizontalBarChartYAnnotations({
               />
               <AnnotationLabel
                 ariaLabel={ariaLabel}
-                hasContent={hasContent}
                 index={index}
-                isVisible={!isContentVisible}
                 label={annotation.label}
+                onMouseEnter={handleLabelMouseEnter}
+                onMouseLeave={handleLabelMouseLeave}
                 position={position}
-                setActiveIndex={setActiveIndex}
                 tabIndex={tabIndex}
               />
               {isContentVisible && (
@@ -119,13 +138,14 @@ export function HorizontalBarChartYAnnotations({
                   annotation={annotation}
                   drawableWidth={drawableWidth}
                   index={index}
-                  onMouseLeave={handleOnMouseLeave}
+                  onMouseEnter={handleContentMouseEnter}
+                  onMouseLeave={handleLabelMouseLeave}
                   parentRef={ref}
                   position={position}
                   renderAnnotationContent={renderAnnotationContent}
                   tabIndex={tabIndex}
                   x={drawableWidth - (drawableWidth - x)}
-                  y={y}
+                  y={y + CONTENT_Y_OFFSET}
                 />
               )}
             </Fragment>

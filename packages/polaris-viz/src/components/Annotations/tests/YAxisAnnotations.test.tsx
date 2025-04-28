@@ -91,7 +91,7 @@ describe('<YAxisAnnotations />', () => {
 
     const labels = component.findAll(AnnotationLabel);
 
-    labels[1].trigger('setActiveIndex', 1);
+    labels[1].trigger('onMouseEnter', 1);
 
     expect(component).toContainReactComponent(AnnotationContent);
   });
