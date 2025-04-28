@@ -1,4 +1,4 @@
-import {Fragment, useMemo, useState} from 'react';
+import {Fragment, useMemo, useRef, useState} from 'react';
 import type {ScaleLinear} from 'd3-scale';
 import {
   isValueWithinDomain,
@@ -17,6 +17,7 @@ import {
 } from './components';
 import type {OptionalDualAxisYAxis} from './types';
 import styles from './Annotations.scss';
+import {CONTENT_Y_OFFSET, LABEL_MOUSEOFF_DELAY} from './constants';
 
 export interface YAxisAnnotationsProps {
   annotationsLookupTable: AnnotationLookupTable;
@@ -36,6 +37,7 @@ export function YAxisAnnotations({
 }: YAxisAnnotationsProps) {
   const [activeIndex, setActiveIndex] = useState(-1);
   const [ref, setRef] = useState<SVGGElement | null>(null);
+  const timeoutRef = useRef<number>(0);
 
   const {annotations} = useMemo(() => {
     const annotations = Object.keys(annotationsLookupTable)
@@ -74,6 +76,20 @@ export function YAxisAnnotations({
   const handleOnMouseLeave = () => {
     setActiveIndex(-1);
   };
+
+  function handleLabelMouseEnter(index: number) {
+    setActiveIndex(index);
+  }
+
+  const handleLabelMouseLeave = () => {
+    timeoutRef.current = window.setTimeout(() => {
+      setActiveIndex(-1);
+    }, LABEL_MOUSEOFF_DELAY);
+  };
+
+  function handleContentMouseEnter() {
+    clearTimeout(timeoutRef.current);
+  }
 
   useSVGBlurEvent({
     ref,
@@ -122,12 +138,11 @@ export function YAxisAnnotations({
             />
             <AnnotationLabel
               ariaLabel={ariaLabel}
-              hasContent={hasContent}
               index={index}
-              isVisible={!isContentVisible}
               label={annotation.label}
               position={position}
-              setActiveIndex={setActiveIndex}
+              onMouseEnter={handleLabelMouseEnter}
+              onMouseLeave={handleLabelMouseLeave}
               tabIndex={tabIndex}
             />
             {isContentVisible && (
@@ -135,12 +150,13 @@ export function YAxisAnnotations({
                 annotation={annotation}
                 drawableWidth={drawableWidth}
                 index={index}
+                onMouseEnter={handleContentMouseEnter}
                 onMouseLeave={handleOnMouseLeave}
                 parentRef={ref}
                 position={position}
                 tabIndex={tabIndex}
                 x={drawableWidth - (drawableWidth - x)}
-                y={y}
+                y={y + CONTENT_Y_OFFSET}
               />
             )}
           </Fragment>

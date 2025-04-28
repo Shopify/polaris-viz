@@ -1,6 +1,8 @@
-import {Fragment, useMemo, useState} from 'react';
+import type {CSSProperties} from 'react';
+import {Fragment, useMemo, useRef, useState} from 'react';
 import type {ScaleBand, ScaleLinear} from 'd3-scale';
 import type {LabelFormatter} from '@shopify/polaris-viz-core';
+import {useTheme} from '@shopify/polaris-viz-core';
 
 import type {
   Annotation,
@@ -8,17 +10,10 @@ import type {
   RenderAnnotationContentData,
 } from '../../types';
 import {useSVGBlurEvent} from '../../hooks/useSVGBlurEvent';
-import {shouldHideAnnotation} from '../../utilities/shouldHideAnnotation';
-import {isShowMoreAnnotationsButtonVisible} from '../../utilities/isShowMoreAnnotationsButtonVisible';
 
-import {
-  AnnotationLabel,
-  AnnotationLine,
-  AnnotationContent,
-  ShowMoreAnnotationsButton,
-} from './components';
+import {AnnotationLabel, AnnotationLine, AnnotationContent} from './components';
 import {useAnnotationPositions} from './hooks/useAnnotationPositions';
-import {PILL_HEIGHT, SHOW_MORE_BUTTON_OFFSET} from './constants';
+import {CONTENT_Y_OFFSET, LABEL_MOUSEOFF_DELAY, PILL_HEIGHT} from './constants';
 import styles from './Annotations.scss';
 
 export interface AnnotationsProps {
@@ -46,9 +41,10 @@ export function Annotations({
   labelFormatter,
   renderAnnotationContent,
 }: AnnotationsProps) {
+  const selectedTheme = useTheme();
   const [activeIndex, setActiveIndex] = useState(-1);
-  const [isShowingAllAnnotations, setIsShowingAllAnnotations] = useState(false);
   const [ref, setRef] = useState<SVGGElement | null>(null);
+  const timeoutRef = useRef<number>(0);
 
   const formattedLabels = useMemo(
     () => labels.map(labelFormatter),
@@ -81,24 +77,33 @@ export function Annotations({
     return {annotations, dataIndexes};
   }, [annotationsLookupTable, formattedLabels, labelFormatter]);
 
-  const {hiddenAnnotationsCount, positions, rowCount} = useAnnotationPositions({
+  const positions = useAnnotationPositions({
     annotations,
     axisLabelWidth,
     dataIndexes,
     drawableWidth,
-    isShowingAllAnnotations,
     onHeightChange,
     xScale,
     labelFormatter,
   });
 
-  const handleToggleAllAnnotations = () => {
-    setIsShowingAllAnnotations(!isShowingAllAnnotations);
-  };
-
   const handleOnMouseLeave = () => {
     setActiveIndex(-1);
   };
+
+  function handleLabelMouseEnter(index: number) {
+    setActiveIndex(index);
+  }
+
+  const handleLabelMouseLeave = () => {
+    timeoutRef.current = window.setTimeout(() => {
+      setActiveIndex(-1);
+    }, LABEL_MOUSEOFF_DELAY);
+  };
+
+  function handleContentMouseEnter() {
+    clearTimeout(timeoutRef.current);
+  }
 
   useSVGBlurEvent({
     ref,
@@ -110,73 +115,63 @@ export function Annotations({
     },
   });
 
-  const isShowMoreButtonVisible = isShowMoreAnnotationsButtonVisible(rowCount);
-  const showMoreButtonOffset = isShowMoreButtonVisible
-    ? SHOW_MORE_BUTTON_OFFSET
-    : 0;
-
   return (
     <g ref={setRef} tabIndex={-1} className={styles.Group}>
-      {isShowMoreButtonVisible && (
-        <ShowMoreAnnotationsButton
-          annotationsCount={hiddenAnnotationsCount}
-          collapseText={annotations[0].collapseButtonText}
-          expandText={annotations[0].expandButtonText}
-          isShowingAllAnnotations={isShowingAllAnnotations}
-          onClick={handleToggleAllAnnotations}
-          tabIndex={annotations.length}
-          width={drawableWidth}
-        />
-      )}
-      <g transform={`translate(0, ${showMoreButtonOffset})`}>
-        {positions.map((position) => {
-          const {line, y, row, index} = position;
-          const annotation = annotations[index];
+      {positions.map((position) => {
+        const {line, y, index} = position;
+        const annotation = annotations[index];
 
-          if (shouldHideAnnotation({row, isShowingAllAnnotations, rowCount})) {
-            return null;
-          }
+        const hasContent = annotation.content != null;
+        const isContentVisible = index === activeIndex && hasContent;
+        const tabIndex = index + 1;
+        const ariaLabel = `${annotation.startKey}`;
 
-          const hasContent = annotation.content != null;
-          const isContentVisible = index === activeIndex && hasContent;
-          const tabIndex = index + 1;
-          const ariaLabel = `${annotation.startKey}`;
-
-          return (
-            <Fragment key={`annotation${index}${annotation.startKey}`}>
+        return (
+          <Fragment key={`annotation${index}${annotation.startKey}`}>
+            <g
+              className={styles.Pill}
+              style={
+                {
+                  '--annotation-hover-color':
+                    selectedTheme.annotations.backgroundHoverColor,
+                  '--annotation-text-hover-color':
+                    selectedTheme.annotations.textHoverColor,
+                } as CSSProperties
+              }
+            >
               <AnnotationLine
-                size={drawableHeight - showMoreButtonOffset}
+                size={drawableHeight}
                 x={line.x}
                 y={y + PILL_HEIGHT}
               />
               <AnnotationLabel
                 ariaLabel={ariaLabel}
-                hasContent={hasContent}
                 index={index}
-                isVisible={!isContentVisible}
                 label={annotation.label}
                 position={position}
-                setActiveIndex={setActiveIndex}
+                onMouseEnter={handleLabelMouseEnter}
+                onMouseLeave={handleLabelMouseLeave}
                 tabIndex={tabIndex}
               />
-              {isContentVisible && (
-                <AnnotationContent
-                  annotation={annotation}
-                  drawableWidth={drawableWidth}
-                  index={index}
-                  onMouseLeave={handleOnMouseLeave}
-                  parentRef={ref}
-                  position={position}
-                  renderAnnotationContent={renderAnnotationContent}
-                  tabIndex={tabIndex}
-                  x={line.x}
-                  y={y}
-                />
-              )}
-            </Fragment>
-          );
-        })}
-      </g>
+            </g>
+            {isContentVisible && (
+              <AnnotationContent
+                annotation={annotation}
+                drawableWidth={drawableWidth}
+                index={index}
+                onMouseEnter={handleContentMouseEnter}
+                onMouseLeave={handleLabelMouseLeave}
+                parentRef={ref}
+                position={position}
+                renderAnnotationContent={renderAnnotationContent}
+                tabIndex={tabIndex}
+                x={line.x}
+                y={y + CONTENT_Y_OFFSET}
+              />
+            )}
+          </Fragment>
+        );
+      })}
     </g>
   );
 }

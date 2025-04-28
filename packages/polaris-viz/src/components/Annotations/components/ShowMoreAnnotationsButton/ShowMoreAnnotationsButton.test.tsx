@@ -65,7 +65,7 @@ describe('<ShowMoreAnnotationsButton />', () => {
       expect(chart).toContainReactComponent(SingleTextLine, {
         color: LIGHT_THEME.annotations.textColor,
         text: 'Expand annotations (1)',
-        targetWidth: 190,
+        targetWidth: 194,
         y: 6,
         x: 105,
       });

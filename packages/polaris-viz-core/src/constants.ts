@@ -228,7 +228,9 @@ export const DARK_THEME: Theme = {
   },
   annotations: {
     backgroundColor: variables.colorGray140,
+    backgroundHoverColor: variables.colorGray150,
     textColor: variables.colorGray30,
+    textHoverColor: variables.colorGray30,
     titleColor: variables.colorWhite,
     linkColor: variables.colorBlue40,
     axisLabelColor: variables.colorGray80,
@@ -338,12 +340,14 @@ export const LIGHT_THEME: Theme = {
     },
   },
   annotations: {
-    backgroundColor: variables.colorGray100,
-    textColor: variables.colorWhite,
-    titleColor: variables.colorWhite,
+    backgroundColor: 'rgb(227, 227, 227)',
+    backgroundHoverColor: 'rgb(235, 235, 235)',
+    textColor: 'rgb(97, 97, 97)',
+    textHoverColor: 'rgb(48, 48, 48)',
+    titleColor: variables.colorGray150,
     linkColor: variables.colorBlue40,
     axisLabelColor: variables.colorGray70,
-    lineColor: variables.colorGray70,
+    lineColor: variables.colorGray40,
     pillOpacity: 1,
   },
   trendIndicator: {

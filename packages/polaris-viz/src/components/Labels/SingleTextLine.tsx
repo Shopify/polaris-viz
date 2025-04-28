@@ -43,6 +43,8 @@ export function SingleTextLine({
     characterWidths,
   });
 
+  const isStringTruncated = truncated !== text;
+
   return (
     <Fragment>
       <text
@@ -60,7 +62,7 @@ export function SingleTextLine({
       >
         {truncated}
       </text>
-      <title>{text}</title>
+      {isStringTruncated && <title>{text}</title>}
     </Fragment>
   );
 }
