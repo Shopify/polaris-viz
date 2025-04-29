@@ -13,6 +13,7 @@ export interface AnnotationContentProps {
   annotation: Annotation;
   drawableWidth: number;
   index: number;
+  onMouseEnter: () => void;
   onMouseLeave: () => void;
   parentRef: SVGElement | null;
   position: AnnotationPosition;
@@ -28,6 +29,7 @@ export function AnnotationContent({
   annotation,
   drawableWidth,
   index,
+  onMouseEnter,
   onMouseLeave,
   parentRef,
   tabIndex,
@@ -83,6 +85,7 @@ export function AnnotationContent({
       <div
         className={styles.Container}
         data-block-tooltip-events
+        onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         ref={setRef}
         style={{
@@ -93,6 +96,7 @@ export function AnnotationContent({
         }}
         id={`annotation-content-${index}`}
         role="dialog"
+        aria-label={content}
       >
         {title != null && (
           <p

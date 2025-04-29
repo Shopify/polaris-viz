@@ -13,8 +13,6 @@ jest.mock('@shopify/polaris-viz-core/src/utilities', () => ({
 const MOCK_PROPS: AnnotationLabelProps = {
   ariaLabel: 'Aria string',
   index: 0,
-  hasContent: false,
-  isVisible: true,
   label: 'Label',
   position: {
     index: 0,
@@ -27,7 +25,8 @@ const MOCK_PROPS: AnnotationLabelProps = {
     x: 10,
     y: 0,
   },
-  setActiveIndex: jest.fn(),
+  onMouseEnter: jest.fn(),
+  onMouseLeave: jest.fn(),
   tabIndex: 0,
 };
 
@@ -42,12 +41,12 @@ describe('<AnnotationLabel />', () => {
     expect(chart).toContainReactComponent('rect', {
       height: 20,
       width: 100,
-      ry: 10,
+      ry: 4,
     });
     expect(chart).toContainReactComponent(SingleTextLine, {
       ariaHidden: true,
       text: 'Label',
-      targetWidth: 81,
+      targetWidth: 85,
       y: 5,
       x: 50,
     });
@@ -60,18 +59,6 @@ describe('<AnnotationLabel />', () => {
       </svg>,
     );
 
-    expect(chart).toContainReactComponent('rect', {
-      height: 20,
-      width: 100,
-      ry: 10,
-    });
-    expect(chart).toContainReactComponent(SingleTextLine, {
-      ariaHidden: true,
-      text: 'Label',
-      targetWidth: 81,
-      y: 5,
-      x: MOCK_PROPS.position.width / 2,
-    });
     expect(chart).toContainReactComponentTimes('text', 1, {
       textAnchor: 'middle',
     });
@@ -115,7 +102,7 @@ describe('<AnnotationLabel />', () => {
 
       button?.trigger('onMouseEnter');
 
-      expect(MOCK_PROPS.setActiveIndex).toHaveBeenCalledWith(0);
+      expect(MOCK_PROPS.onMouseEnter).toHaveBeenCalledWith(0);
     });
 
     it('responds to focus event', () => {
@@ -129,35 +116,35 @@ describe('<AnnotationLabel />', () => {
 
       button?.trigger('onFocus');
 
-      expect(MOCK_PROPS.setActiveIndex).toHaveBeenCalledWith(0);
-    });
-  });
-
-  describe('hasContent', () => {
-    it('renders a line when true', () => {
-      const chart = mount(
-        <svg>
-          <AnnotationLabel {...MOCK_PROPS} hasContent />
-        </svg>,
-      );
-
-      expect(chart).toContainReactComponent('line', {
-        x1: 10,
-        x2: 90,
-        y1: 17,
-        y2: 17,
-        strokeWidth: 1,
-      });
+      expect(MOCK_PROPS.onMouseEnter).toHaveBeenCalledWith(0);
     });
 
-    it('renders no line when false', () => {
+    it('responds to mouse-leave event', () => {
       const chart = mount(
         <svg>
           <AnnotationLabel {...MOCK_PROPS} />
         </svg>,
       );
 
-      expect(chart).not.toContainReactComponent('line');
+      const button = chart.find('button');
+
+      button?.trigger('onMouseLeave');
+
+      expect(MOCK_PROPS.onMouseLeave).toHaveBeenCalled();
+    });
+
+    it('responds to blur event', () => {
+      const chart = mount(
+        <svg>
+          <AnnotationLabel {...MOCK_PROPS} />
+        </svg>,
+      );
+
+      const button = chart.find('button');
+
+      button?.trigger('onBlur');
+
+      expect(MOCK_PROPS.onMouseLeave).toHaveBeenCalled();
     });
   });
 });

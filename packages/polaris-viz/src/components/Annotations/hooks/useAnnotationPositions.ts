@@ -8,7 +8,6 @@ import {
 } from '@shopify/polaris-viz-core';
 import type {ScaleBand, ScaleLinear} from 'd3-scale';
 
-import {COLLAPSED_ANNOTATIONS_COUNT} from '../../../constants';
 import {
   PILL_HEIGHT,
   PILL_PADDING,
@@ -19,14 +18,11 @@ import type {Annotation} from '../../../types';
 import type {AnnotationPosition} from '../types';
 import {checkForHorizontalSpace} from '../utilities/checkForHorizontalSpace';
 
-import {useShowMoreAnnotationsButton} from './useShowMoreAnnotationsButton';
-
 export interface Props {
   annotations: Annotation[];
   axisLabelWidth: number;
   dataIndexes: {[key: string]: string};
   drawableWidth: number;
-  isShowingAllAnnotations: boolean;
   labelFormatter: LabelFormatter;
   onHeightChange: (height: number) => void;
   xScale: ScaleLinear<number, number> | ScaleBand<string>;
@@ -37,15 +33,10 @@ export function useAnnotationPositions({
   axisLabelWidth,
   dataIndexes,
   drawableWidth,
-  isShowingAllAnnotations,
   onHeightChange,
   xScale,
   labelFormatter,
-}: Props): {
-  hiddenAnnotationsCount: number;
-  positions: AnnotationPosition[];
-  rowCount: number;
-} {
+}: Props): AnnotationPosition[] {
   const {characterWidths} = useChartContext();
 
   const textWidths = useMemo(() => {
@@ -54,7 +45,7 @@ export function useAnnotationPositions({
     });
   }, [annotations, characterWidths]);
 
-  const {positions, hiddenAnnotationsCount} = useMemo(() => {
+  const {positions} = useMemo(() => {
     let positions = annotations.map((annotation, dataIndex) => {
       const xPosition = getValueFromXScale(
         dataIndexes[labelFormatter(annotation.startKey)],
@@ -108,11 +99,7 @@ export function useAnnotationPositions({
       current.y = row * PILL_HEIGHT + row * PILL_ROW_GAP;
     });
 
-    const hiddenAnnotationsCount = positions.filter(
-      ({row}) => row >= COLLAPSED_ANNOTATIONS_COUNT,
-    ).length;
-
-    return {positions, hiddenAnnotationsCount};
+    return {positions};
   }, [
     annotations,
     dataIndexes,
@@ -123,20 +110,23 @@ export function useAnnotationPositions({
     labelFormatter,
   ]);
 
-  const {totalRowHeight, rowCount} = useShowMoreAnnotationsButton({
-    isShowingAllAnnotations,
-    positions,
-  });
+  const totalRowHeight = useMemo(() => {
+    return (
+      positions.reduce((total, {y}) => {
+        if (y > total) {
+          return y;
+        }
+
+        return total;
+      }, 0) +
+      PILL_HEIGHT +
+      PILL_ROW_GAP
+    );
+  }, [positions]);
 
   useEffect(() => {
     onHeightChange(totalRowHeight);
   }, [onHeightChange, totalRowHeight]);
 
-  return {
-    positions,
-    rowCount,
-    hiddenAnnotationsCount: isShowingAllAnnotations
-      ? 0
-      : hiddenAnnotationsCount,
-  };
+  return positions;
 }

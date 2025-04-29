@@ -134,7 +134,9 @@ export interface GroupLabelTheme {
 
 export interface AnnotationsTheme {
   backgroundColor: string;
+  backgroundHoverColor: string;
   textColor: string;
+  textHoverColor: string;
   titleColor: string;
   linkColor: string;
   axisLabelColor: string;

@@ -52,7 +52,6 @@ export const BAR_CONTAINER_TEXT_HEIGHT = 48;
 export const ANNOTATIONS_LABELS_OFFSET = 10;
 export const Y_AXIS_LABEL_OFFSET = 2;
 export const TOOLTIP_BG_OPACITY = 0.8;
-export const COLLAPSED_ANNOTATIONS_COUNT = 3;
 export const PREVIEW_ICON_SIZE = 12;
 export const DASHED_LINE_PREVIEW_STROKE_DASHARRAY = '1.5 3';
 export const ARC_PAD_ANGLE = 0.02;
