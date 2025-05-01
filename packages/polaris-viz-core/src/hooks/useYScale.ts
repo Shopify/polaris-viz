@@ -50,8 +50,8 @@ export function useYScale({
     const minY = min;
     let maxY = isDataEmpty ? DEFAULT_MAX_Y : max;
 
-    if (maxYOverride != null) {
-      maxY = Math.max(maxY, maxYOverride);
+    if (maxYOverride != null && isDataEmpty) {
+      maxY = maxYOverride;
     }
 
     if (integersOnly) {

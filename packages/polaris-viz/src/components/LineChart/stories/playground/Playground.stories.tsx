@@ -1115,3 +1115,70 @@ LegendPosition.args = {
   ],
   legendPosition: 'right',
 };
+
+export const yScale = Template.bind({});
+
+yScale.args = {
+  data: [
+    {
+      name: 'Mar 1, 2024–Mar 25, 2025',
+      data: [
+        {
+          key: '0',
+          value: 0.039603960396039604,
+        },
+        {
+          key: '1',
+          value: 0.07920792079207921,
+        },
+        {
+          key: '2',
+          value: 0.0165016501650165,
+        },
+        {
+          key: '3',
+          value: 0.0462046204620462,
+        },
+        {
+          key: '4',
+          value: 0.026402640264026403,
+        },
+        {
+          key: '5',
+          value: 0.009900990099009901,
+        },
+        {
+          key: '6',
+          value: 0.026402640264026403,
+        },
+        {
+          key: '7',
+          value: 0.009900990099009901,
+        },
+        {
+          key: '8',
+          value: 0,
+        },
+        {
+          key: '9',
+          value: 0,
+        },
+        {
+          key: '10',
+          value: 0.0033003300330033004,
+        },
+        {
+          key: '11',
+          value: 0,
+        },
+        {
+          key: '12',
+          value: 0,
+        },
+      ],
+    },
+  ],
+  yAxisOptions: {
+    maxYOverride: 1,
+  },
+};
