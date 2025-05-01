@@ -342,7 +342,7 @@ describe('useYScale()', () => {
         <TestComponent
           {...MOCK_PROPS}
           min={0}
-          max={10}
+          max={0}
           maxYOverride={maxYOverride}
         />,
       );
