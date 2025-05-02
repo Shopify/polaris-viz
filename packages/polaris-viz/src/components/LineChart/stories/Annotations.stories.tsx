@@ -27,7 +27,7 @@ Annotations.args = {
       axis: 'x',
     },
     {
-      startKey: '540',
+      startKey: '700',
       label: 'Sales target',
       axis: 'y',
     },
@@ -41,9 +41,20 @@ Annotations.args = {
     },
   ],
   renderAnnotationContent: (data) => (
-    <p>
-      Rendering custom content for the label <b>{data.annotation.label}</b>
-    </p>
+    <div>
+      <p>
+        Rendering custom content for the label <b>{data.annotation.label}</b>
+      </p>
+      <p>
+        Rendering custom content for the label <b>{data.annotation.label}</b>
+      </p>
+      <p>
+        Rendering custom content for the label <b>{data.annotation.label}</b>
+      </p>
+      <p>
+        Rendering custom content for the label <b>{data.annotation.label}</b>
+      </p>
+    </div>
   ),
   xAxisOptions: {
     labelFormatter: (value) =>
