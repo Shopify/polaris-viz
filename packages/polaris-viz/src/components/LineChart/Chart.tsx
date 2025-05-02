@@ -383,6 +383,21 @@ export function Chart({
           />
         </g>
 
+        {hasYAxisAnnotations && (
+          <g
+            transform={`translate(${chartXPosition},${chartYPosition})`}
+            tabIndex={-1}
+          >
+            <YAxisAnnotations
+              annotationsLookupTable={annotationsLookupTable}
+              drawableHeight={annotationsDrawableHeight}
+              drawableWidth={drawableWidth}
+              ticks={ticks}
+              yScale={yScale}
+            />
+          </g>
+        )}
+
         {hasXAxisAnnotations && (
           <g transform={`translate(${chartXPosition},0)`} tabIndex={-1}>
             <Annotations
@@ -395,21 +410,6 @@ export function Chart({
               onHeightChange={setAnnotationsHeight}
               xScale={xScale}
               renderAnnotationContent={renderAnnotationContent}
-            />
-          </g>
-        )}
-
-        {hasYAxisAnnotations && (
-          <g
-            transform={`translate(${chartXPosition},${chartYPosition})`}
-            tabIndex={-1}
-          >
-            <YAxisAnnotations
-              annotationsLookupTable={annotationsLookupTable}
-              drawableHeight={annotationsDrawableHeight}
-              drawableWidth={drawableWidth}
-              ticks={ticks}
-              yScale={yScale}
             />
           </g>
         )}
