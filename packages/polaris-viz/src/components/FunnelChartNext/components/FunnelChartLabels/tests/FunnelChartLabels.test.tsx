@@ -98,7 +98,7 @@ describe('<FunnelChartLabels />', () => {
       const component = wrapper(propsWithNarrowWidth);
       const texts = component.findAll(SingleTextLine);
 
-      expect(texts).toHaveLength(6);
+      expect(texts).toHaveLength(9);
 
       // Verify labels and percentages are still shown
       expect(component).toContainReactComponent(SingleTextLine, {
@@ -106,30 +106,6 @@ describe('<FunnelChartLabels />', () => {
       });
       expect(component).toContainReactComponent(SingleTextLine, {
         text: '100%',
-      });
-    });
-
-    it('hides all formatted values when any label has insufficient space', () => {
-      const propsWithMixedWidths = {
-        ...mockProps,
-        // Enough space for first two labels
-        labelWidth: 150,
-        barWidth: 50,
-      };
-
-      const component = wrapper(propsWithMixedWidths);
-
-      expect(component).toContainReactComponentTimes(SingleTextLine, 6);
-
-      // Verify no formatted values are shown
-      expect(component).not.toContainReactComponent(SingleTextLine, {
-        text: '1,000',
-      });
-      expect(component).not.toContainReactComponent(SingleTextLine, {
-        text: '750',
-      });
-      expect(component).not.toContainReactComponent(SingleTextLine, {
-        text: '500',
       });
     });
   });
@@ -159,7 +135,7 @@ describe('<FunnelChartLabels />', () => {
         barWidth: 50,
       });
 
-      expect(component).toContainReactComponentTimes('g', 3, {
+      expect(component).toContainReactComponentTimes('g', 0, {
         transform: expect.stringContaining(`${LINE_HEIGHT}`),
       });
     });

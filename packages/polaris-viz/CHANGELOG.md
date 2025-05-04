@@ -12,6 +12,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Added padding between slices in `<DonutChart />` to improve visibility of small values.
+- Redesign on funnel labels to either show all in one line or break in multiple lines.
 
 ## [16.15.2] - 2025-05-02
 
