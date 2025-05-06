@@ -166,7 +166,8 @@ export function Chart({
 
   const createPie = pie<DataPoint>()
     .value(({value}) => value!)
-    .sort(null);
+    .sort(null)
+    .padAngle(0.05);
   const pieChartData = createPie(points);
   const isEveryValueZero = points.every(({value}) => value === 0);
   const emptyState = pieChartData.length === 0 || isEveryValueZero;
