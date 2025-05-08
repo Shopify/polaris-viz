@@ -1,5 +1,5 @@
 {
-  "version": "16.15.4-funnel-beta.1",
+  "version": "16.0.0-funnel-beta.1",
   "npmClient": "npm",
   "useWorkspaces": true,
   "ignoreChanges": [
