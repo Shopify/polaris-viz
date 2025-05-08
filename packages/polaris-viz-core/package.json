@@ -1,6 +1,6 @@
 {
   "name": "@shopify/polaris-viz-core",
-  "version": "16.15.3",
+  "version": "16.15.4",
   "description": "Core logic for Polaris Viz that is not platform specific",
   "homepage": "https://github.com/Shopify/polaris-viz#readme",
   "license": "SEE LICENSE IN LICENSE.md",
