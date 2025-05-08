@@ -76,6 +76,9 @@ export function Chart({
   const yValues = dataSeries.map(({value}) => value) as [number, number];
   const sanitizedYValues = yValues.map((value) => Math.max(0, value));
 
+  const chartContainerWidth = containerBounds?.width ?? 0;
+  const barHeightAdjustment = chartContainerWidth <= 500 ? 10 : 0;
+
   const {
     width: drawableWidth,
     height: drawableHeight,
@@ -91,7 +94,7 @@ export function Chart({
   const highestYValue = Math.max(...sanitizedYValues);
 
   const yScale = scaleLinear()
-    .range([0, drawableHeight - LABELS_HEIGHT])
+    .range([0, drawableHeight - LABELS_HEIGHT - barHeightAdjustment])
     .domain([0, highestYValue]);
 
   const {getBarHeight, shouldApplyScaling} = useFunnelBarScaling({
@@ -281,7 +284,8 @@ export function Chart({
 
   function getYPosition(activeDataSeries: DataPoint) {
     const barHeight = getBarHeight(activeDataSeries.value ?? 0);
-    const yPosition = chartY + drawableHeight - barHeight;
+    const yPosition =
+      chartY + (drawableHeight - barHeightAdjustment) - barHeight;
 
     if (shouldPositionTooltipRight(activeDataSeries)) {
       return yPosition;

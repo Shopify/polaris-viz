@@ -16,14 +16,15 @@ const LINE_GAP = 5;
 const LINE_PADDING = 4;
 const GROUP_OFFSET = 10;
 const LABEL_FONT_SIZE = 12;
-const PERCENT_FONT_SIZE = 14;
-const PERCENT_FONT_WEIGHT = 650;
-const VALUE_FONT_SIZE = 13;
-const TREND_INDICATOR_SPACING = 8;
+const VALUE_FONT_SIZE = 14;
+const VALUE_FONT_WEIGHT = 500;
+const TREND_INDICATOR_SPACING = 20;
+const VERTICAL_STACK_SPACING = 3;
+const MIN_CHART_WIDTH_FOR_RULE_3_PRIORITY = 400;
 export const LABEL_VERTICAL_OFFSET = 2;
+const TREND_INDICATOR_SPACING_ADJUSTMENT = 20;
 
 const TEXT_COLOR = 'rgba(31, 33, 36, 1)';
-const VALUE_COLOR = 'rgba(97, 97, 97, 1)';
 
 const REDUCED_FONT_SIZE = 11;
 
@@ -39,6 +40,12 @@ export interface FunnelChartLabelsProps {
   renderScaleIconTooltipContent?: () => ReactNode;
 }
 
+const LAYOUT_STRATEGY = {
+  ONE_LINE_ALL: 'one_line_all',
+  ONE_LINE_COUNTS_AND_TRENDS: 'one_line_counts_and_trends',
+  VERTICAL_STACKING: 'vertical_stacking',
+} as const;
+
 export function FunnelChartLabels({
   formattedValues,
   labels,
@@ -50,66 +57,229 @@ export function FunnelChartLabels({
   shouldApplyScaling,
   renderScaleIconTooltipContent,
 }: FunnelChartLabelsProps) {
-  const {characterWidths} = useChartContext();
+  const {characterWidths, containerBounds} = useChartContext();
+  const chartContainerWidth = containerBounds?.width ?? 0;
   const [showTooltip, setShowTooltip] = useState(false);
 
   const labelFontSize = useMemo(() => {
     const maxLabelWidth = Math.max(
       ...labels.map((label) => estimateStringWidth(label, characterWidths)),
     );
-
     return maxLabelWidth > labelWidth ? REDUCED_FONT_SIZE : LABEL_FONT_SIZE;
   }, [labels, characterWidths, labelWidth]);
 
-  const {canShowAllFormattedValues, canShowAllTrendIndicatorsInline} =
-    useMemo(() => {
-      return labels.reduce(
-        (acc, _, index) => {
-          const isLast = index === labels.length - 1;
-          const targetWidth = isLast
-            ? barWidth - GROUP_OFFSET * 2
-            : labelWidth - GROUP_OFFSET * 2;
-
-          const percentWidth = estimateStringWidthWithOffset(
-            percentages[index],
-            PERCENT_FONT_SIZE,
-            PERCENT_FONT_WEIGHT,
-          );
-
-          const formattedValueWidth = estimateStringWidthWithOffset(
-            formattedValues[index],
-            VALUE_FONT_SIZE,
-          );
-
-          const {trendIndicatorWidth} = getTrendIndicatorData(
-            trends?.[index]?.reached,
-          );
-
-          // Check if we can fit percentage + formatted value + trend indicator inline
-          const canFitInline =
-            percentWidth +
-              formattedValueWidth +
-              trendIndicatorWidth +
-              TREND_INDICATOR_SPACING * 2 <
-            targetWidth;
-
-          // Check if we can fit the percentage and formatted value
-          const canFitFormattedValue =
-            percentWidth + formattedValueWidth + LINE_PADDING < targetWidth;
-
-          return {
-            canShowAllFormattedValues:
-              acc.canShowAllFormattedValues && canFitFormattedValue,
-            canShowAllTrendIndicatorsInline:
-              acc.canShowAllTrendIndicatorsInline && canFitInline,
-          };
-        },
-        {
-          canShowAllFormattedValues: true,
-          canShowAllTrendIndicatorsInline: true,
-        },
+  const {layoutStrategy} = useMemo(() => {
+    // Check if all items can fit in one Main Percentage, Counts, and TI (if present) on a single line.
+    const canAllFitInOneLine = labels.every((_, i) => {
+      const isLast = i === labels.length - 1;
+      const currentTargetWidth = isLast
+        ? barWidth - GROUP_OFFSET * 2
+        : labelWidth - GROUP_OFFSET * 2;
+      const currentPercentWidth = estimateStringWidthWithOffset(
+        percentages[i],
+        VALUE_FONT_SIZE,
+        VALUE_FONT_WEIGHT,
       );
-    }, [labels, barWidth, labelWidth, percentages, formattedValues, trends]);
+      const currentCountStringWidth = estimateStringWidthWithOffset(
+        formattedValues[i],
+        VALUE_FONT_SIZE,
+        VALUE_FONT_WEIGHT,
+      );
+      const {
+        trendIndicatorWidth: currentTrendWidth,
+        trendIndicatorProps: currentTrendProps,
+      } = getTrendIndicatorData(trends?.[i]?.reached);
+
+      return (
+        currentPercentWidth +
+          LINE_PADDING +
+          currentCountStringWidth +
+          (currentTrendProps
+            ? TREND_INDICATOR_SPACING + currentTrendWidth
+            : 0) <
+        currentTargetWidth
+      );
+    });
+
+    if (canAllFitInOneLine) {
+      // All elements in one line
+      return {layoutStrategy: LAYOUT_STRATEGY.ONE_LINE_ALL};
+    }
+
+    // If chart width is very narrow, prioritize full stacking.
+    if (chartContainerWidth < MIN_CHART_WIDTH_FOR_RULE_3_PRIORITY) {
+      return {layoutStrategy: LAYOUT_STRATEGY.VERTICAL_STACKING};
+    }
+
+    // Check if counts and trends can fit in one line.
+    const canCountsAndTrendsFitOneLine = labels.every((_, i) => {
+      const isLast = i === labels.length - 1;
+      const currentTargetWidth = isLast
+        ? barWidth - GROUP_OFFSET * 2
+        : labelWidth - GROUP_OFFSET * 2;
+      const currentCountStringWidth = estimateStringWidthWithOffset(
+        formattedValues[i],
+        VALUE_FONT_SIZE,
+        VALUE_FONT_WEIGHT,
+      );
+      const {
+        trendIndicatorWidth: currentTrendWidth,
+        trendIndicatorProps: currentTrendProps,
+      } = getTrendIndicatorData(trends?.[i]?.reached);
+
+      return (
+        currentCountStringWidth +
+          (currentTrendProps
+            ? TREND_INDICATOR_SPACING + currentTrendWidth
+            : 0) <
+        Number(currentTargetWidth) + TREND_INDICATOR_SPACING_ADJUSTMENT
+      );
+    });
+
+    if (canCountsAndTrendsFitOneLine) {
+      return {layoutStrategy: LAYOUT_STRATEGY.ONE_LINE_COUNTS_AND_TRENDS};
+    }
+
+    // Fall back to vertical stacking.
+    return {layoutStrategy: LAYOUT_STRATEGY.VERTICAL_STACKING};
+  }, [
+    labels,
+    percentages,
+    formattedValues,
+    trends,
+    labelWidth,
+    barWidth,
+    chartContainerWidth,
+  ]);
+
+  function displayChartLabels(
+    layoutStrategy: typeof LAYOUT_STRATEGY[keyof typeof LAYOUT_STRATEGY],
+    index: number,
+    currentTargetWidth: number,
+    percentWidth: number,
+    countStringWidth: number,
+    trendIndicatorProps: any,
+    trendIndicatorWidth: number,
+  ) {
+    if (layoutStrategy === LAYOUT_STRATEGY.ONE_LINE_ALL) {
+      return (
+        <Fragment>
+          <SingleTextLine
+            color={TEXT_COLOR}
+            text={percentages[index]}
+            targetWidth={percentWidth}
+            textAnchor="start"
+            fontSize={VALUE_FONT_SIZE}
+            fontWeight={VALUE_FONT_WEIGHT}
+          />
+          <SingleTextLine
+            color={TEXT_COLOR}
+            text={formattedValues[index]}
+            x={percentWidth + LINE_PADDING}
+            targetWidth={
+              currentTargetWidth -
+              (percentWidth + LINE_PADDING) -
+              (trendIndicatorProps
+                ? TREND_INDICATOR_SPACING + trendIndicatorWidth
+                : 0)
+            }
+            textAnchor="start"
+            fontSize={VALUE_FONT_SIZE}
+            fontWeight={VALUE_FONT_WEIGHT}
+          />
+          {trendIndicatorProps && (
+            <g
+              transform={`translate(${
+                percentWidth + countStringWidth + TREND_INDICATOR_SPACING
+              }, ${-LABEL_VERTICAL_OFFSET})`}
+            >
+              <TrendIndicator {...trendIndicatorProps} />
+            </g>
+          )}
+        </Fragment>
+      );
+    }
+
+    if (layoutStrategy === LAYOUT_STRATEGY.ONE_LINE_COUNTS_AND_TRENDS) {
+      return (
+        <Fragment>
+          <SingleTextLine
+            color={TEXT_COLOR}
+            text={percentages[index]}
+            targetWidth={currentTargetWidth}
+            textAnchor="start"
+            fontSize={VALUE_FONT_SIZE}
+            fontWeight={VALUE_FONT_WEIGHT}
+          />
+          <g
+            transform={`translate(0, ${LINE_HEIGHT + VERTICAL_STACK_SPACING})`}
+          >
+            <SingleTextLine
+              color={TEXT_COLOR}
+              text={formattedValues[index]}
+              targetWidth={
+                trendIndicatorProps ? countStringWidth : currentTargetWidth
+              }
+              textAnchor="start"
+              fontSize={VALUE_FONT_SIZE}
+              fontWeight={VALUE_FONT_WEIGHT}
+              x={0}
+            />
+            {trendIndicatorProps && (
+              <g
+                transform={`translate(${
+                  countStringWidth + TREND_INDICATOR_SPACING
+                }, ${-LABEL_VERTICAL_OFFSET})`}
+              >
+                <TrendIndicator {...trendIndicatorProps} />
+              </g>
+            )}
+          </g>
+        </Fragment>
+      );
+    }
+
+    if (layoutStrategy === LAYOUT_STRATEGY.VERTICAL_STACKING) {
+      return (
+        <Fragment>
+          <SingleTextLine
+            color={TEXT_COLOR}
+            text={percentages[index]}
+            targetWidth={currentTargetWidth}
+            textAnchor="start"
+            fontSize={VALUE_FONT_SIZE}
+            fontWeight={VALUE_FONT_WEIGHT}
+          />
+          <g
+            transform={`translate(0, ${LINE_HEIGHT + VERTICAL_STACK_SPACING})`}
+          >
+            <SingleTextLine
+              color={TEXT_COLOR}
+              text={formattedValues[index]}
+              targetWidth={currentTargetWidth}
+              textAnchor="start"
+              fontSize={VALUE_FONT_SIZE}
+              fontWeight={VALUE_FONT_WEIGHT}
+              x={0}
+            />
+          </g>
+          {trendIndicatorProps && (
+            <g
+              transform={`translate(0, ${
+                LINE_HEIGHT * 2 + VERTICAL_STACK_SPACING * 2
+              })`}
+            >
+              <g transform={`translate(0, ${-LABEL_VERTICAL_OFFSET})`}>
+                <TrendIndicator {...trendIndicatorProps} />
+              </g>
+            </g>
+          )}
+        </Fragment>
+      );
+    }
+
+    return null;
+  }
 
   return (
     <Fragment>
@@ -118,22 +288,24 @@ export function FunnelChartLabels({
         const showScaleIcon = index === 0 && shouldApplyScaling;
         const isLast = index === labels.length - 1;
 
-        const targetWidth = isLast
+        const currentTargetWidth = isLast
           ? barWidth - GROUP_OFFSET * 2
           : labelWidth - GROUP_OFFSET * 2;
 
         const percentWidth = estimateStringWidthWithOffset(
           percentages[index],
-          PERCENT_FONT_SIZE,
-          PERCENT_FONT_WEIGHT,
+          VALUE_FONT_SIZE,
+          VALUE_FONT_WEIGHT,
+        );
+
+        const countStringWidth = estimateStringWidthWithOffset(
+          formattedValues[index],
+          VALUE_FONT_SIZE,
+          VALUE_FONT_WEIGHT,
         );
 
         const {trendIndicatorProps, trendIndicatorWidth} =
           getTrendIndicatorData(trends?.[index]?.reached);
-
-        const trendIndicatorX = canShowAllTrendIndicatorsInline
-          ? targetWidth - trendIndicatorWidth
-          : 0;
 
         return (
           <g
@@ -161,42 +333,21 @@ export function FunnelChartLabels({
             <SingleTextLine
               color={TEXT_COLOR}
               text={label}
-              targetWidth={targetWidth}
+              targetWidth={currentTargetWidth}
               textAnchor="start"
               fontSize={labelFontSize}
               x={showScaleIcon ? 20 : 0}
             />
 
             <g transform={`translate(0,${LINE_HEIGHT + LINE_GAP})`}>
-              <SingleTextLine
-                color={TEXT_COLOR}
-                text={percentages[index]}
-                targetWidth={targetWidth}
-                textAnchor="start"
-                fontSize={PERCENT_FONT_SIZE}
-                fontWeight={PERCENT_FONT_WEIGHT}
-              />
-              {canShowAllFormattedValues && (
-                <SingleTextLine
-                  color={VALUE_COLOR}
-                  text={formattedValues[index]}
-                  targetWidth={targetWidth}
-                  x={percentWidth + LINE_PADDING}
-                  y={1}
-                  textAnchor="start"
-                  fontSize={VALUE_FONT_SIZE}
-                />
-              )}
-              {trendIndicatorProps && (
-                <g
-                  transform={`translate(${trendIndicatorX}, ${
-                    canShowAllTrendIndicatorsInline
-                      ? -LABEL_VERTICAL_OFFSET
-                      : LINE_HEIGHT
-                  })`}
-                >
-                  <TrendIndicator {...trendIndicatorProps} />
-                </g>
+              {displayChartLabels(
+                layoutStrategy,
+                index,
+                currentTargetWidth,
+                percentWidth,
+                countStringWidth,
+                trendIndicatorProps,
+                trendIndicatorWidth,
               )}
             </g>
           </g>
