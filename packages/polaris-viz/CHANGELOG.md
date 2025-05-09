@@ -7,6 +7,12 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- ## Unreleased -->
 
+## [16.15.5] - 2025-05-09
+
+### Changed
+
+- Reduce spacing between counts and trends in funnel.
+
 ## [16.15.4] - 2025-05-08
 
 - No updates. Transitive dependency bump.
