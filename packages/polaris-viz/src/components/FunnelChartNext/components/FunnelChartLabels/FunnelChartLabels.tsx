@@ -18,11 +18,12 @@ const GROUP_OFFSET = 10;
 const LABEL_FONT_SIZE = 12;
 const VALUE_FONT_SIZE = 14;
 const VALUE_FONT_WEIGHT = 500;
+const VALUE_FONT_SIZE_SMALL = 12;
 const TREND_INDICATOR_SPACING = 20;
 const VERTICAL_STACK_SPACING = 3;
 const MIN_CHART_WIDTH_FOR_RULE_3_PRIORITY = 400;
 export const LABEL_VERTICAL_OFFSET = 2;
-const TREND_INDICATOR_SPACING_ADJUSTMENT = 20;
+const TREND_INDICATOR_SPACING_ADJUSTMENT = 35;
 
 const TEXT_COLOR = 'rgba(31, 33, 36, 1)';
 
@@ -221,15 +222,14 @@ export function FunnelChartLabels({
                 trendIndicatorProps ? countStringWidth : currentTargetWidth
               }
               textAnchor="start"
-              fontSize={VALUE_FONT_SIZE}
+              fontSize={VALUE_FONT_SIZE_SMALL}
               fontWeight={VALUE_FONT_WEIGHT}
               x={0}
+              y={2}
             />
             {trendIndicatorProps && (
               <g
-                transform={`translate(${
-                  countStringWidth + TREND_INDICATOR_SPACING
-                }, ${-LABEL_VERTICAL_OFFSET})`}
+                transform={`translate(${countStringWidth}, ${-LABEL_VERTICAL_OFFSET})`}
               >
                 <TrendIndicator {...trendIndicatorProps} />
               </g>
