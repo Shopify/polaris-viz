@@ -54,14 +54,19 @@ export const Point = memo(function Point({
 
   const radius = active ? DEFAULT_RADIUS : 0;
 
-  const {animatedRadius} = useSpring({
-    animatedRadius: radius,
-    from: {
-      animatedRadius: 0,
+  // Add dependency array to useSpring to prevent re-initializing on every render
+  const [{animatedRadius}] = useSpring(
+    {
+      animatedRadius: radius,
+      from: {
+        animatedRadius: 0,
+      },
+      config: {duration: BASE_ANIMATION_DURATION},
+      default: {immediate: !isAnimated},
+      // Only re-initialize the animation when these values change
     },
-    config: {duration: BASE_ANIMATION_DURATION},
-    default: {immediate: !isAnimated},
-  });
+    [radius, isAnimated],
+  );
 
   return (
     <animated.circle
