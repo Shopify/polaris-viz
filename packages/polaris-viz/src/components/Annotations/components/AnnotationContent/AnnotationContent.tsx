@@ -96,7 +96,7 @@ export function AnnotationContent({
         }}
         id={`annotation-content-${index}`}
         role="dialog"
-        aria-label={content}
+        aria-label={annotation.startKey.toString()}
       >
         {title != null && (
           <p
