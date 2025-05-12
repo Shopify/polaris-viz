@@ -169,10 +169,10 @@ export interface Annotation {
   collapseButtonText?: string;
   expandButtonText?: string;
   content?: {
-    content: string;
+    content: ReactNode;
     linkText?: string;
     linkUrl?: string;
-    title?: string;
+    title?: ReactNode;
   };
 }
 
