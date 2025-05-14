@@ -18,6 +18,7 @@ export {
   TrendIndicator,
   LineChartRelational,
   LineChartPredictive,
+  LineChartCumulative,
   MissingDataArea,
   Grid,
   FunnelChartNext,
@@ -41,6 +42,7 @@ export type {
   GridProps,
   FunnelChartNextProps,
   SparkFunnelChartProps,
+  LineChartCumulativeProps,
 } from './components';
 
 export {

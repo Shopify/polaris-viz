@@ -17,6 +17,8 @@ interface Props {
   targetHeight: number;
   targetWidth: number;
   characterWidths: CharacterWidths;
+  activeIndex?: number;
+  fillColor?: string;
 }
 
 export function getDiagonalLabels({
@@ -25,6 +27,8 @@ export function getDiagonalLabels({
   longestLabelWidth,
   targetHeight,
   targetWidth,
+  activeIndex,
+  fillColor,
 }: Props) {
   const clampedTargetWidth = clamp({
     amount: longestLabelWidth,
@@ -44,6 +48,7 @@ export function getDiagonalLabels({
   const centerPoint = targetWidth / 2 - LINE_HEIGHT / 2;
 
   for (let i = 0; i < labels.length; i++) {
+    const isActiveIndex = activeIndex === i;
     lines[i] = [];
     lines[i].push({
       truncatedText: truncatedLabels[i].truncatedName,
@@ -56,6 +61,8 @@ export function getDiagonalLabels({
       height: LINE_HEIGHT,
       textAnchor: 'end',
       transform: `rotate(-45)`,
+      style: isActiveIndex ? {fontWeight: '600'} : undefined,
+      fill: isActiveIndex ? fillColor : undefined,
     });
   }
 
