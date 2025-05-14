@@ -139,6 +139,8 @@ export interface FormattedLine {
   y: number;
   dominantBaseline?: string;
   transform?: string;
+  fill?: string;
+  style?: React.CSSProperties;
 }
 
 export interface LegendData {
