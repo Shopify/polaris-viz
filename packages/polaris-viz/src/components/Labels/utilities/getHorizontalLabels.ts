@@ -16,6 +16,8 @@ interface Props {
   targetHeight: number;
   targetWidth: number;
   characterWidths: CharacterWidths;
+  activeIndex?: number;
+  fillColor?: string;
 }
 
 export function getHorizontalLabels({
@@ -25,6 +27,8 @@ export function getHorizontalLabels({
   targetHeight,
   targetWidth,
   characterWidths,
+  activeIndex,
+  fillColor,
 }: Props) {
   const truncatedLabels = truncateLabels({
     labels,
@@ -42,6 +46,7 @@ export function getHorizontalLabels({
     let line = '';
     let lineNumber = 0;
     const words = label.truncatedWords;
+    const isActiveIndex = activeIndex === index;
 
     // The reason we use a for loop here is we want
     // to be able to advance the loop below if we
@@ -84,6 +89,8 @@ export function getHorizontalLabels({
         height: LINE_HEIGHT,
         textAnchor: align === 'left' ? 'start' : 'middle',
         dominantBaseline: 'hanging',
+        style: isActiveIndex ? {fontWeight: '600'} : undefined,
+        fill: isActiveIndex ? fillColor : undefined,
       });
 
       lineNumber += 1;
