@@ -51,13 +51,12 @@ const FULL_CIRCLE = Math.PI * 2;
 const RADIUS_PADDING = 20;
 const SMALL_CHART_HEIGHT_THRESHOLD = 150;
 
-export interface ChartProps {
+export interface BaseChartProps {
   data: DataSeries[];
   labelFormatter: LabelFormatter;
   legendPosition: LegendPosition;
   seriesNameFormatter: LabelFormatter;
   showLegend: boolean;
-  showLegendValues: boolean;
   state: ChartState;
   theme: string;
   accessibilityLabel?: string;
@@ -66,10 +65,23 @@ export interface ChartProps {
   legendFullWidth?: boolean;
   renderInnerValueContent?: RenderInnerValueContent;
   renderLegendContent?: RenderLegendContent;
-  renderHiddenLegendLabel?: RenderHiddenLegendLabel;
   renderTooltipContent?: (data: RenderTooltipContentData) => ReactNode;
   total?: number;
 }
+
+interface ChartPropsWithLegendValues extends BaseChartProps {
+  showLegendValues: true;
+  renderHiddenLegendLabel?: RenderHiddenLegendLabel;
+}
+
+interface ChartPropsWithoutLegendValues extends BaseChartProps {
+  showLegendValues?: false;
+  renderHiddenLegendLabel?: never;
+}
+
+export type ChartProps =
+  | ChartPropsWithLegendValues
+  | ChartPropsWithoutLegendValues;
 
 export function Chart({
   data,
