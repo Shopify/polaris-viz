@@ -23,6 +23,7 @@ import {PointsAndCrosshair} from './components';
 import {useFormatData, useFormattedLabels} from './hooks';
 import {yAxisMinMax} from './utilities';
 
+const Y_AXIS_WIDTH_OFFSET = -30;
 export interface ChartProps {
   data: LineChartDataSeriesWithDefaults[];
   emptyStateText?: string;
@@ -62,7 +63,7 @@ export function Chart({
   const {formattedLabels} = useFormattedLabels({
     data: [data[indexForLabels]],
     labelFormatter: xAxisOptions.labelFormatter,
-    indexToKeep: [0, fixedActiveIndex, data[indexForLabels]?.data.length - 1],
+    indexToKeep: [0, data[indexForLabels]?.data.length - 1],
   });
 
   const emptyState =
@@ -93,7 +94,7 @@ export function Chart({
     height,
     width,
     xAxisHeight,
-    yAxisWidth: 0,
+    yAxisWidth: Y_AXIS_WIDTH_OFFSET,
   });
 
   const {xAxisDetails, xScale, labels} = useLinearLabelsAndDimensions({
@@ -126,6 +127,13 @@ export function Chart({
         role="table"
         width={width}
       >
+        <line
+          x2={width}
+          stroke={selectedTheme.crossHair.color}
+          transform={`translate(${chartXPosition},${
+            chartYPosition + drawableHeight
+          })`}
+        />
         <XAxis
           allowLineWrap={xAxisOptions.allowLineWrap}
           ariaHidden

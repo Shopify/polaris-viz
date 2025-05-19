@@ -50,7 +50,7 @@ export function LineChartCumulative(props: LineChartCumulativeProps) {
     yAxisOptions,
     scrollContainer,
     fixedActiveIndex,
-    seriesColors = ['#cbcbcf', '#cbcbcf', 'rgba(4, 123, 93, 1)'],
+    seriesColors = ['#b0b0b6', '#b0b0b6', 'rgba(4, 123, 93, 1)'],
   } = {
     ...DEFAULT_CHART_PROPS,
     ...props,

@@ -19,6 +19,8 @@ interface PointsAndCrosshairProps {
   yScale: ScaleLinear<number, number>;
 }
 
+const Y_AXIS_WIDTH_OFFSET = 10;
+
 export function PointsAndCrosshair({
   activeIndex,
   data,
@@ -47,7 +49,7 @@ export function PointsAndCrosshair({
     <Fragment>
       {emptyState ? null : (
         <Crosshair
-          height={drawableHeight}
+          height={drawableHeight - Y_AXIS_WIDTH_OFFSET}
           id={`${tooltipId}-${CROSSHAIR_ID}`}
           opacity={activeIndex == null ? 0 : 1}
           theme={theme}
