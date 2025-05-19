@@ -38,6 +38,7 @@ export interface FunnelChartLabelsProps {
   trends?: FunnelChartMetaData['trends'];
   xScale: ScaleBand<string>;
   shouldApplyScaling: boolean;
+  showPercentages?: boolean;
   renderScaleIconTooltipContent?: () => ReactNode;
 }
 
@@ -56,6 +57,7 @@ export function FunnelChartLabels({
   trends,
   xScale,
   shouldApplyScaling,
+  showPercentages = true,
   renderScaleIconTooltipContent,
 }: FunnelChartLabelsProps) {
   const {characterWidths, containerBounds} = useChartContext();
@@ -76,11 +78,13 @@ export function FunnelChartLabels({
       const currentTargetWidth = isLast
         ? barWidth - GROUP_OFFSET * 2
         : labelWidth - GROUP_OFFSET * 2;
-      const currentPercentWidth = estimateStringWidthWithOffset(
-        percentages[i],
-        VALUE_FONT_SIZE,
-        VALUE_FONT_WEIGHT,
-      );
+      const currentPercentWidth = showPercentages
+        ? estimateStringWidthWithOffset(
+            percentages[i],
+            VALUE_FONT_SIZE,
+            VALUE_FONT_WEIGHT,
+          )
+        : 0;
       const currentCountStringWidth = estimateStringWidthWithOffset(
         formattedValues[i],
         VALUE_FONT_SIZE,
@@ -151,6 +155,7 @@ export function FunnelChartLabels({
     labelWidth,
     barWidth,
     chartContainerWidth,
+    showPercentages,
   ]);
 
   function displayChartLabels(
@@ -161,22 +166,25 @@ export function FunnelChartLabels({
     countStringWidth: number,
     trendIndicatorProps: any,
     trendIndicatorWidth: number,
+    showPercentages: boolean,
   ) {
     if (layoutStrategy === LAYOUT_STRATEGY.ONE_LINE_ALL) {
       return (
         <Fragment>
-          <SingleTextLine
-            color={TEXT_COLOR}
-            text={percentages[index]}
-            targetWidth={percentWidth}
-            textAnchor="start"
-            fontSize={VALUE_FONT_SIZE}
-            fontWeight={VALUE_FONT_WEIGHT}
-          />
+          {showPercentages ? (
+            <SingleTextLine
+              color={TEXT_COLOR}
+              text={percentages[index]}
+              targetWidth={percentWidth}
+              textAnchor="start"
+              fontSize={VALUE_FONT_SIZE}
+              fontWeight={VALUE_FONT_WEIGHT}
+            />
+          ) : null}
           <SingleTextLine
             color={TEXT_COLOR}
             text={formattedValues[index]}
-            x={percentWidth + LINE_PADDING}
+            x={showPercentages ? percentWidth + LINE_PADDING : 0}
             targetWidth={
               currentTargetWidth -
               (percentWidth + LINE_PADDING) -
@@ -202,19 +210,22 @@ export function FunnelChartLabels({
     }
 
     if (layoutStrategy === LAYOUT_STRATEGY.ONE_LINE_COUNTS_AND_TRENDS) {
+      const formattedValueTransformY = showPercentages
+        ? LINE_HEIGHT + VERTICAL_STACK_SPACING
+        : 0;
       return (
         <Fragment>
-          <SingleTextLine
-            color={TEXT_COLOR}
-            text={percentages[index]}
-            targetWidth={currentTargetWidth}
-            textAnchor="start"
-            fontSize={VALUE_FONT_SIZE}
-            fontWeight={VALUE_FONT_WEIGHT}
-          />
-          <g
-            transform={`translate(0, ${LINE_HEIGHT + VERTICAL_STACK_SPACING})`}
-          >
+          {showPercentages ? (
+            <SingleTextLine
+              color={TEXT_COLOR}
+              text={percentages[index]}
+              targetWidth={currentTargetWidth}
+              textAnchor="start"
+              fontSize={VALUE_FONT_SIZE}
+              fontWeight={VALUE_FONT_WEIGHT}
+            />
+          ) : null}
+          <g transform={`translate(0, ${formattedValueTransformY})`}>
             <SingleTextLine
               color={TEXT_COLOR}
               text={formattedValues[index]}
@@ -240,19 +251,25 @@ export function FunnelChartLabels({
     }
 
     if (layoutStrategy === LAYOUT_STRATEGY.VERTICAL_STACKING) {
+      const formattedValueTransformY = showPercentages
+        ? LINE_HEIGHT + VERTICAL_STACK_SPACING
+        : 0;
+      const trendIndicatorTransformY = showPercentages
+        ? LINE_HEIGHT * 2 + VERTICAL_STACK_SPACING * 2
+        : LINE_HEIGHT + VERTICAL_STACK_SPACING * 2;
       return (
         <Fragment>
-          <SingleTextLine
-            color={TEXT_COLOR}
-            text={percentages[index]}
-            targetWidth={currentTargetWidth}
-            textAnchor="start"
-            fontSize={VALUE_FONT_SIZE}
-            fontWeight={VALUE_FONT_WEIGHT}
-          />
-          <g
-            transform={`translate(0, ${LINE_HEIGHT + VERTICAL_STACK_SPACING})`}
-          >
+          {showPercentages ? (
+            <SingleTextLine
+              color={TEXT_COLOR}
+              text={percentages[index]}
+              targetWidth={currentTargetWidth}
+              textAnchor="start"
+              fontSize={VALUE_FONT_SIZE}
+              fontWeight={VALUE_FONT_WEIGHT}
+            />
+          ) : null}
+          <g transform={`translate(0, ${formattedValueTransformY})`}>
             <SingleTextLine
               color={TEXT_COLOR}
               text={formattedValues[index]}
@@ -264,11 +281,7 @@ export function FunnelChartLabels({
             />
           </g>
           {trendIndicatorProps && (
-            <g
-              transform={`translate(0, ${
-                LINE_HEIGHT * 2 + VERTICAL_STACK_SPACING * 2
-              })`}
-            >
+            <g transform={`translate(0, ${trendIndicatorTransformY})`}>
               <g transform={`translate(0, ${-LABEL_VERTICAL_OFFSET})`}>
                 <TrendIndicator {...trendIndicatorProps} />
               </g>
@@ -307,6 +320,8 @@ export function FunnelChartLabels({
         const {trendIndicatorProps, trendIndicatorWidth} =
           getTrendIndicatorData(trends?.[index]?.reached);
 
+        const updatedPercentWidth = showPercentages ? percentWidth : 0;
+
         return (
           <g
             transform={`translate(${
@@ -344,10 +359,11 @@ export function FunnelChartLabels({
                 layoutStrategy,
                 index,
                 currentTargetWidth,
-                percentWidth,
+                updatedPercentWidth,
                 countStringWidth,
                 trendIndicatorProps,
                 trendIndicatorWidth,
+                showPercentages,
               )}
             </g>
           </g>

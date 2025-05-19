@@ -30,6 +30,7 @@ describe('<FunnelChartLabels />', () => {
     percentages: ['100%', '75%', '50%'],
     xScale: scaleBand().domain(['0', '1', '2']).range([0, 300]),
     shouldApplyScaling: false,
+    showPercentages: true,
     renderScaleIconTooltipContent: () => <div>Tooltip content</div>,
     trends: [
       {
@@ -106,6 +107,23 @@ describe('<FunnelChartLabels />', () => {
       });
       expect(component).toContainReactComponent(SingleTextLine, {
         text: '100%',
+      });
+    });
+
+    it('hides percentages when showPercentages is false', () => {
+      const component = wrapper({
+        ...mockProps,
+        showPercentages: false,
+      });
+
+      expect(component).toContainReactComponent(SingleTextLine, {
+        text: 'Step 1',
+      });
+      expect(component).not.toContainReactComponent(SingleTextLine, {
+        text: '100%',
+      });
+      expect(component).toContainReactComponent(SingleTextLine, {
+        text: '1,000',
       });
     });
   });

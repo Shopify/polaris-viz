@@ -29,6 +29,7 @@ export type FunnelChartNextProps = {
   labelFormatter?: LabelFormatter;
   renderScaleIconTooltipContent?: () => ReactNode;
   percentageFormatter?: (value: number) => string;
+  showPercentages?: boolean;
 } & ChartProps;
 
 export function FunnelChartNext(props: FunnelChartNextProps) {
@@ -43,6 +44,7 @@ export function FunnelChartNext(props: FunnelChartNextProps) {
     errorText,
     tooltipLabels = DEFAULT_TOOLTIP_LABELS,
     showTooltip = true,
+    showPercentages = true,
     seriesNameFormatter = DEFAULT_LABEL_FORMATTER,
     labelFormatter = DEFAULT_LABEL_FORMATTER,
     percentageFormatter,
@@ -73,6 +75,7 @@ export function FunnelChartNext(props: FunnelChartNextProps) {
           data={data}
           tooltipLabels={tooltipLabels}
           showTooltip={showTooltip}
+          showPercentages={showPercentages}
           seriesNameFormatter={seriesNameFormatter}
           labelFormatter={labelFormatter}
           percentageFormatter={percentageFormatter}
