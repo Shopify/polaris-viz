@@ -158,8 +158,6 @@ export function FunnelChartLabels({
     showPercentages,
   ]);
 
-  console.log('layoutStrategy', layoutStrategy);
-
   function displayChartLabels(
     layoutStrategy: typeof LAYOUT_STRATEGY[keyof typeof LAYOUT_STRATEGY],
     index: number,
