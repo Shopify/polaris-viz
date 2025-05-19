@@ -50,6 +50,7 @@ export interface ChartProps {
     dropped: string;
   };
   showTooltip?: boolean;
+  showPercentages?: boolean;
   seriesNameFormatter: LabelFormatter;
   labelFormatter: LabelFormatter;
   percentageFormatter?: (value: number) => string;
@@ -60,6 +61,7 @@ export function Chart({
   data,
   tooltipLabels,
   showTooltip = true,
+  showPercentages = true,
   seriesNameFormatter,
   labelFormatter,
   percentageFormatter = (value: number) => {
@@ -175,6 +177,7 @@ export function Chart({
             shouldApplyScaling={shouldApplyScaling}
             renderScaleIconTooltipContent={renderScaleIconTooltipContent}
             trends={trends}
+            showPercentages={showPercentages}
           />
         </g>
 
