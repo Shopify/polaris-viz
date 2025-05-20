@@ -21,6 +21,8 @@ interface Props {
   targetWidth: number;
   onHeightChange?: Dispatch<SetStateAction<number>> | (() => void);
   align?: 'center' | 'left';
+  activeIndex?: number;
+  fillColor?: string;
 }
 
 export function useLabels({
@@ -29,6 +31,8 @@ export function useLabels({
   labels,
   onHeightChange = () => {},
   targetWidth,
+  activeIndex,
+  fillColor,
 }: Props) {
   const {characterWidths} = useChartContext();
 
@@ -77,6 +81,8 @@ export function useLabels({
           targetWidth,
           targetHeight: HORIZONTAL_LABEL_TARGET_HEIGHT,
           characterWidths,
+          activeIndex,
+          fillColor,
         });
       }
       case shouldDrawDiagonal: {
@@ -86,6 +92,8 @@ export function useLabels({
           longestLabelWidth,
           targetHeight: LINE_HEIGHT,
           targetWidth,
+          activeIndex,
+          fillColor,
         });
       }
       case shouldDrawVertical: {
@@ -94,6 +102,8 @@ export function useLabels({
           labels: preparedLabels,
           longestLabelWidth,
           targetWidth,
+          activeIndex,
+          fillColor,
         });
       }
       default: {
@@ -111,6 +121,8 @@ export function useLabels({
     characterWidths,
     preparedLabels,
     longestLabelWidth,
+    activeIndex,
+    fillColor,
   ]);
 
   useEffect(() => {

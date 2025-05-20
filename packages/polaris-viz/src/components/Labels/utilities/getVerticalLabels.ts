@@ -13,6 +13,8 @@ interface Props {
   longestLabelWidth: number;
   labels: PreparedLabels[];
   characterWidths: CharacterWidths;
+  activeIndex?: number;
+  fillColor?: string;
 }
 
 export function getVerticalLabels({
@@ -20,6 +22,8 @@ export function getVerticalLabels({
   characterWidths,
   longestLabelWidth,
   targetWidth,
+  activeIndex,
+  fillColor,
 }: Props) {
   const clampedTargetWidth = clamp({
     amount: longestLabelWidth,
@@ -38,6 +42,7 @@ export function getVerticalLabels({
   let longestString = 0;
 
   for (let i = 0; i < labels.length; i++) {
+    const isActiveIndex = activeIndex === i;
     lines[i] = [];
     lines[i].push({
       truncatedText: truncatedLabels[i].truncatedName,
@@ -49,6 +54,8 @@ export function getVerticalLabels({
       height: LINE_HEIGHT,
       textAnchor: 'end',
       transform: `translate(${targetWidth / 2}) rotate(-90)`,
+      style: isActiveIndex ? {fontWeight: '600'} : undefined,
+      fill: isActiveIndex ? fillColor : undefined,
     });
 
     if (truncatedLabels[i].truncatedWidth > longestString) {

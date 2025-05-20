@@ -61,3 +61,5 @@ export {FunnelChartNext} from './FunnelChartNext';
 export type {FunnelChartNextProps} from './FunnelChartNext';
 export {SparkFunnelChart} from './SparkFunnelChart';
 export type {SparkFunnelChartProps} from './SparkFunnelChart';
+export {LineChartCumulative} from './LineChartCumulative';
+export type {LineChartCumulativeProps} from './LineChartCumulative';
