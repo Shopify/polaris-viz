@@ -28,6 +28,8 @@ export function TextLine({color, index, line}: TextLineProps) {
             width,
             x,
             y,
+            style,
+            fill,
           },
           textIndex,
         ) => {
@@ -42,10 +44,11 @@ export function TextLine({color, index, line}: TextLineProps) {
                 width={width}
                 x={x}
                 y={y}
-                fill={color ?? selectedTheme.xAxis.labelColor}
+                fill={color ?? fill ?? selectedTheme.xAxis.labelColor}
                 fontSize={fontSize}
                 fontFamily={FONT_FAMILY}
                 transform={transform}
+                style={style}
               >
                 {truncatedText}
               </text>

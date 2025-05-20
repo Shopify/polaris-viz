@@ -22,6 +22,7 @@ export {
   Grid,
   FunnelChartNext,
   SparkFunnelChart,
+  LineChartCumulative,
 } from './components';
 
 export type {
@@ -41,6 +42,7 @@ export type {
   GridProps,
   FunnelChartNextProps,
   SparkFunnelChartProps,
+  LineChartCumulativeProps,
 } from './components';
 
 export {

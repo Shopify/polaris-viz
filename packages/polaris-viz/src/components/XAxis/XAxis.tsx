@@ -16,6 +16,8 @@ interface XAxisProps {
   ariaHidden?: boolean;
   isLinearChart?: boolean;
   reducedLabelIndexes?: number[];
+  activeIndex?: number;
+  fillColor?: string;
 }
 
 export function XAxis({
@@ -29,12 +31,16 @@ export function XAxis({
   x,
   xScale,
   y,
+  activeIndex,
+  fillColor,
 }: XAxisProps) {
   const {lines} = useLabels({
     labels,
     onHeightChange,
     targetWidth: labelWidth,
     allowLineWrap,
+    activeIndex,
+    fillColor,
   });
 
   return (
