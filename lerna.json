@@ -1,5 +1,5 @@
 {
-  "version": "16.15.6-cumulative-line-chart-beta.1",
+  "version": "16.15.6-cumulative-line-chart-beta.2",
   "npmClient": "npm",
   "useWorkspaces": true,
   "ignoreChanges": [

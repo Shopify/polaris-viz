@@ -1,6 +1,6 @@
 {
   "name": "sandbox",
-  "version": "16.15.6-cumulative-line-chart-beta.1",
+  "version": "16.15.6-cumulative-line-chart-beta.2",
   "private": true,
   "main": "index.js",
   "dependencies": {
